@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sauerteigbrot">
+<meta name="theme-color" content="#a8541f">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" href="data:image/png;base64,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">
+<title>Mildes Weizensauerteigbrot – Backplaner</title>
+<style>
+  :root{
+    --bg:#f6f1e7;
+    --card:#fffdf8;
+    --ink:#2b2118;
+    --muted:#7b6a58;
+    --line:#e3d7c4;
+    --accent:#a8541f;
+    --accent-soft:#f3e2d3;
+    --ok:#3f7d3f;
+    --shadow:0 1px 2px rgba(43,33,24,.06),0 8px 24px rgba(43,33,24,.07);
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#191512;--card:#221d18;--ink:#f0e7db;--muted:#a99781;
+      --line:#3a3129;--accent:#e08a4b;--accent-soft:#3a2a1d;
+      --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+    }
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:calc(28px + env(safe-area-inset-top)) 18px calc(80px + env(safe-area-inset-bottom))}
+  header h1{font-size:1.7rem;margin:0 0 4px;letter-spacing:-.02em}
+  header p{margin:0;color:var(--muted);font-size:.92rem}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:18px;margin-top:18px;box-shadow:var(--shadow);
+  }
+  h2{font-size:1.02rem;margin:0 0 14px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+  .controls{display:flex;flex-wrap:wrap;gap:18px}
+  .ctl{flex:1 1 200px}
+  label{display:block;font-size:.8rem;color:var(--muted);margin-bottom:6px}
+  input[type=number],input[type=time],input[type=date],select{
+    width:100%;padding:10px 12px;font-size:1rem;font-family:inherit;
+    border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--ink);
+  }
+  input[type=range]{width:100%;accent-color:var(--accent)}
+  .big{font-variant-numeric:tabular-nums}
+  table{width:100%;border-collapse:collapse;font-size:.95rem}
+  th,td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
+  th{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:600}
+  td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  td.pct{text-align:right;color:var(--muted);font-size:.85rem;font-variant-numeric:tabular-nums}
+  tr:last-child td{border-bottom:none}
+  .total td{font-weight:700;border-top:2px solid var(--line)}
+  .step{display:flex;gap:12px;padding:11px 4px;border-bottom:1px solid var(--line);align-items:flex-start}
+  .step:last-child{border-bottom:none}
+  .step.done{opacity:.42}
+  .step.now{background:var(--accent-soft);border-radius:9px;padding-left:10px;padding-right:10px}
+  .time{font-variant-numeric:tabular-nums;font-weight:700;min-width:64px;font-size:.95rem}
+  .day{font-size:.68rem;color:var(--muted);display:block;font-weight:500;letter-spacing:.05em}
+  .what{flex:1}
+  .what small{display:block;color:var(--muted);font-size:.83rem;margin-top:2px}
+  .go{
+    border:none;background:var(--accent);color:#fff;font-family:inherit;font-size:.8rem;
+    padding:6px 11px;border-radius:7px;cursor:pointer;white-space:nowrap;font-weight:600;
+  }
+  .go:hover{filter:brightness(1.08)}
+  .go.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+  #timerCard{position:sticky;bottom:0;z-index:5}
+  .tbox{text-align:center;padding:6px 0 2px}
+  .tlabel{color:var(--muted);font-size:.85rem}
+  .tclock{font-size:3rem;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;margin:2px 0}
+  .tclock.fire{color:var(--ok)}
+  .trow{display:flex;gap:10px;justify-content:center;margin-top:10px;flex-wrap:wrap}
+  .quick{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;justify-content:center}
+  .quick button{
+    border:1px solid var(--line);background:var(--bg);color:var(--ink);font-family:inherit;
+    font-size:.82rem;padding:7px 12px;border-radius:20px;cursor:pointer;
+  }
+  .quick button:hover{border-color:var(--accent);color:var(--accent)}
+  .note{font-size:.85rem;color:var(--muted);margin-top:12px}
+  .src{margin-top:26px;font-size:.8rem;color:var(--muted);text-align:center}
+  .src a{color:var(--accent)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Mildes Weizensauerteigbrot</h1>
+  <p>Backplaner mit Mengen-Skalierung, Zeitplan und Timer</p>
+</header>
+
+<!-- STEUERUNG -->
+<div class="card">
+  <h2>Einstellungen</h2>
+  <div class="controls">
+    <div class="ctl">
+      <label for="loaves">Anzahl Brote</label>
+      <input type="number" id="loaves" value="1" min="1" max="12" step="1">
+    </div>
+    <div class="ctl">
+      <label for="weight">Teiggewicht je Brot: <b id="wOut" class="big">1050</b> g</label>
+      <input type="range" id="weight" min="400" max="2000" step="10" value="1050">
+    </div>
+  </div>
+  <div class="controls" style="margin-top:16px">
+    <div class="ctl">
+      <label for="anchor">Zeit-Anker</label>
+      <select id="anchor">
+        <option value="start">Startzeit (Sauerteig ansetzen)</option>
+        <option value="end">Fertig-Zeit (Brot aus dem Ofen)</option>
+      </select>
+    </div>
+    <div class="ctl">
+      <label for="date">Datum</label>
+      <input type="date" id="date">
+    </div>
+    <div class="ctl">
+      <label for="time">Uhrzeit</label>
+      <input type="time" id="time" value="16:38">
+    </div>
+  </div>
+  <div class="controls" style="margin-top:16px">
+    <div class="ctl">
+      <label for="cold">Kalte Stückgare bei 5 °C: <b id="cOut" class="big">9</b> Std <span style="opacity:.7">(8–12)</span></label>
+      <input type="range" id="cold" min="8" max="12" step="0.5" value="9">
+    </div>
+  </div>
+  <p class="note">Gesamtdauer: <b id="totalDur">16 Std 22 Min</b> · Teigausbeute 174 %</p>
+</div>
+
+<!-- ZUTATEN -->
+<div class="card">
+  <h2>Zutatenübersicht</h2>
+  <table>
+    <thead><tr><th>Zutat</th><th class="num">Menge</th><th class="pct">%</th></tr></thead>
+    <tbody id="tOverview"></tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h2>Weizensauerteig · 2 Std bei 27–28 °C</h2>
+  <table>
+    <thead><tr><th>Zutat</th><th class="num">Menge</th><th class="num">Temp.</th></tr></thead>
+    <tbody id="tSauer"></tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h2>Hauptteig</h2>
+  <table>
+    <thead><tr><th>Zutat</th><th class="num">Menge</th><th class="num">Temp.</th></tr></thead>
+    <tbody id="tHaupt"></tbody>
+  </table>
+  <p class="note">Kneten bis zum Fenstertest. Gewünschte Teigtemperatur ca. 27 °C.</p>
+</div>
+
+<!-- ZEITPLAN -->
+<div class="card">
+  <h2>Zeitplan</h2>
+  <div id="plan"></div>
+</div>
+
+<!-- TIMER -->
+<div class="card" id="timerCard">
+  <div class="tbox">
+    <div class="tlabel" id="tLabel">Kein Timer aktiv</div>
+    <div class="tclock" id="tClock">–:–</div>
+  </div>
+  <div class="trow">
+    <button class="go" id="btnPause" style="display:none">Pause</button>
+    <button class="go ghost" id="btnStop" style="display:none">Stopp</button>
+  </div>
+  <div class="quick">
+    <button data-min="30">30 Min · Falten</button>
+    <button data-min="60">1 Std · Reife</button>
+    <button data-min="120">2 Std · Sauerteig</button>
+    <button data-min="20">20 Min · Dampf ablassen</button>
+    <button data-min="50">50 Min · Backen</button>
+  </div>
+  <p class="note" style="text-align:center">Timer klingelt und zeigt eine Meldung. Tab geöffnet lassen.</p>
+</div>
+
+<p class="src">Rezept nach Lutz Geißler, <a href="https://www.ploetzblog.de/rezepte/mildes-weizensauerteigbrot/id=619f68b528ae7154616ab768" target="_blank" rel="noopener">ploetzblog.de</a> · private Nutzung</p>
+
+</div>
+
+<script>
+/* ---------- Rezeptbasis (Bäckerprozente, 100 % = Gesamtmehl) ---------- */
+const TA = 174;            // Teigausbeute in % vom Mehl
+const REZ = {
+  overview:[
+    {n:"Weizenmehl 550",              p:92.5},
+    {n:"Wasser",                      p:64.5},
+    {n:"Weizenanstellgut TA 200 (weich)", p:15},
+    {n:"Salz",                        p:2.2}
+  ],
+  sauer:[
+    {n:"Wasser",                      p:15, t:"40 °C"},
+    {n:"Weizenmehl 550",              p:15, t:"20 °C"},
+    {n:"Weizenanstellgut TA 200 (weich)", p:15, t:"28 °C"}
+  ],
+  haupt:[
+    {n:"Salz",                        p:2.2,  t:"20 °C"},
+    {n:"Wasser",                      p:49.5, t:"25 °C"},
+    {n:"Weizenmehl 550",              p:77.5, t:"20 °C"},
+    {n:"gesamter Weizensauerteig",    p:null, t:"28 °C"}
+  ]
+};
+
+/* ---------- Zeitplan: Offsets in Minuten ab Start ---------- */
+/* Alles vor der kalten Gare = fix. Danach verschiebt sich alles um die Gare-Dauer. */
+const PRE = [
+  {m:0,   t:"Weizensauerteig herstellen", s:"Zutaten mischen, ca. 28 °C, zudecken", timer:120},
+  {m:125, t:"Hauptteig herstellen",       s:"Kneten bis Fenstertest, ca. 27 °C",    timer:30},
+  {m:174, t:"Dehnen und Falten",          s:"1 von 4",                              timer:30},
+  {m:204, t:"Dehnen und Falten",          s:"2 von 4",                              timer:30},
+  {m:234, t:"Dehnen und Falten",          s:"3 von 4",                              timer:30},
+  {m:264, t:"Dehnen und Falten",          s:"4 von 4 · danach 1 Std auf knapp doppeltes Volumen", timer:60},
+  {m:325, t:"Formen",                     s:"Straff rund einschlagen, Schluss nach oben in den Gärkorb", timer:null}
+];
+const POST = [
+  {m:0,  t:"Ofen vorheizen auf 250 °C", s:"Backstein mit aufheizen", timer:60},
+  {m:59, t:"Einschneiden",              s:"Teigling stürzen, Klinge im 45°-Winkel", timer:null},
+  {m:60, t:"Backen",                    s:"250 °C, kräftig bedampfen, sofort auf 220 °C · Dampf nach 20 Min ablassen", timer:50},
+  {m:110,t:"Fertig gebacken",           s:"Auf Gitterrost auskühlen lassen", timer:null}
+];
+const COLD_START = 325;   // Formen = Beginn der kalten Gare
+const PRE_END   = 325;
+
+/* ---------- Elemente ---------- */
+const $ = id => document.getElementById(id);
+const elW=$("weight"), elL=$("loaves"), elCold=$("cold"),
+      elDate=$("date"), elTime=$("time"), elAnchor=$("anchor");
+
+/* Datum auf heute vorbelegen */
+(function(){
+  const d=new Date();
+  elDate.value = d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+})();
+
+/* ---------- Mengen ---------- */
+function round(g){ return g<10 ? Math.round(g*10)/10 : Math.round(g); }
+function fmt(g){ return round(g).toLocaleString("de-DE")+" g"; }
+
+function renderAmounts(){
+  const per   = +elW.value;
+  const count = Math.max(1, Math.round(+elL.value||1));
+  const dough = per*count;
+  const flour = dough/(TA/100);          // 100 %-Basis
+  $("wOut").textContent = per.toLocaleString("de-DE");
+
+  let sum=0;
+  $("tOverview").innerHTML = REZ.overview.map(r=>{
+    const g=flour*r.p/100; sum+=g;
+    return `<tr><td>${r.n}</td><td class="num">${fmt(g)}</td><td class="pct">${String(r.p).replace(".",",")} %</td></tr>`;
+  }).join("") +
+  `<tr class="total"><td>Teig gesamt</td><td class="num">${fmt(sum)}</td><td class="pct">${TA} %</td></tr>`;
+
+  $("tSauer").innerHTML = REZ.sauer.map(r=>
+    `<tr><td>${r.n}</td><td class="num">${fmt(flour*r.p/100)}</td><td class="num">${r.t}</td></tr>`).join("");
+
+  $("tHaupt").innerHTML = REZ.haupt.map(r=>
+    `<tr><td>${r.n}</td><td class="num">${r.p===null?"–":fmt(flour*r.p/100)}</td><td class="num">${r.t}</td></tr>`).join("");
+}
+
+/* ---------- Zeitplan ---------- */
+function buildSteps(){
+  const coldMin = Math.round(+elCold.value*60);
+  const list=[];
+  PRE.forEach(s=>list.push({...s, off:s.m}));
+  // Kalte Gare als eigener Eintrag
+  list.push({off:COLD_START, t:`Kalte Stückgare · ${(+elCold.value).toString().replace(".",",")} Std bei 5 °C`,
+             s:"Im leicht bemehlten Gärkorb, zugedeckt, Schluss nach oben", timer:null, cold:true});
+  POST.forEach(s=>list.push({...s, off:PRE_END+coldMin+s.m}));
+  return list;
+}
+function totalMin(){ return PRE_END + Math.round(+elCold.value*60) + POST[POST.length-1].m; }
+
+function startDate(){
+  const [y,mo,d]=elDate.value.split("-").map(Number);
+  const [h,mi]=elTime.value.split(":").map(Number);
+  let base=new Date(y,mo-1,d,h,mi,0,0);
+  if(elAnchor.value==="end") base=new Date(base.getTime()-totalMin()*60000);
+  return base;
+}
+function hhmm(dt){ return String(dt.getHours()).padStart(2,"0")+":"+String(dt.getMinutes()).padStart(2,"0"); }
+function durTxt(m){ const h=Math.floor(m/60), r=m%60; return `${h} Std ${String(r).padStart(2,"0")} Min`; }
+
+function renderPlan(){
+  const base=startDate(), steps=buildSteps(), now=Date.now();
+  $("cOut").textContent=(+elCold.value).toString().replace(".",",");
+  $("totalDur").textContent=durTxt(totalMin());
+
+  // aktueller Schritt = letzter, dessen Zeit vergangen ist
+  let cur=-1;
+  steps.forEach((s,i)=>{ if(base.getTime()+s.off*60000<=now) cur=i; });
+
+  $("plan").innerHTML = steps.map((s,i)=>{
+    const dt=new Date(base.getTime()+s.off*60000);
+    const dayLbl = dt.toLocaleDateString("de-DE",{weekday:"short",day:"2-digit",month:"2-digit"});
+    const cls = i<cur ? "step done" : (i===cur ? "step now" : "step");
+    const btn = s.timer ? `<button class="go" data-min="${s.timer}">${s.timer} Min</button>` : "";
+    return `<div class="${cls}">
+      <div class="time">${hhmm(dt)}<span class="day">${dayLbl}</span></div>
+      <div class="what"><b>${s.t}</b><small>${s.s}</small></div>
+      ${btn}
+    </div>`;
+  }).join("");
+}
+
+/* ---------- Timer ---------- */
+let deadline=null, remaining=null, tick=null, label="";
+function setDisplay(ms,fire){
+  const c=$("tClock");
+  if(ms==null){ c.textContent="–:–"; c.classList.remove("fire"); $("tLabel").textContent="Kein Timer aktiv"; return; }
+  const s=Math.max(0,Math.round(ms/1000));
+  const h=Math.floor(s/3600), m=Math.floor(s%3600/60), sec=s%60;
+  c.textContent = (h?h+":"+String(m).padStart(2,"0"):String(m))+":"+String(sec).padStart(2,"0");
+  c.classList.toggle("fire",!!fire);
+}
+function startTimer(min,name){
+  clearInterval(tick);
+  label = name || `${min} Min`;
+  $("tLabel").textContent = "Läuft: "+label;
+  deadline = Date.now()+min*60000; remaining=null;
+  $("btnPause").style.display=""; $("btnPause").textContent="Pause"; $("btnStop").style.display="";
+  tick=setInterval(loop,250); loop();
+}
+function loop(){
+  if(deadline==null) return;
+  const left=deadline-Date.now();
+  setDisplay(left,false);
+  if(left<=0){ clearInterval(tick); deadline=null; ring(); }
+}
+function ring(){
+  setDisplay(0,true);
+  $("tLabel").textContent="Fertig: "+label;
+  $("btnPause").style.display="none";
+  try{
+    const A=new (window.AudioContext||window.webkitAudioContext)();
+    [0,600,1200].forEach(d=>{
+      const o=A.createOscillator(), g=A.createGain();
+      o.type="sine"; o.frequency.value=880;
+      o.connect(g); g.connect(A.destination);
+      const t=A.currentTime+d/1000;
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.exponentialRampToValueAtTime(0.35,t+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+0.45);
+      o.start(t); o.stop(t+0.5);
+    });
+  }catch(e){}
+  document.title="⏰ Fertig – "+label;
+  setTimeout(()=>document.title="Mildes Weizensauerteigbrot – Backplaner",8000);
+}
+$("btnPause").onclick=()=>{
+  if(deadline!=null){ remaining=deadline-Date.now(); deadline=null; clearInterval(tick);
+    $("btnPause").textContent="Weiter"; $("tLabel").textContent="Pausiert: "+label; setDisplay(remaining,false); }
+  else if(remaining!=null){ deadline=Date.now()+remaining; remaining=null;
+    $("btnPause").textContent="Pause"; $("tLabel").textContent="Läuft: "+label; tick=setInterval(loop,250); }
+};
+$("btnStop").onclick=()=>{
+  clearInterval(tick); deadline=null; remaining=null; setDisplay(null);
+  $("btnPause").style.display="none"; $("btnStop").style.display="none";
+};
+
+/* Klicks auf alle Timer-Buttons (Zeitplan + Schnellwahl) */
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-min]");
+  if(!b) return;
+  const step=b.closest(".step");
+  const name = step ? step.querySelector("b").textContent : b.textContent.trim();
+  startTimer(+b.dataset.min,name);
+});
+
+/* ---------- Init ---------- */
+[elW,elL,elCold].forEach(el=>el.addEventListener("input",()=>{renderAmounts();renderPlan();}));
+[elDate,elTime,elAnchor].forEach(el=>el.addEventListener("change",renderPlan));
+renderAmounts(); renderPlan();
+setInterval(renderPlan,60000);
+setDisplay(null);
+</script>
+</body>
+</html>
