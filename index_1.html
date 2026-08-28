@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Küche">
+<meta name="theme-color" content="#1E211C">
+<title>Küche · Rezepte und Planer</title>
+<style>
+:root{
+  --enamel:#E7E9E1;
+  --enamel-hi:#F2F3EE;
+  --enamel-lo:#DCE0D5;
+  --line:#C4CABA;
+  --ink:#1E211C;
+  --ash:#6B7065;
+  --madder:#B3271B;
+  --display:"Superclarendon","Bookman Old Style",Georgia,"Times New Roman",serif;
+  --body:"Avenir Next",Avenir,"Segoe UI","Helvetica Neue",sans-serif;
+  --data:Menlo,"SF Mono",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--enamel);color:var(--ink);
+  font-family:var(--body);font-size:17px;line-height:1.45;
+  -webkit-tap-highlight-color:transparent;
+}
+.masthead{
+  background:var(--ink);color:var(--enamel);
+  padding:calc(env(safe-area-inset-top) + 34px) 20px 26px;
+}
+.eyebrow{
+  margin:0 0 12px;font-family:var(--data);font-size:10px;
+  letter-spacing:.18em;text-transform:uppercase;color:#9AA394;
+}
+.masthead h1{
+  margin:0;font-family:var(--display);font-weight:400;
+  font-size:34px;line-height:1.05;letter-spacing:-.01em;
+}
+.masthead p{
+  margin:16px 0 0;padding-top:14px;border-top:1px solid #3A3F38;
+  font-size:14px;color:#AFB6A8;
+}
+main{padding:26px 20px 48px;max-width:640px;margin:0 auto}
+.sect{
+  font-family:var(--data);font-size:10px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ash);
+  margin:0 0 12px;
+}
+.card{
+  display:block;text-decoration:none;color:inherit;
+  background:var(--enamel-hi);border:1px solid var(--line);
+  border-left:3px solid var(--madder);border-radius:2px;
+  padding:16px 17px 17px;margin-bottom:14px;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.card:active{transform:translateY(1px)}
+.card:hover{box-shadow:0 2px 0 var(--enamel-lo)}
+.kind{
+  font-family:var(--data);font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--madder);
+}
+.card h2{
+  margin:7px 0 5px;font-family:var(--display);font-weight:400;
+  font-size:22px;line-height:1.15;
+}
+.card p{margin:0;font-size:15px;color:#4A4F47}
+.card .meta{
+  display:block;margin-top:11px;
+  font-family:var(--data);font-size:11px;color:var(--ash);
+}
+footer{
+  margin-top:34px;padding-top:18px;border-top:1px solid var(--line);
+  font-size:14px;color:var(--ash);
+}
+footer b{color:var(--ink);font-weight:600}
+a:focus-visible{outline:2px solid var(--madder);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <p class="eyebrow">maxhengst-cmyk · github pages</p>
+  <h1>Küche</h1>
+  <p>Rezepte und Planer für Grill, Ofen und Herd. Alles läuft offline im Browser.</p>
+</header>
+
+<main>
+  <p class="sect">Alle Planer</p>
+
+  <a class="card" href="grillplaner.html">
+    <span class="kind">Grill</span>
+    <h2>Grillplaner</h2>
+    <p>Zwei-Zonen-Garen mit Temperaturprognose nach Newton, ETA-Uhr und Sitzungsprotokoll.</p>
+    <span class="meta">Fleischprofile · Meater · Plancha</span>
+  </a>
+
+  <a class="card" href="Mildes-Weizensauerteigbrot-Backplaner.html">
+    <span class="kind">Brot</span>
+    <h2>Mildes Weizensauerteigbrot</h2>
+    <p>Backplaner nach Lutz Geißler. Bäckerprozente, Zeitplan rückwärts ab Fertig-Zeit, Timer.</p>
+    <span class="meta">TA 174 % · ca. 16 Std · Ploetzblog</span>
+  </a>
+
+  <a class="card" href="spaghetti-ragu-di-salsiccia.html">
+    <span class="kind">Pasta</span>
+    <h2>Spaghetti al Ragù di Salsiccia</h2>
+    <p>Süditalienisches Ragù mit frischer Salsiccia, langsam in Passata geschmort. Ohne Erbsen.</p>
+    <span class="meta">4 Portionen · ca. 85 Min · Domenico Gentile</span>
+  </a>
+
+  <footer>
+    <b>Aufs iPhone holen:</b> Diese Seite in Safari öffnen, Teilen-Symbol antippen, „Zum Home-Bildschirm“ wählen. Dann liegt die ganze Sammlung als App auf dem Bildschirm.
+  </footer>
+</main>
+
+</body>
+</html>
