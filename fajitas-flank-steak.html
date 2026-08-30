@@ -312,6 +312,13 @@ button{cursor:pointer}
     <ol class="rail" id="rail"><div id="now"></div></ol>
 
     <div class="thermo">
+      <h4>Plattentemperatur · Bosch Infrarot</h4>
+      <div class="scale" id="scaleP"></div>
+      <div class="scale-lab" id="scaleLabP"></div>
+      <p>Blankes Metall spiegelt und täuscht jedes Infrarot-Thermometer. Ziel auf eine dunkle, eingebrannte Stelle oder auf einen Ölfilm, senkrecht von oben aus etwa 30 cm. Auf spiegelnder Fläche liest das Gerät rund 30 bis 50 °C zu niedrig.</p>
+    </div>
+
+    <div class="thermo">
       <h4>Kerntemperatur Flank Steak</h4>
       <div class="scale" id="scale"></div>
       <div class="scale-lab" id="scaleLab"></div>
@@ -343,7 +350,8 @@ button{cursor:pointer}
 
     <div class="notes">
       <h4>Notizen</h4>
-      <p><b>Plancha-Temperatur:</b> Das IR-Thermometer liest auf blankem Metall 30 bis 50 °C zu niedrig. Verlass dich auf den Wassertropfen-Test: die Tropfen sollen tanzen und wandern, nicht sofort verpuffen.</p>
+      <p><b>Richtig messen mit dem Bosch:</b> Infrarot misst keine Temperatur, sondern abgestrahlte Wärme. Poliertes Metall strahlt wenig ab und spiegelt stattdessen die Umgebung — deshalb liest das Gerät dort 30 bis 50 °C zu niedrig. Auf eingebrannter, matter Patina oder auf einem Ölfilm stimmt der Wert.</p>
+      <p><b>Messfehler vermeiden:</b> Senkrecht von oben halten, etwa 30 cm Abstand, nicht schräg durch den Hitzeschleier. Immer dieselbe Stelle messen, sonst vergleichst du Ränder mit Mitte. Der Wassertropfen-Test bleibt die schnelle Gegenprobe.</p>
       <p><b>Kein Flank bekommen?</b> Bavette (Flap Steak) oder Skirt Steak funktionieren identisch, beide sind ebenfalls grobfaserig. Skirt ist dünner, also je Seite eine Minute kürzer.</p>
       <p><b>Meater:</b> Funktioniert hier gut, aber seitlich einführen — an der dicksten Stelle parallel zur Oberfläche, nicht von oben. So sitzt der Sensor mittig und die Markierung ist sicher im Fleisch. Beim Wenden den Griff mitdrehen, damit er nicht flach auf dem heißen Metall liegt.</p>
       <p><b>Rub-Salz:</b> Der Rub bringt das Salz schon mit. Nicht zusätzlich salzen, sonst zieht die Oberfläche Wasser und du bekommst keine Kruste.</p>
@@ -386,8 +394,8 @@ var STEPS = [
    body:"Beide Brenner auf volle Leistung, Deckel zu. Die Grillplatte heizt links mit auf, der Rost rechts bleibt frei als Parkzone."},
   {t:5, title:"Letzter Check",
    body:"Gemüse geschnitten, Beilagen bereit, Fleisch liegt seit 25 Minuten draußen. Spachtel und Zange griffbereit. Meater jetzt setzen: seitlich an der dicksten Stelle, parallel zur Oberfläche."},
-  {t:12, title:"Platte prüfen",
-   body:"Wassertropfen-Test: die Tropfen sollen perlen, tanzen und wandern. Verpuffen sie sofort, ist die Platte zu heiß — dann eine Stufe zurück und zwei Minuten warten."},
+  {t:12, title:"Platte messen",
+   body:"Mit dem Bosch auf eine dunkle, eingebrannte Stelle zielen, senkrecht von oben. Für das Gemüse willst du etwa 210 °C. Gegenprobe mit Wassertropfen: sie sollen perlen und wandern, nicht sofort verpuffen."},
   {t:14, title:"Abziehen und ölen",
    body:"Die heiße Platte mit dem Spachtel abziehen und mit einem geölten Küchentuch dünn auswischen. Nur ein Film, keine Pfütze."},
   {t:15, title:"Zwiebeln auf die Platte", timer:180,
@@ -395,7 +403,7 @@ var STEPS = [
   {t:18, title:"Paprika dazu", timer:300,
    body:"Paprikastreifen zu den Zwiebeln. Alle zwei Minuten einmal wenden, sonst nicht anfassen. Ziel sind weiche Streifen mit dunklen Kanten, kein Matsch."},
   {t:23, title:"Gemüse parken", flag:true,
-   body:"Gemüse in eine Schale oder auf den Warmhalterost. Die Platte muss jetzt komplett frei sein — das Steak braucht die volle Fläche und die volle Hitze."},
+   body:"Gemüse in eine Schale oder auf den Warmhalterost. Die Platte muss jetzt komplett frei sein. Brenner voll aufdrehen und nachmessen: für das Steak willst du rund 250 °C, deutlich heißer als beim Gemüse."},
   {t:25, title:"Steak auflegen", timer:210,
    body:"Flank Steak auf die freie, heiße Platte legen und nicht mehr bewegen. Nicht drücken, nicht schieben, nicht schauen. Es löst sich von selbst, wenn die Kruste steht."},
   {t:29, title:"Wenden", timer:180,
@@ -597,26 +605,21 @@ setInterval(function(){
 window.addEventListener("resize",placeNow);
 document.addEventListener("visibilitychange",function(){ last=Date.now(); });
 
-/* ---------- Temperaturleiste ---------- */
-(function(){
-  var lo=45, hi=65;
-  var pos=function(t){ return ((t-lo)/(hi-lo))*100; };
-  var scale=document.getElementById("scale");
-  var lab=document.getElementById("scaleLab");
+/* ---------- Temperaturleisten ---------- */
+function buildScale(cfg){
+  var pos=function(t){ return ((t-cfg.lo)/(cfg.hi-cfg.lo))*100; };
+  var scale=document.getElementById(cfg.scale);
+  var lab=document.getElementById(cfg.lab);
+  if(!scale||!lab) return;
 
-  var band=document.createElement("div");
-  band.className="band";
-  band.style.left=pos(52)+"%";
-  band.style.width=(pos(54)-pos(52))+"%";
-  scale.appendChild(band);
-
-  var marks=[
-    {t:48, n:"48",  c:"blutig"},
-    {t:53, n:"52–54", c:"medium rare", hit:true},
-    {t:57, n:"57",  c:"medium"},
-    {t:63, n:"63",  c:"durch, zäh"}
-  ];
-  marks.forEach(function(m){
+  if(cfg.band){
+    var band=document.createElement("div");
+    band.className="band";
+    band.style.left=pos(cfg.band[0])+"%";
+    band.style.width=(pos(cfg.band[1])-pos(cfg.band[0]))+"%";
+    scale.appendChild(band);
+  }
+  cfg.marks.forEach(function(m){
     var p=document.createElement("div");
     p.className="pin"; p.style.left=pos(m.t)+"%";
     scale.appendChild(p);
@@ -626,7 +629,27 @@ document.addEventListener("visibilitychange",function(){ last=Date.now(); });
     s.innerHTML=m.n+" °C<b>"+m.c+"</b>";
     lab.appendChild(s);
   });
-})();
+}
+
+buildScale({
+  lo:150, hi:300, scale:"scaleP", lab:"scaleLabP", band:[240,260],
+  marks:[
+    {t:180, n:"180", c:"zu kalt"},
+    {t:210, n:"210", c:"Gemüse"},
+    {t:250, n:"250", c:"Steak", hit:true},
+    {t:285, n:"285", c:"zu heiß"}
+  ]
+});
+
+buildScale({
+  lo:45, hi:65, scale:"scale", lab:"scaleLab", band:[52,54],
+  marks:[
+    {t:48, n:"48",    c:"blutig"},
+    {t:53, n:"52–54", c:"medium rare", hit:true},
+    {t:57, n:"57",    c:"medium"},
+    {t:63, n:"63",    c:"durch, zäh"}
+  ]
+});
 
 /* ---------- Vorlauf-Zeitstrahl ---------- */
 var railVor=document.getElementById("railVor");
