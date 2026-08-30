@@ -276,7 +276,7 @@ button{cursor:pointer}
 <body>
 
 <header class="masthead">
-  <p class="eyebrow">Genesis II LX S-240 · Grillplatte</p>
+  <p class="eyebrow">Genesis II LX S-240 · Platte und Wok</p>
   <h1>Fajitas<em>vom Flank Steak</em></h1>
   <p class="lede">Kern <b>52 bis 54 °C</b>, dann <b>8 Minuten ruhen</b>, dann <b>quer zur Faser</b> schneiden. Diese drei Zahlen entscheiden alles.</p>
 </header>
@@ -352,6 +352,7 @@ button{cursor:pointer}
       <h4>Notizen</h4>
       <p><b>Richtig messen mit dem Bosch:</b> Infrarot misst keine Temperatur, sondern abgestrahlte Wärme. Poliertes Metall strahlt wenig ab und spiegelt stattdessen die Umgebung — deshalb liest das Gerät dort 30 bis 50 °C zu niedrig. Auf eingebrannter, matter Patina oder auf einem Ölfilm stimmt der Wert.</p>
       <p><b>Messfehler vermeiden:</b> Senkrecht von oben halten, etwa 30 cm Abstand, nicht schräg durch den Hitzeschleier. Immer dieselbe Stelle messen, sonst vergleichst du Ränder mit Mitte. Der Wassertropfen-Test bleibt die schnelle Gegenprobe.</p>
+      <p><b>Wok auf dem Seitenbrenner:</b> Das Gemüse läuft parallel zum Steak, deshalb muss die Platte nicht geteilt werden. Wok leer vorheizen, Öl erst danach — kaltes Öl im kalten Wok wird klebrig statt heiß. Nicht überfüllen: zu viel Gemüse auf einmal kühlt den Wok aus und alles dünstet.</p>
       <p><b>Kein Flank bekommen?</b> Bavette (Flap Steak) oder Skirt Steak funktionieren identisch, beide sind ebenfalls grobfaserig. Skirt ist dünner, also je Seite eine Minute kürzer.</p>
       <p><b>Meater:</b> Funktioniert hier gut, aber seitlich einführen — an der dicksten Stelle parallel zur Oberfläche, nicht von oben. So sitzt der Sensor mittig und die Markierung ist sicher im Fleisch. Beim Wenden den Griff mitdrehen, damit er nicht flach auf dem heißen Metall liegt.</p>
       <p><b>Rub-Salz:</b> Der Rub bringt das Salz schon mit. Nicht zusätzlich salzen, sonst zieht die Oberfläche Wasser und du bekommst keine Kruste.</p>
@@ -390,34 +391,36 @@ var VOR = [
 
 /* ---------- Grillablauf ---------- */
 var STEPS = [
-  {t:0, title:"Grill anwerfen",
-   body:"Beide Brenner auf volle Leistung, Deckel zu. Die Grillplatte heizt links mit auf, der Rost rechts bleibt frei als Parkzone."},
-  {t:5, title:"Letzter Check",
-   body:"Gemüse geschnitten, Beilagen bereit, Fleisch liegt seit 25 Minuten draußen. Spachtel und Zange griffbereit. Meater jetzt setzen: seitlich an der dicksten Stelle, parallel zur Oberfläche."},
-  {t:12, title:"Platte messen",
-   body:"Mit dem Bosch auf eine dunkle, eingebrannte Stelle zielen, senkrecht von oben. Für das Gemüse willst du etwa 210 °C. Gegenprobe mit Wassertropfen: sie sollen perlen und wandern, nicht sofort verpuffen."},
-  {t:14, title:"Abziehen und ölen",
+  {t:0, st:"Grill", title:"Grill anwerfen",
+   body:"Beide Hauptbrenner auf volle Leistung, Deckel zu. Der Seitenbrenner bleibt vorerst aus. Der Rost rechts bleibt frei als Abstellzone."},
+  {t:5, st:"Grill", title:"Letzter Check",
+   body:"Gemüse geschnitten, Beilagen bereit, Fleisch liegt seit 25 Minuten draußen. Wok, Spachtel und Zange griffbereit. Meater jetzt setzen: seitlich an der dicksten Stelle, parallel zur Oberfläche."},
+  {t:12, st:"Platte", title:"Platte messen",
+   body:"Mit dem Bosch auf eine dunkle, eingebrannte Stelle zielen, senkrecht von oben. Ziel sind rund 250 °C — die Platte macht heute nur Steak und Tortillas. Gegenprobe mit Wassertropfen: sie sollen perlen und wandern, nicht sofort verpuffen."},
+  {t:14, st:"Platte", title:"Abziehen und ölen",
    body:"Die heiße Platte mit dem Spachtel abziehen und mit einem geölten Küchentuch dünn auswischen. Nur ein Film, keine Pfütze."},
-  {t:15, title:"Zwiebeln auf die Platte", timer:180,
-   body:"Zwiebelstreifen auf die rechte Hälfte der Platte, kurz verteilen, dann liegen lassen. Sie brauchen den Vorsprung."},
-  {t:18, title:"Paprika dazu", timer:300,
-   body:"Paprikastreifen zu den Zwiebeln. Alle zwei Minuten einmal wenden, sonst nicht anfassen. Ziel sind weiche Streifen mit dunklen Kanten, kein Matsch."},
-  {t:23, title:"Gemüse parken", flag:true,
-   body:"Gemüse in eine Schale oder auf den Warmhalterost. Die Platte muss jetzt komplett frei sein. Brenner voll aufdrehen und nachmessen: für das Steak willst du rund 250 °C, deutlich heißer als beim Gemüse."},
-  {t:25, title:"Steak auflegen", timer:210,
-   body:"Flank Steak auf die freie, heiße Platte legen und nicht mehr bewegen. Nicht drücken, nicht schieben, nicht schauen. Es löst sich von selbst, wenn die Kruste steht."},
-  {t:29, title:"Wenden", timer:180,
+  {t:15, st:"Wok", title:"Wok vorheizen", timer:180,
+   body:"Seitenbrenner voll auf, Wok leer und trocken heiß werden lassen. Erst wenn er richtig heiß ist, kommt das Öl hinein — sonst brennt nichts an, sondern klebt."},
+  {t:18, st:"Wok", title:"Zwiebeln in den Wok", timer:180,
+   body:"Öl in den heißen Wok, sofort die Zwiebelstreifen hinterher. Ständig in Bewegung halten. Sie sollen Farbe nehmen, nicht dünsten."},
+  {t:21, st:"Wok", title:"Paprika dazu", timer:360,
+   body:"Paprikastreifen in den Wok. Weiter regelmäßig schwenken. Ziel sind bissfeste Streifen mit dunklen Kanten, kein Matsch."},
+  {t:25, st:"Platte", title:"Steak auflegen", timer:210,
+   body:"Flank Steak auf die heiße Platte legen und nicht mehr bewegen. Der Wok läuft parallel weiter — einmal umrühren, dann Hände weg vom Steak. Nicht drücken, nicht schieben."},
+  {t:27, st:"Wok", title:"Gemüse warm stellen", flag:true,
+   body:"Seitenbrenner auf die kleinste Flamme. Das Gemüse ist fertig und bleibt jetzt einfach im Wok stehen. Ab hier gehört deine Aufmerksamkeit dem Steak."},
+  {t:29, st:"Platte", title:"Wenden", timer:180,
    body:"Einmal wenden, den Meater-Griff dabei mitdrehen. Ab jetzt die Kerntemperatur im Blick behalten, bei einem dünnen Flank geht das Fenster schnell zu."},
-  {t:33, title:"Kern messen", flag:true,
+  {t:33, st:"Platte", title:"Kern messen", flag:true,
    body:"Ziel sind 52 bis 54 °C für medium rare. Der Meater zeigt es laufend an, sonst flach von der Seite einstechen. Bei 50 °C runternehmen, es zieht beim Ruhen noch 2 bis 3 °C nach."},
-  {t:34, title:"Ruhen lassen", timer:480,
+  {t:34, st:"Brett", title:"Ruhen lassen", timer:480,
    body:"Auf ein Brett legen, locker mit Folie abdecken. Acht Minuten. Jetzt anschneiden heißt, den Saft auf dem Brett zu verlieren."},
-  {t:36, title:"Tortillas erwärmen", timer:180,
-   body:"Tortillas einzeln auf die Platte, 20 bis 30 Sekunden je Seite, dann gestapelt in ein Küchentuch. Der Stapel hält sich unter dem Tuch warm und weich."},
-  {t:42, title:"Quer zur Faser schneiden",
+  {t:36, st:"Platte", title:"Tortillas erwärmen", timer:180,
+   body:"Hauptbrenner eine Stufe zurück, die Platte darf jetzt kühler sein. Tortillas einzeln auflegen, 20 bis 30 Sekunden je Seite, dann gestapelt in ein Küchentuch."},
+  {t:42, st:"Brett", title:"Quer zur Faser schneiden",
    body:"Faserrichtung suchen, sie läuft längs durch das Stück. Quer dazu, im 45-Grad-Winkel, etwa 5 mm dünn schneiden. Das ist der wichtigste Schnitt des Abends."},
-  {t:44, title:"Anrichten",
-   body:"Fleischscheiben zurück zum Gemüse, den Saft vom Brett darüber. Limette drüberdrücken, Koriander und Frühlingszwiebeln drauf. Tortillas, Sour Cream und Guacamole dazu."}
+  {t:44, st:"Tisch", title:"Anrichten",
+   body:"Fleischscheiben zum Gemüse in den Wok oder in eine Pfanne, den Saft vom Brett darüber. Limette drüberdrücken, Koriander und Frühlingszwiebeln drauf. Tortillas, Sour Cream und Guacamole dazu."}
 ];
 
 /* ---------- Zutaten, Basis 4 Personen ---------- */
@@ -495,7 +498,7 @@ STEPS.forEach(function(s,i){
   var li=document.createElement("li");
   li.className="step"+(s.flag?" flag":"");
 
-  var html='<span class="tick">'+s.t+"&#8242;</span><span class=\"dot\"></span>"+
+  var html='<span class="tick">'+s.t+"&#8242;"+(s.st?"<small>"+s.st+"</small>":"")+"</span><span class=\"dot\"></span>"+
            '<div class="card"><h3>'+s.title+"</h3><p>"+s.body+"</p>"+
            '<div class="card-foot"><button class="tick-btn" data-act="done">abgehakt</button>';
   if(s.timer) html+='<button class="timer" data-act="timer">'+mmss(s.timer)+"</button>";
@@ -635,7 +638,7 @@ buildScale({
   lo:150, hi:300, scale:"scaleP", lab:"scaleLabP", band:[240,260],
   marks:[
     {t:180, n:"180", c:"zu kalt"},
-    {t:210, n:"210", c:"Gemüse"},
+    {t:210, n:"210", c:"Tortillas"},
     {t:250, n:"250", c:"Steak", hit:true},
     {t:285, n:"285", c:"zu heiß"}
   ]
