@@ -2,810 +2,445 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Fajitas">
-<meta name="theme-color" content="#1E211C">
+<meta name="theme-color" content="#12100E">
 <title>Fajitas vom Flank Steak</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 :root{
-  --enamel:#E7E9E1;
-  --enamel-hi:#F2F3EE;
-  --enamel-lo:#DCE0D5;
-  --line:#C4CABA;
-  --ink:#1E211C;
-  --ash:#6B7065;
-  --madder:#B3271B;
-  --zest:#B8830A;
-  --rail-x:64px;
-  --display:"Superclarendon","Bookman Old Style",Georgia,"Times New Roman",serif;
-  --body:"Avenir Next",Avenir,"Segoe UI","Helvetica Neue",sans-serif;
-  --data:Menlo,"SF Mono",Consolas,monospace;
+  --ground:#12100E; --panel:#1B1714; --panelHi:#241E19; --line:#342C24;
+  --bone:#EAE2D6; --ash:#8B7F72; --ashDim:#5E554B;
+  --flame:#5B8CF7; --ember:#FF7A1A; --ok:#79C06B; --warn:#E5B33C;
 }
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--ground);min-height:100%}
 body{
-  margin:0;
-  background:var(--enamel);
-  color:var(--ink);
-  font-family:var(--body);
-  font-size:17px;
-  line-height:1.45;
-  padding-bottom:64px;
-  -webkit-tap-highlight-color:transparent;
+  font-family:'Barlow',system-ui,-apple-system,sans-serif;color:var(--bone);
+  -webkit-font-smoothing:antialiased;
+  padding:calc(env(safe-area-inset-top) + 16px) 16px calc(env(safe-area-inset-bottom) + 32px);
 }
-button,input{font-family:inherit;font-size:inherit;color:inherit}
-button{cursor:pointer}
-:focus-visible{outline:2px solid var(--madder);outline-offset:2px}
-.hidden{display:none}
-
-/* ---------- Kopf ---------- */
-.masthead{
-  background:var(--ink);
-  color:var(--enamel);
-  padding:calc(env(safe-area-inset-top) + 26px) 20px 22px;
+#wrap{max-width:460px;margin:0 auto}
+.disp{font-family:'Barlow Condensed','Barlow',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ashDim)}
+header{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:16px}
+.chips{display:flex;gap:8px;flex:0 0 auto}
+.chip{
+  font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.05em;
+  font-size:14px;font-weight:600;border:1px solid var(--line);background:transparent;
+  color:var(--ash);border-radius:999px;padding:8px 12px;width:auto;margin:0;cursor:pointer;
 }
-.eyebrow{
-  margin:0 0 12px;
-  font-family:var(--data);
-  font-size:10px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:#9AA394;
+.chip.on{border-color:var(--flame);color:var(--flame);background:rgba(91,140,247,.10)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 4px;text-align:center}
+.stat .k{display:block;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--ashDim)}
+.stat .v{display:block;margin-top:6px;font-family:'IBM Plex Mono',monospace;font-size:15px;color:var(--bone);white-space:nowrap}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.doneness{display:flex;gap:8px;margin-bottom:12px}
+.doneness button{margin:0;padding:11px 8px;font-size:15px;border-radius:12px;line-height:1.3}
+.doneness button small{display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.04em;text-transform:none;font-weight:400;color:var(--ash);margin-top:3px}
+.doneness button.on{background:var(--flame);border-color:var(--flame);color:#08101F}
+.doneness button.on small{color:#08101F}
+.stepno{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ashDim)}
+.step-title{font-size:26px;margin:8px 0 10px}
+.step-body{margin:0;font-size:17px;line-height:1.55;color:#D9D0C2}
+.step-body b{color:var(--ember);font-weight:600}
+button{
+  font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.07em;
+  font-weight:600;font-size:18px;border:1px solid var(--line);background:var(--panelHi);
+  color:var(--bone);border-radius:12px;padding:15px 16px;width:100%;cursor:pointer;margin-bottom:10px;
 }
-.masthead h1{
-  margin:0;
-  font-family:var(--display);
-  font-weight:400;
-  font-size:31px;
-  line-height:1.06;
-  letter-spacing:-.01em;
+button:focus-visible{outline:2px solid var(--flame);outline-offset:2px}
+button.primary{background:var(--flame);border-color:var(--flame);color:#08101F}
+button.ghost{background:transparent;color:var(--ash);font-size:15px;padding:11px}
+button:disabled{opacity:.35}
+.timer{width:auto;margin:14px 0 0;font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:0;padding:9px 14px;border-radius:10px}
+.timer.run{background:var(--warn);border-color:var(--warn);color:#1A1200}
+.timer.zero{background:var(--ember);border-color:var(--ember);color:#1A0A00}
+.list{list-style:none;margin:0;padding:0}
+.list li{display:flex;align-items:center;gap:11px;padding:12px 2px;border-bottom:1px solid var(--line);cursor:pointer}
+.list li:last-child{border-bottom:0}
+.ck{flex:0 0 auto;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--ashDim);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ok)}
+li.done .ck{border-color:var(--ok)}
+li.done .tx{color:var(--ashDim);text-decoration:line-through;text-decoration-thickness:1px}
+li.cur .ck{border-color:var(--flame)}
+li.cur .tx{color:var(--flame)}
+.tx{font-size:16px;min-width:0}
+.tx small{display:block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ashDim);margin-top:2px}
+.mins{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ashDim);white-space:nowrap}
+.lab{font-size:12px;color:var(--ashDim);letter-spacing:.04em;margin-bottom:5px;display:block}
+input{
+  font-family:'IBM Plex Mono',monospace;font-variant-numeric:tabular-nums;
+  background:var(--ground);border:1px solid var(--line);color:var(--bone);
+  border-radius:10px;padding:11px 12px;font-size:16px;width:100%;
 }
-.masthead h1 em{
-  display:block;
-  font-style:normal;
-  font-size:20px;
-  color:#B9C0B0;
-  margin-top:4px;
-}
-.lede{
-  margin:16px 0 0;
-  padding-top:14px;
-  border-top:1px solid #3A3F38;
-  font-size:14px;
-  color:#AFB6A8;
-}
-.lede b{color:var(--enamel);font-weight:600}
-
-/* ---------- Steuerleiste ---------- */
-.deck{
-  position:sticky;top:0;z-index:20;
-  display:flex;align-items:center;gap:14px;
-  padding:11px 20px;
-  background:rgba(231,233,225,.94);
-  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line);
-}
-.clock{display:flex;flex-direction:column;line-height:1;flex:0 0 auto}
-.clock-time{font-family:var(--data);font-size:24px;font-variant-numeric:tabular-nums}
-.clock-cap{font-family:var(--data);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ash);margin-top:5px}
-.deck-btns{margin-left:auto;display:flex;gap:8px}
-.btn{
-  border:1px solid var(--ink);
-  background:transparent;
-  border-radius:2px;
-  padding:9px 14px;
-  font-size:14px;
-  letter-spacing:.01em;
-}
-.btn-solid{background:var(--ink);color:var(--enamel)}
-.btn-quiet{border-color:var(--line);color:var(--ash)}
-
-/* ---------- Tabs ---------- */
-.tabs{display:flex;border-bottom:1px solid var(--line);background:var(--enamel)}
-.tab{
-  flex:1;border:0;background:transparent;
-  padding:13px 0 11px;
-  font-family:var(--data);font-size:11px;letter-spacing:.13em;text-transform:uppercase;
-  color:var(--ash);
-  border-bottom:2px solid transparent;
-}
-.tab.on{color:var(--ink);border-bottom-color:var(--madder)}
-
-/* ---------- Zeitanker ---------- */
-.anchor{
-  display:flex;align-items:center;gap:12px;
-  margin:20px 20px 4px;padding:13px 15px;
-  background:var(--enamel-hi);border:1px solid var(--line);border-radius:2px;
-}
-.anchor label{
-  font-family:var(--data);font-size:10px;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--ash);line-height:1.5;
-}
-.anchor input{
-  margin-left:auto;
-  border:1px solid var(--line);background:var(--enamel);
-  border-radius:2px;padding:8px 10px;
-  font-family:var(--data);font-size:17px;font-variant-numeric:tabular-nums;
-  width:112px;text-align:center;
-}
-
-/* ---------- Garstufen-Umschalter ---------- */
-.doneness{display:flex;margin:20px 20px 0;border:1px solid var(--line);border-radius:2px;overflow:hidden}
-.doneness button{
-  flex:1;border:0;background:transparent;padding:11px 4px;
-  font-family:var(--data);font-size:10px;letter-spacing:.11em;
-  text-transform:uppercase;color:var(--ash);line-height:1.5;
-}
-.doneness button b{display:block;font-size:12px;font-weight:400;letter-spacing:.04em}
-.doneness button.on{background:var(--ink);color:var(--enamel)}
-.doneness button + button{border-left:1px solid var(--line)}
-
-/* ---------- Zeitstrahl ---------- */
-.rail{position:relative;margin:0;padding:22px 20px 40px;list-style:none}
-.rail::before{
-  content:"";position:absolute;top:22px;bottom:40px;
-  left:var(--rail-x);width:1px;background:var(--line);
-}
-#now{
-  position:absolute;left:20px;right:20px;height:0;
-  border-top:1.5px dashed var(--madder);
-  display:none;pointer-events:none;z-index:5;
-  transition:transform .6s linear;
-}
-#now::after{
-  content:"jetzt";position:absolute;right:0;top:-16px;
-  font-family:var(--data);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--madder);
-}
-.step{position:relative;padding-left:calc(var(--rail-x) - 20px + 22px);margin-bottom:22px}
-.tick{
-  position:absolute;left:0;top:1px;width:40px;text-align:right;
-  font-family:var(--data);font-size:12px;color:var(--ash);
-  font-variant-numeric:tabular-nums;line-height:1.35;
-}
-.tick small{display:block;font-size:9px;letter-spacing:.08em;color:#8E948A}
-.dot{
-  position:absolute;left:calc(var(--rail-x) - 20px - 4.5px);top:7px;
-  width:10px;height:10px;border-radius:50%;
-  background:var(--enamel);border:1.5px solid var(--line);
-}
-.step.on .dot{border-color:var(--madder);background:var(--madder)}
-.step.flag .dot{border-color:var(--madder)}
-.step.done .dot{background:var(--ash);border-color:var(--ash)}
-.card{
-  background:var(--enamel-hi);
-  border:1px solid var(--line);
-  border-left:3px solid var(--enamel-lo);
-  border-radius:2px;
-  padding:13px 15px 14px;
-}
-.step.on .card{border-left-color:var(--madder);box-shadow:0 2px 0 var(--enamel-lo)}
-.step.flag .card{border-left-color:var(--madder);background:#F6EEEC}
-.step.done .card{opacity:.5}
-.card h3{
-  margin:0 0 6px;
-  font-family:var(--display);font-weight:400;font-size:19px;line-height:1.2;
-}
-.card p{margin:0;color:#3A3F38;font-size:16px}
-.card p + p{margin-top:8px}
-.card-foot{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
-.tick-btn{
-  border:1px solid var(--line);background:transparent;border-radius:2px;
-  padding:6px 11px;font-size:13px;color:var(--ash);
-}
-.step.done .tick-btn{border-color:var(--ash);color:var(--ink)}
-.timer{
-  border:1px solid var(--ink);background:transparent;border-radius:2px;
-  padding:6px 11px;font-family:var(--data);font-size:14px;font-variant-numeric:tabular-nums;
-}
-.timer.run{background:var(--zest);border-color:var(--zest);color:#fff}
-.timer.zero{background:var(--madder);border-color:var(--madder);color:#fff}
-.at{
-  font-family:var(--data);font-size:12px;color:var(--ash);
-  font-variant-numeric:tabular-nums;margin-left:auto;
-}
-
-/* ---------- Temperaturleiste ---------- */
-.thermo{margin:0 20px 26px;padding:15px 16px 17px;background:var(--enamel-hi);border:1px solid var(--line);border-radius:2px}
-.thermo h4{
-  margin:0 0 13px;font-family:var(--data);font-size:10px;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--ash);
-}
-.scale{position:relative;height:9px;border-radius:1px;background:var(--enamel-lo);border:1px solid var(--line);margin-bottom:9px}
-.scale .band{position:absolute;top:0;bottom:0;background:var(--madder)}
-.scale .pin{position:absolute;top:-5px;bottom:-5px;width:1px;background:var(--ash)}
-.scale-lab{position:relative;height:34px;font-family:var(--data);font-size:11px;color:var(--ash);font-variant-numeric:tabular-nums}
-.scale-lab span{position:absolute;transform:translateX(-50%);text-align:center;line-height:1.35;white-space:nowrap}
-.scale-lab span b{display:block;font-size:9px;letter-spacing:.08em;text-transform:uppercase;font-weight:400;color:#8E948A}
-.scale-lab span.hit{color:var(--madder)}
-.scale-lab span.hit b{color:var(--madder)}
-.thermo p{margin:12px 0 0;font-size:15px;color:#3A3F38}
-
-/* ---------- Merker ---------- */
-.pin-card{
-  margin:0 20px 26px;padding:14px 16px 15px;
-  background:#F6EEEC;border:1px solid var(--line);border-left:3px solid var(--madder);border-radius:2px;
-}
-.pin-card h4{
-  margin:0 0 7px;font-family:var(--data);font-size:10px;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--madder);
-}
-.pin-card p{margin:0;font-size:16px;color:#3A3F38}
-.pin-card p + p{margin-top:8px}
-
-/* ---------- Zutaten ---------- */
-.portions{
-  display:flex;align-items:center;
-  margin:20px 20px 6px;padding:12px 15px;
-  background:var(--enamel-hi);border:1px solid var(--line);border-radius:2px;
-}
-.portions-cap{font-family:var(--data);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ash)}
+input:focus{outline:none;border-color:var(--flame)}
+.anchor{display:flex;align-items:center;gap:12px}
+.anchor input{width:120px;margin-left:auto;text-align:center}
+.portions{display:flex;align-items:center;gap:12px}
 .stepper{margin-left:auto;display:flex;align-items:center;gap:4px}
-.stepper button{
-  width:38px;height:38px;border:1px solid var(--line);background:transparent;
-  border-radius:2px;font-size:20px;line-height:1;color:var(--ink);
-}
-.stepper span{
-  min-width:42px;text-align:center;
-  font-family:var(--data);font-size:19px;font-variant-numeric:tabular-nums;
-}
-.grp{
-  margin:22px 20px 0;
-  font-family:var(--data);font-size:10px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--ash);
-}
-.ing{list-style:none;margin:10px 20px 0;padding:0}
-.ing li{
-  display:flex;gap:14px;align-items:baseline;
-  padding:11px 2px;border-bottom:1px solid var(--line);cursor:pointer;
-}
+.stepper button{width:44px;height:44px;padding:0;margin:0;font-size:22px;border-radius:10px}
+.stepper span{min-width:44px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:19px}
+.ing{list-style:none;margin:0;padding:0}
+.ing li{display:flex;gap:12px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer}
 .ing li:last-child{border-bottom:0}
-.ing .amt{
-  flex:0 0 92px;font-family:var(--data);font-size:15px;
-  font-variant-numeric:tabular-nums;color:var(--ink);
-}
+.ing .amt{flex:0 0 84px;font-family:'IBM Plex Mono',monospace;font-size:14px;font-variant-numeric:tabular-nums}
 .ing .nm{flex:1;font-size:16px}
 .ing .nt{display:block;font-size:13px;color:var(--ash);margin-top:2px}
 .ing li.have{opacity:.42}
 .ing li.have .nm{text-decoration:line-through}
-.notes{
-  margin:28px 20px 0;padding-top:18px;border-top:1px solid var(--line);
-}
-.notes h4{
-  margin:0 0 10px;font-family:var(--data);font-size:10px;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--ash);
-}
-.notes p{margin:0 0 11px;font-size:15px;color:#3A3F38}
-.notes p:last-child{margin-bottom:0}
-.notes b{font-weight:600;color:var(--ink)}
-
-@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.hint{color:var(--ash);font-size:14px;line-height:1.55}
+.note p{margin:0 0 11px;font-size:15px;line-height:1.55;color:#D9D0C2}
+.note p:last-child{margin-bottom:0}
+.note b{color:var(--bone)}
+.hidden{display:none}
+@keyframes pulse{0%,100%{opacity:.55}50%{opacity:1}}
+.live{animation:pulse 2.4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.live{opacity:.85}}
 </style>
 </head>
 <body>
+<div id="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Genesis II LX S-240 · Platte und Wok</div>
+      <div class="disp" style="font-size:27px;line-height:1.05;margin-top:2px">Fajitas vom Flank Steak</div>
+    </div>
+    <div class="chips">
+      <button class="chip" id="navVor">Vorlauf</button>
+      <button class="chip" id="navIng">Zutaten</button>
+    </div>
+  </header>
 
-<header class="masthead">
-  <p class="eyebrow">Genesis II LX S-240 · Platte und Wok</p>
-  <h1>Fajitas<em>vom Flank Steak</em></h1>
-  <p class="lede">Platte auf <b>260 °C</b>, Kern <b>2 bis 3 °C vor dem Ziel</b> runter, <b>8 Minuten ruhen</b>, dann <b>quer zur Faser</b> schneiden.</p>
-</header>
-
-<div class="deck">
-  <div class="clock">
-    <span class="clock-time" id="clockTime">00:00</span>
-    <span class="clock-cap">Grillablauf</span>
+  <div class="stats">
+    <div class="stat"><span class="k">Platte</span><span class="v">260–270°</span></div>
+    <div class="stat"><span class="k">Runter bei</span><span class="v" id="stK">50°</span></div>
+    <div class="stat"><span class="k">Ruhen</span><span class="v">8 min</span></div>
+    <div class="stat"><span class="k">Schnitt</span><span class="v">quer</span></div>
   </div>
-  <div class="deck-btns">
-    <button class="btn btn-solid" id="startBtn">Start</button>
-    <button class="btn btn-quiet" id="resetBtn">Reset</button>
-  </div>
-</div>
 
-<nav class="tabs">
-  <button class="tab" data-view="vor">Vorlauf</button>
-  <button class="tab on" data-view="grill">Grill</button>
-  <button class="tab" data-view="zutaten">Zutaten</button>
-</nav>
+  <!-- ================= GRILL ================= -->
+  <section id="view-plan">
+    <div class="doneness">
+      <button data-done="mr" class="on">Medium rare<small>52–54 °C</small></button>
+      <button data-done="m">Medium<small>60–65 °C</small></button>
+    </div>
 
-<main>
+    <div class="card" style="padding:10px" id="grillVis"></div>
 
+    <div class="card">
+      <div class="stepno" id="stepNo"></div>
+      <div class="disp step-title" id="stepTitle"></div>
+      <p class="step-body" id="stepBody"></p>
+      <button class="timer hidden" id="stepTimer">00:00</button>
+    </div>
+    <button class="primary" id="nextBtn">Weiter</button>
+    <button class="ghost" id="backBtn">Schritt zurück</button>
+    <div class="card"><ul class="list" id="stepList"></ul></div>
+
+    <div class="card note">
+      <div class="eyebrow" style="margin-bottom:10px">Merken</div>
+      <p><b>Deckelregel:</b> Aufheizen zu, Anbraten offen, indirekt zu. Offen pendelt die Platte bei 200 °C; ohne Deckel passiert indirekt gar nichts.</p>
+      <p><b>Bosch Infrarot:</b> Modus Mitte (Gusseisen/Emaille), auf dunkle eingebrannte Stelle zielen, senkrecht aus 30 cm. Blankes Metall liest 30–50 °C zu niedrig.</p>
+      <p><b>Der Schnitt:</b> Faser läuft längs — quer dazu, 45 Grad, 5 mm dünn. Der Unterschied ist größer als jeder Rub.</p>
+    </div>
+  </section>
+
+  <!-- ================= VORLAUF ================= -->
   <section id="view-vor" class="hidden">
-    <div class="anchor">
-      <label>Grillstart<br>geplant um</label>
+    <div class="card anchor">
+      <span class="eyebrow">Grillstart<br>geplant um</span>
       <input type="time" id="anchorTime" value="18:00">
     </div>
-    <ol class="rail" id="railVor"></ol>
+    <div class="card"><ul class="list" id="vorList"></ul></div>
   </section>
 
-  <section id="view-grill">
-    <div class="doneness">
-      <button data-done="mr" class="on">Medium rare<b>52–54 °C</b></button>
-      <button data-done="m">Medium<b>60–65 °C</b></button>
-    </div>
-    <ol class="rail" id="rail"><div id="now"></div></ol>
-
-    <div class="thermo">
-      <h4>Plattentemperatur · Bosch Infrarot</h4>
-      <div class="scale" id="scaleP"></div>
-      <div class="scale-lab" id="scaleLabP"></div>
-      <p>Blankes Metall spiegelt und täuscht jedes Infrarot-Thermometer. Ziel auf eine dunkle, eingebrannte Stelle oder auf einen Ölfilm, senkrecht von oben aus etwa 30 cm. Auf spiegelnder Fläche liest das Gerät rund 30 bis 50 °C zu niedrig.</p>
-    </div>
-
-    <div class="thermo">
-      <h4>Kerntemperatur Flank Steak</h4>
-      <div class="scale" id="scale"></div>
-      <div class="scale-lab" id="scaleLab"></div>
-      <p>Nimm das Steak immer <b>2 bis 3 °C vor dem Ziel</b> runter, es zieht beim Ruhen nach. Für medium rare also bei 50, für medium bei 60. Und miss am dicksten Punkt: sitzt die Sonde zu flach, zeigt sie den Rand und du nimmst zu früh runter.</p>
-    </div>
-
-    <div class="pin-card">
-      <h4>Die Deckelregel</h4>
-      <p><b>Aufheizen: zu.</b> Nur mit geschlossenem Deckel kommt die Platte über 250 °C. Offen pendelt sie sich bei rund 200 ein.</p>
-      <p><b>Anbraten: offen.</b> Die Masse des Gusseisens liefert die Kruste. Deckel zu würde den Kern von oben mitgaren, und bei 2 cm Flank ist das Fenster zu eng dafür.</p>
-      <p><b>Indirekt: zu.</b> Ohne Deckel zirkuliert keine Umluft, dann passiert auf der ausgeschalteten Seite schlicht nichts.</p>
-    </div>
-
-    <div class="pin-card">
-      <h4>Der eine Schritt, der alles rettet</h4>
-      <p>Nach dem Ruhen die Faserrichtung suchen — sie läuft beim Flank sichtbar längs durch das ganze Stück. Dann <b>quer dazu</b> schneiden, im 45-Grad-Winkel, etwa 5 mm dünn.</p>
-      <p>Längs geschnitten ist selbst ein perfekt gegartes Flank Steak zäh. Quer geschnitten ist es zart. Der Unterschied ist größer als jeder Rub.</p>
-    </div>
-  </section>
-
-  <section id="view-zutaten" class="hidden">
-    <div class="portions">
-      <span class="portions-cap">Personen</span>
+  <!-- ================= ZUTATEN ================= -->
+  <section id="view-ing" class="hidden">
+    <div class="card portions">
+      <span class="eyebrow">Personen</span>
       <div class="stepper">
         <button id="pMinus" aria-label="weniger">–</button>
         <span id="pVal">4</span>
         <button id="pPlus" aria-label="mehr">+</button>
       </div>
     </div>
-    <p class="grp" id="grpA">Fajitas</p>
-    <ul class="ing" id="ingA"></ul>
-    <p class="grp">Rub</p>
-    <ul class="ing" id="ingB"></ul>
-    <p class="grp">Dazu</p>
-    <ul class="ing" id="ingC"></ul>
-
-    <div class="notes">
-      <h4>Notizen</h4>
-      <p><b>Bosch-Modus:</b> Das Gerät hat drei Emissionsgrad-Stufen. Bosch ordnet <b>Gusseisen und Emaille dem mittleren</b> zu — also das mittlere der drei Pfeilsymbole. Die rechte Stufe ist für matte Wände und Holz und liest auf der Platte deutlich zu niedrig.</p>
-      <p><b>Richtig messen mit dem Bosch:</b> Infrarot misst keine Temperatur, sondern abgestrahlte Wärme. Poliertes Metall strahlt wenig ab und spiegelt stattdessen die Umgebung — deshalb liest das Gerät dort 30 bis 50 °C zu niedrig. Auf eingebrannter, matter Patina oder auf einem Ölfilm stimmt der Wert.</p>
-      <p><b>Messfehler vermeiden:</b> Senkrecht von oben halten, etwa 30 cm Abstand, nicht schräg durch den Hitzeschleier. Immer dieselbe Stelle messen, sonst vergleichst du Ränder mit Mitte. Der Wassertropfen-Test bleibt die schnelle Gegenprobe.</p>
-      <p><b>Wok auf dem Seitenbrenner:</b> Das Gemüse läuft parallel zum Steak, deshalb muss die Platte nicht geteilt werden. Wok leer vorheizen, Öl erst danach — kaltes Öl im kalten Wok wird klebrig statt heiß. Nicht überfüllen: zu viel Gemüse auf einmal kühlt den Wok aus und alles dünstet.</p>
-      <p><b>Kein Flank bekommen?</b> Bavette (Flap Steak) oder Skirt Steak funktionieren identisch, beide sind ebenfalls grobfaserig. Skirt ist dünner, also je Seite eine Minute kürzer.</p>
-      <p><b>Meater:</b> Funktioniert hier gut, aber seitlich einführen — an der dicksten Stelle parallel zur Oberfläche, nicht von oben. So sitzt der Sensor mittig und die Markierung ist sicher im Fleisch. Beim Wenden den Griff mitdrehen, damit er nicht flach auf dem heißen Metall liegt.</p>
-      <p><b>Rub-Salz:</b> Der Rub bringt das Salz schon mit. Nicht zusätzlich salzen, sonst zieht die Oberfläche Wasser und du bekommst keine Kruste.</p>
-      <p><b>Gemüse vorher:</b> Paprika und Zwiebeln brauchen länger als das Steak und vertragen Wartezeit. Deshalb zuerst auf die Platte, danach auf den Warmhalterost.</p>
-      <p><b>Indirekt richtig dosieren:</b> Für alles über medium rare geht das Steak nach der Kruste auf den Rost über den ausgeschalteten Brenner. Umgebung auf 160 bis 180 °C halten, nicht Vollgas — über 200 °C entsteht ein grauer Rand um einen noch rohen Kern. Bei 170 °C steigt der Kern mit rund 1,2 °C pro Minute.</p>
-      <p><b>Meater-Außenwert hinkt:</b> Der Ambient-Sensor braucht zwei bis drei Minuten, bis er die tatsächliche Grilltemperatur zeigt. Nicht sofort nachregeln, sonst überschießt du in beide Richtungen.</p>
-      <p><b>Grill nicht zwischendurch ausmachen:</b> Klingt banal, kostet aber sofort fünf bis zehn Minuten. Das Fleisch nimmt keinen Schaden, solange es unter 55 °C bleibt, aber der Ablauf verschiebt sich komplett.</p>
-      <p><b>Reste:</b> Aufgeschnittenes Flank am nächsten Tag nicht heiß aufwärmen, sondern kalt in den Salat oder lauwarm in die Tortilla. Erneutes Erhitzen macht es zäh.</p>
+    <div class="card">
+      <div class="eyebrow" style="margin-bottom:6px">Fajitas</div><ul class="ing" id="ingA"></ul>
+    </div>
+    <div class="card">
+      <div class="eyebrow" style="margin-bottom:6px">Rub</div><ul class="ing" id="ingB"></ul>
+    </div>
+    <div class="card">
+      <div class="eyebrow" style="margin-bottom:6px">Dazu</div><ul class="ing" id="ingC"></ul>
+    </div>
+    <div class="card note">
+      <div class="eyebrow" style="margin-bottom:10px">Notizen</div>
+      <p><b>Wok auf dem Seitenbrenner:</b> Wok leer vorheizen, Öl erst danach. Nicht überfüllen, sonst dünstet alles.</p>
+      <p><b>Kein Flank bekommen?</b> Bavette oder Skirt funktionieren identisch. Skirt ist dünner, je Seite eine Minute kürzer.</p>
+      <p><b>Meater:</b> Seitlich an der dicksten Stelle einführen, ganz rein bis zur Markierung. Beim Wenden den Griff mitdrehen. Der Außenwert hinkt 2–3 Minuten hinterher.</p>
+      <p><b>Rub-Salz:</b> Der Rub bringt das Salz schon mit, nicht extra salzen.</p>
+      <p><b>Indirekt dosieren:</b> 160–180 °C Umgebung, nicht Vollgas. Bei 170 °C steigt der Kern mit rund 1,2 °C pro Minute.</p>
+      <p><b>Grill nicht zwischendurch ausmachen:</b> Kostet sofort 5–10 Minuten, der ganze Ablauf verschiebt sich.</p>
+      <p><b>Reste:</b> Am nächsten Tag nicht heiß aufwärmen — kalt in den Salat oder lauwarm in die Tortilla.</p>
     </div>
   </section>
-
-</main>
+</div>
 
 <script>
 (function(){
 "use strict";
-
-/* ---------- Vorlauf ---------- */
-var VOR = [
-  {off:null, when:"Nach der Abholung", title:"Auspacken und abspülen",
-   body:"Aus dem Vakuum nehmen. Riecht es leicht säuerlich: kurz kalt abspülen, das ist bei vakuumiertem Rindfleisch normal und verfliegt in Minuten."},
-  {off:null, when:"Direkt danach", title:"Trocken tupfen",
-   body:"Mit Küchenpapier rundum richtig trocken tupfen. Trockene Oberfläche ist die Voraussetzung für Kruste."},
-  {off:null, when:"Direkt danach", title:"Parieren",
-   body:"Silberhaut und lose Fettlappen mit scharfem Messer flach abschneiden. Die Silberhaut zieht sich beim Grillen zusammen und wölbt das Stück."},
-  {off:null, when:"Bis zur Rub-Zeit", title:"Offen in den Kühlschrank",
-   body:"Unabgedeckt auf ein Gitter oder einen Teller legen. Die Oberfläche trocknet weiter an, das ist gewollt."},
-  {off:180, when:"2 bis 4 Std vorher", title:"Ölen",
-   body:"Fleisch hauchdünn mit neutralem Öl einreiben, nur als Haftgrund für den Rub. Nicht mehr, sonst schwimmt der Rub."},
-  {off:175, when:"Direkt danach", title:"Rub auftragen",
-   body:"Großzügig auf beide Seiten streuen und einmassieren, auch die Kanten. Der Rub ist salzig, also nicht extra salzen. Zurück in den Kühlschrank, weiterhin offen."},
-  {off:50, when:"50 Min vorher", title:"Gemüse schneiden",
-   body:"Paprika und Zwiebeln in etwa 1 cm breite Streifen. Gleichmäßig breit, damit alles zur selben Zeit gar ist."},
-  {off:45, when:"45 Min vorher", title:"Beilagen fertig machen",
-   body:"Guacamole, Sour Cream, Limetten vierteln, Koriander zupfen, Frühlingszwiebeln in Ringe, Käse reiben. Ab dem Grillstart hast du dafür keine Hand mehr frei."},
-  {off:30, when:"30 Min vorher", title:"Fleisch rausnehmen", flag:true,
-   body:"Bei Zimmertemperatur akklimatisieren lassen. Kaltes Fleisch gart außen zu weit, bevor die Mitte ankommt."}
-];
-
-/* ---------- Grillablauf ---------- */
-var COMMON_HEAD = [
-  {t:0, st:"Grill", title:"Grill anwerfen",
-   body:"Beide Hauptbrenner voll, <b>Deckel zu</b>. Bei offenem Deckel bleibt die Platte bei rund 200 °C hängen und wird nie heiß genug fürs Steak. Der Seitenbrenner bleibt vorerst aus."},
-  {t:5, st:"Grill", title:"Letzter Check",
-   body:"Gemüse geschnitten, Beilagen bereit, Fleisch liegt seit 25 Minuten draußen. Meater jetzt setzen: seitlich an der dicksten Stelle, parallel zur Oberfläche, <b>ganz rein bis zur Markierung</b>. Sitzt die Sonde zu flach, misst sie den Rand statt den Kern."},
-  {t:12, st:"Platte", title:"Platte messen",
-   body:"Bosch auf <b>Modus mitte</b> stellen — Gusseisen und Emaille liegen beim mittleren Emissionsgrad. Auf eine dunkle, eingebrannte Stelle zielen, senkrecht von oben. <b>Ziel 260 bis 270 °C</b>, nicht 250: beim Deckelöffnen und Auflegen fällt sie sofort ab."},
-  {t:14, st:"Platte", title:"Abziehen und ölen",
-   body:"Die heiße Platte mit dem Spachtel abziehen und mit einem geölten Küchentuch dünn auswischen. Nur ein Film, keine Pfütze."},
-  {t:15, st:"Wok", title:"Wok vorheizen", timer:180,
-   body:"Seitenbrenner voll auf, Wok leer und trocken heiß werden lassen. Erst wenn er richtig heiß ist, kommt das Öl hinein — sonst brennt nichts an, sondern klebt."},
-  {t:18, st:"Wok", title:"Zwiebeln in den Wok", timer:180,
-   body:"Öl in den heißen Wok, sofort die Zwiebelstreifen hinterher. Ständig in Bewegung halten. Sie sollen Farbe nehmen, nicht dünsten."},
-  {t:21, st:"Wok", title:"Paprika dazu", timer:360,
-   body:"Paprikastreifen in den Wok. Weiter regelmäßig schwenken. Ziel sind bissfeste Streifen mit dunklen Kanten, kein Matsch."},
-  {t:25, st:"Platte", title:"Steak auflegen", timer:210,
-   body:"Steak auf die heiße Platte, <b>Deckel bleibt jetzt offen</b>. Die gespeicherte Wärme im Gusseisen reicht für die Kruste, mit Deckel würde die Umluft den Kern zu schnell hochtreiben. Nicht bewegen, nicht drücken."},
-  {t:27, st:"Wok", title:"Gemüse warm stellen", flag:true,
-   body:"Seitenbrenner auf die kleinste Flamme. Das Gemüse ist fertig und bleibt jetzt einfach im Wok stehen. Ab hier gehört deine Aufmerksamkeit dem Steak."},
-  {t:29, st:"Platte", title:"Wenden", timer:180,
-   body:"Einmal wenden, den Meater-Griff dabei mitdrehen. Die Kruste ist nach diesen zwei Seiten fertig — alles Weitere entscheidet nur noch der Kern."}
-];
-
-var TAIL_MR = [
-  {t:32, st:"Platte", title:"Kern messen", flag:true,
-   body:"Ziel medium rare. <b>Bei 50 °C runter</b> — es zieht beim Ruhen noch 2 bis 3 °C nach und landet bei 52 bis 54. Nach zweimal 3,5 Minuten auf 260 °C ist das meist schon erreicht."},
-  {t:34, st:"Brett", title:"Ruhen lassen", timer:480,
-   body:"Auf ein Brett legen, locker mit Folie abdecken. Acht Minuten. Jetzt anschneiden heißt, den Saft auf dem Brett zu verlieren."},
-  {t:36, st:"Platte", title:"Tortillas erwärmen", timer:180,
-   body:"Hauptbrenner eine Stufe zurück, die Platte darf jetzt kühler sein. Tortillas einzeln auflegen, 20 bis 30 Sekunden je Seite, dann gestapelt in ein Küchentuch."},
-  {t:42, st:"Brett", title:"Quer zur Faser schneiden",
-   body:"Faserrichtung suchen, sie läuft längs durch das Stück. Quer dazu, im 45-Grad-Winkel, etwa 5 mm dünn schneiden. Das ist der wichtigste Schnitt des Abends."},
-  {t:44, st:"Tisch", title:"Anrichten",
-   body:"Fleischscheiben zum Gemüse in den Wok oder in eine Pfanne, den Saft vom Brett darüber. Limette drüberdrücken, Koriander und Frühlingszwiebeln drauf."}
-];
-
-var TAIL_M = [
-  {t:32, st:"Rost", title:"Rüber auf indirekt", flag:true,
-   body:"Kruste ist fertig, Kern noch weit weg. Steak auf den Rost über den <b>ausgeschalteten</b> Brenner, anderer Brenner auf mittel, <b>Deckel zu</b>. Ohne Deckel passiert indirekt gar nichts — es zirkuliert keine Umluft."},
-  {t:34, st:"Rost", title:"Umgebung einregeln",
-   body:"<b>Ziel 160 bis 180 °C</b> Umgebung. Nicht Vollgas: über 200 °C gart der Rand schneller als der Kern und du bekommst einen grauen Ring. Der Meater-Außenwert hinkt zwei bis drei Minuten hinterher, also nicht sofort nachregeln."},
-  {t:36, st:"Rost", title:"Ziehen lassen", timer:600,
-   body:"Bei 170 °C Umgebung steigt der Kern mit etwa <b>1,2 °C pro Minute</b>. Von 47 auf 60 sind das rund elf Minuten. Deckel zu lassen, jedes Öffnen kostet Zeit."},
-  {t:47, st:"Rost", title:"Bei 60 °C runter", flag:true,
-   body:"Ab 57 °C nicht mehr weggehen. <b>Bei 60 runternehmen</b>, beim Ruhen zieht es auf 64 bis 66 nach. Wer bis 63 wartet, landet über dem Ziel."},
-  {t:49, st:"Brett", title:"Ruhen lassen", timer:480,
-   body:"Auf ein Brett legen, locker mit Folie abdecken. Acht Minuten. Jetzt anschneiden heißt, den Saft auf dem Brett zu verlieren."},
-  {t:51, st:"Platte", title:"Tortillas erwärmen", timer:180,
-   body:"Platte ist inzwischen abgekühlt, das passt für Tortillas. Einzeln auflegen, 20 bis 30 Sekunden je Seite, dann gestapelt in ein Küchentuch."},
-  {t:57, st:"Brett", title:"Quer zur Faser schneiden",
-   body:"Faserrichtung suchen, sie läuft längs durch das Stück. Quer dazu, im 45-Grad-Winkel, <b>sehr dünn</b> schneiden. Bei medium ist der Querschnitt noch wichtiger als bei rare."},
-  {t:59, st:"Tisch", title:"Anrichten",
-   body:"Fleischscheiben zum Gemüse in den Wok oder in eine Pfanne, den Saft vom Brett darüber. Limette drüberdrücken, Koriander und Frühlingszwiebeln drauf."}
-];
-
-var STEPS_MR = COMMON_HEAD.concat(TAIL_MR);
-var STEPS_M  = COMMON_HEAD.concat(TAIL_M);
-var STEPS = STEPS_MR;
-
-/* ---------- Zutaten, Basis 4 Personen ---------- */
-var ING_A = [
-  {n:"Flank Steak",              a:800, u:"g",  nt:"am Stück, pariert"},
-  {n:"Paprika, gemischt",        a:3,   u:"",   nt:"rot, gelb, grün"},
-  {n:"Zwiebeln",                 a:2,   u:"",   nt:"rot oder weiß, in Streifen"},
-  {n:"Weizentortillas",          a:12,  u:"",   nt:"ca. 20 cm"},
-  {n:"Neutrales Öl",             a:2,   u:"EL", nt:"Raps oder Erdnuss"},
-  {n:"Limetten",                 a:2,   u:""}
-];
-var ING_B = [
-  {n:"Kreuzkümmel, gemahlen",    a:2,   u:"TL"},
-  {n:"Paprikapulver edelsüß",    a:2,   u:"TL"},
-  {n:"Paprikapulver geräuchert", a:1,   u:"TL", nt:"Pimentón de la Vera"},
-  {n:"Knoblauchpulver",          a:1.5, u:"TL"},
-  {n:"Zwiebelpulver",            a:1,   u:"TL"},
-  {n:"Oregano, getrocknet",      a:1,   u:"TL", nt:"mexikanischer, falls greifbar"},
-  {n:"Koriandersaat, gemahlen",  a:1,   u:"TL"},
-  {n:"Chipotle oder Cayenne",    a:0.5, u:"TL"},
-  {n:"Rohrzucker",               a:1,   u:"TL"},
-  {n:"Salz",                     a:2,   u:"TL"},
-  {n:"Schwarzer Pfeffer",        a:1,   u:"TL"}
-];
-var ING_C = [
-  {n:"Sour Cream",               a:200, u:"g"},
-  {n:"Guacamole",                a:250, u:"g",  nt:"oder 2 reife Avocados"},
-  {n:"Käse, gerieben",           a:150, u:"g",  nt:"Cheddar oder junger Gouda"},
-  {n:"Koriandergrün",            a:1,   u:"",   nt:"Bund, grob gezupft"},
-  {n:"Frühlingszwiebeln",        a:3,   u:"",   nt:"in feine Ringe, als Topping"},
-  {n:"Salsa",                    a:200, u:"g",  nt:"nach Wunsch"}
-];
-
-/* ---------- Hilfen ---------- */
-function pad(n){return (n<10?"0":"")+n;}
-function mmss(s){s=Math.max(0,Math.round(s));return pad(Math.floor(s/60))+":"+pad(s%60);}
-
-function frac(v){
-  var r=Math.round(v*4)/4, w=Math.floor(r), rest=+(r-w).toFixed(2);
-  var m={0:"",0.25:"¼",0.5:"½",0.75:"¾"};
-  if(w===0) return m[rest]||String(r);
-  return w+(m[rest]||"");
-}
-function amount(v,u){
-  if(u==="g"||u==="ml"){
-    var r = v>=100 ? Math.round(v/10)*10 : v>=20 ? Math.round(v/5)*5 : Math.round(v);
-    return r+" "+u;
-  }
-  return frac(v)+(u?" "+u:"");
-}
-
+var mem={};
+function store(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}}
+function load(k){try{var v=localStorage.getItem(k);if(v!==null)return v}catch(e){}return Object.prototype.hasOwnProperty.call(mem,k)?mem[k]:null}
+function pad(n){return (n<10?"0":"")+n}
+function mmss(s){s=Math.max(0,Math.round(s));return pad(Math.floor(s/60))+":"+pad(s%60)}
 var ac=null;
-function beep(){
-  try{
-    ac = ac || new (window.AudioContext||window.webkitAudioContext)();
-    [0,.28,.56].forEach(function(off){
-      var o=ac.createOscillator(), g=ac.createGain();
-      o.type="triangle"; o.frequency.value=880;
-      o.connect(g); g.connect(ac.destination);
-      var t=ac.currentTime+off;
-      g.gain.setValueAtTime(.0001,t);
-      g.gain.exponentialRampToValueAtTime(.25,t+.02);
-      g.gain.exponentialRampToValueAtTime(.0001,t+.20);
-      o.start(t); o.stop(t+.22);
-    });
-  }catch(e){}
+function beep(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();[0,.3,.6].forEach(function(off){var o=ac.createOscillator(),g=ac.createGain();o.type="triangle";o.frequency.value=880;o.connect(g);g.connect(ac.destination);var t=ac.currentTime+off;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.3,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.25);o.start(t);o.stop(t+.28)})}catch(e){}}
+
+/* ---------- grillskizze ---------- */
+function grillVis(){
+  var s='<svg viewBox="0 0 320 128" width="100%" role="img" aria-label="Platte links, Rost rechts, Wok auf dem Seitenbrenner">';
+  s+='<defs><radialGradient id="hg" cx="50%" cy="52%" r="62%"><stop offset="0%" stop-color="#FF7A1A" stop-opacity="0.85"/><stop offset="55%" stop-color="#C4400F" stop-opacity="0.4"/><stop offset="100%" stop-color="#C4400F" stop-opacity="0"/></radialGradient>'
+   +'<linearGradient id="pl" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3A3029"/><stop offset="100%" stop-color="#2A221C"/></linearGradient></defs>';
+  s+='<rect x="2" y="2" width="316" height="124" rx="12" fill="#0C0A09" stroke="#342C24"/>';
+  s+='<rect x="12" y="14" width="136" height="100" rx="5" fill="url(#pl)" stroke="#342C24"/>';
+  s+='<rect x="12" y="14" width="136" height="100" rx="5" fill="url(#hg)"/>';
+  [32,52,72,92].forEach(function(y){s+='<line x1="22" y1="'+y+'" x2="138" y2="'+y+'" stroke="#000" stroke-opacity="0.16"/>'});
+  s+='<ellipse cx="80" cy="66" rx="42" ry="18" fill="#0A0807" opacity="0.5"/>';
+  s+='<ellipse cx="80" cy="62" rx="42" ry="18" fill="#B4713C" stroke="#6B4A2C"/>';
+  for(var i=0;i<11;i++)s+='<rect x="'+(166+i*13)+'" y="14" width="7" height="100" rx="2" fill="#3A312A" stroke="#0B0908" stroke-width="0.5"/>';
+  s+='<circle cx="292" cy="98" r="16" fill="none" stroke="#5E554B" stroke-width="2"/>';
+  s+='<circle cx="292" cy="98" r="9" fill="#241E19" stroke="#5E554B"/>';
+  s+='<text x="292" y="124" fill="#8B7F72" font-size="8" text-anchor="middle" font-family="IBM Plex Mono, monospace" letter-spacing="1">WOK</text>';
+  s+='<g class="live"><circle cx="70" cy="122" r="3.4" fill="#FF7A1A"/><text x="80" y="125.5" fill="#FF7A1A" font-size="8" font-family="IBM Plex Mono, monospace">VOLL</text></g>';
+  s+='<circle cx="200" cy="122" r="3.4" fill="none" stroke="#5E554B"/><text x="210" y="125.5" fill="#5E554B" font-size="8" font-family="IBM Plex Mono, monospace">AUS</text>';
+  s+='<text x="80" y="9" fill="#8B7F72" font-size="8.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" letter-spacing="1.6">PLATTE</text>';
+  s+='<text x="236" y="9" fill="#8B7F72" font-size="8.5" text-anchor="middle" font-family="IBM Plex Mono, monospace" letter-spacing="1.6">ROST</text>';
+  return s+'</svg>';
 }
+document.getElementById("grillVis").innerHTML=grillVis();
 
-/* ---------- Grill-Zeitstrahl ---------- */
-var rail=document.getElementById("rail");
-var nowLine=document.getElementById("now");
-var nodes=[];
+/* ---------- schritte ---------- */
+var HEAD=[
+  {st:"Grill",t:"Grill anwerfen",b:"Beide Hauptbrenner voll, <b>Deckel zu</b>. Offen bleibt die Platte bei rund 200 °C hängen. Seitenbrenner bleibt vorerst aus."},
+  {st:"Grill",t:"Letzter Check",b:"Gemüse geschnitten, Beilagen bereit, Fleisch liegt seit 25 Minuten draußen. <b>Meater setzen</b>: seitlich an der dicksten Stelle, ganz rein bis zur Markierung."},
+  {st:"Platte",t:"Platte messen",b:"Bosch auf <b>Modus Mitte</b>, auf eine dunkle eingebrannte Stelle zielen, senkrecht von oben. <b>Ziel 260 bis 270 °C</b> — beim Deckelöffnen fällt sie sofort ab."},
+  {st:"Platte",t:"Abziehen und ölen",b:"Heiße Platte mit dem Spachtel abziehen, mit geöltem Küchentuch <b>dünn</b> auswischen. Nur ein Film, keine Pfütze."},
+  {st:"Wok",t:"Wok vorheizen",timer:180,b:"Seitenbrenner voll auf, Wok <b>leer und trocken</b> heiß werden lassen. Öl erst in den heißen Wok — sonst klebt alles."},
+  {st:"Wok",t:"Zwiebeln in den Wok",timer:180,b:"Öl rein, sofort die Zwiebelstreifen hinterher. <b>Ständig in Bewegung</b> halten — Farbe nehmen, nicht dünsten."},
+  {st:"Wok",t:"Paprika dazu",timer:360,b:"Paprikastreifen dazu, regelmäßig schwenken. Ziel: <b>bissfest mit dunklen Kanten</b>, kein Matsch."},
+  {st:"Platte",t:"Steak auflegen",timer:210,b:"Steak auf die heiße Platte, <b>Deckel bleibt offen</b>. Nicht bewegen, nicht drücken — es löst sich von selbst, wenn die Kruste steht."},
+  {st:"Wok",t:"Gemüse warm stellen",b:"Seitenbrenner auf kleinste Flamme. Das Gemüse ist fertig und wartet im Wok. <b>Ab jetzt gehört alles dem Steak.</b>"},
+  {st:"Platte",t:"Wenden",timer:180,b:"Einmal wenden, <b>Meater-Griff mitdrehen</b>. Die Kruste ist nach zwei Seiten fertig — alles Weitere entscheidet der Kern."}
+];
+var TAIL_MR=[
+  {st:"Platte",t:"Kern messen",b:"Ziel medium rare. <b>Bei 50 °C runter</b> — beim Ruhen zieht es auf 52 bis 54 nach. Nach zweimal 3,5 Minuten meist erreicht."},
+  {st:"Brett",t:"Ruhen lassen",timer:480,b:"Aufs Brett, locker mit Folie abdecken, <b>8 Minuten</b>. Jetzt anschneiden heißt den Saft verlieren."},
+  {st:"Platte",t:"Tortillas erwärmen",timer:180,b:"Hauptbrenner eine Stufe zurück. Tortillas einzeln, <b>20–30 Sek je Seite</b>, dann gestapelt ins Küchentuch."},
+  {st:"Brett",t:"Quer zur Faser schneiden",b:"Faser läuft längs durchs Stück. <b>Quer dazu</b>, 45-Grad-Winkel, 5 mm dünn. Der wichtigste Schnitt des Abends."},
+  {st:"Tisch",t:"Anrichten",b:"Scheiben zum Gemüse in den Wok, <b>Brettsaft darüber</b>. Limette, Koriander, Frühlingszwiebeln. Tortillas, Sour Cream, Guacamole dazu."}
+];
+var TAIL_M=[
+  {st:"Rost",t:"Rüber auf indirekt",b:"Kruste fertig, Kern noch weit weg. Steak auf den Rost über den <b>ausgeschalteten</b> Brenner, anderer auf mittel, <b>Deckel zu</b>."},
+  {st:"Rost",t:"Umgebung einregeln",b:"<b>160 bis 180 °C</b> Umgebung, nicht Vollgas — über 200 °C gibt es einen grauen Ring. Meater-Außenwert hinkt 2–3 Minuten, nicht sofort nachregeln."},
+  {st:"Rost",t:"Ziehen lassen",timer:600,b:"Bei 170 °C steigt der Kern mit etwa <b>1,2 °C pro Minute</b>. Von 47 auf 60 sind das rund elf Minuten. Deckel zu lassen."},
+  {st:"Rost",t:"Bei 60 °C runter",b:"Ab 57 °C nicht mehr weggehen. <b>Bei 60 runternehmen</b>, es zieht auf 64 bis 66 nach. Wer bis 63 wartet, landet drüber."},
+  {st:"Brett",t:"Ruhen lassen",timer:480,b:"Aufs Brett, locker mit Folie abdecken, <b>8 Minuten</b>. Jetzt anschneiden heißt den Saft verlieren."},
+  {st:"Platte",t:"Tortillas erwärmen",timer:180,b:"Die Platte ist inzwischen abgekühlt, das passt. Tortillas einzeln, <b>20–30 Sek je Seite</b>, dann gestapelt ins Küchentuch."},
+  {st:"Brett",t:"Quer zur Faser schneiden",b:"Faser läuft längs durchs Stück. <b>Quer dazu</b>, 45-Grad-Winkel, <b>sehr dünn</b>. Bei medium noch wichtiger als bei rare."},
+  {st:"Tisch",t:"Anrichten",b:"Scheiben zum Gemüse in den Wok, <b>Brettsaft darüber</b>. Limette, Koriander, Frühlingszwiebeln. Tortillas, Sour Cream, Guacamole dazu."}
+];
+var mode=load("faj:mode")==="m"?"m":"mr";
+var STEPS=HEAD.concat(mode==="m"?TAIL_M:TAIL_MR);
+var idx=+(load("faj:idx")||0);if(!(idx>=0&&idx<STEPS.length))idx=0;
+var tState=[];
+function resetTimers(){tState=STEPS.map(function(s){return {left:s.timer||0,running:false}})}
+resetTimers();
 
-function buildRail(){
-  rail.innerHTML="";
-  rail.appendChild(nowLine);
-  nodes=[];
+var elNo=document.getElementById("stepNo"),elTi=document.getElementById("stepTitle"),
+    elBo=document.getElementById("stepBody"),elTm=document.getElementById("stepTimer"),
+    elNext=document.getElementById("nextBtn"),elBack=document.getElementById("backBtn"),
+    elList=document.getElementById("stepList");
+
+function renderStep(){
+  var s=STEPS[idx];
+  elNo.textContent="Schritt "+(idx+1)+" von "+STEPS.length+" · "+s.st;
+  elTi.textContent=s.t;
+  elBo.innerHTML=s.b;
+  paintTimer();
+  elNext.textContent=(idx===STEPS.length-1)?"Von vorn":"Weiter";
+  elBack.disabled=(idx===0);
+  renderList();
+  store("faj:idx",idx);
+}
+function paintTimer(){
+  var s=STEPS[idx],st=tState[idx];
+  if(!s.timer){elTm.classList.add("hidden");return}
+  elTm.classList.remove("hidden");
+  elTm.textContent=st.left<=0?"fertig ↻":mmss(st.left);
+  elTm.classList.toggle("run",st.running&&st.left>0);
+  elTm.classList.toggle("zero",st.left<=0);
+}
+elTm.addEventListener("click",function(){
+  var s=STEPS[idx],st=tState[idx];
+  if(st.left<=0){st.left=s.timer;st.running=false}
+  else{st.running=!st.running;if(st.running)beep()}
+  paintTimer();
+});
+elNext.addEventListener("click",function(){
+  if(idx>=STEPS.length-1){idx=0;resetTimers()}else idx++;
+  renderStep();window.scrollTo({top:0,behavior:"smooth"});
+});
+elBack.addEventListener("click",function(){if(idx>0){idx--;renderStep()}});
+
+function renderList(){
+  elList.innerHTML="";
   STEPS.forEach(function(s,i){
     var li=document.createElement("li");
-    li.className="step"+(s.flag?" flag":"");
-
-    var html='<span class="tick">'+s.t+"&#8242;"+(s.st?"<small>"+s.st+"</small>":"")+"</span><span class=\"dot\"></span>"+
-             '<div class="card"><h3>'+s.title+"</h3><p>"+s.body+"</p>"+
-             '<div class="card-foot"><button class="tick-btn" data-act="done">abgehakt</button>';
-    if(s.timer) html+='<button class="timer" data-act="timer">'+mmss(s.timer)+"</button>";
-    html+="</div></div>";
-    li.innerHTML=html;
-
-    rail.appendChild(li);
-    nodes.push({el:li,dot:li.querySelector(".dot"),
-                timerBtn:li.querySelector('[data-act="timer"]'),
-                left:s.timer||0, running:false, done:false});
-
-    li.querySelector('[data-act="done"]').addEventListener("click",function(){
-      var n=nodes[i]; n.done=!n.done; n.el.classList.toggle("done",n.done);
-      this.textContent = n.done ? "erledigt" : "abgehakt";
-    });
-
-    if(s.timer){
-      nodes[i].timerBtn.addEventListener("click",function(){
-        var n=nodes[i];
-        if(n.left<=0){ n.left=s.timer; n.running=false; paintTimer(n); return; }
-        n.running=!n.running; if(n.running) beep();
-        paintTimer(n);
-      });
-    }
+    li.className=i<idx?"done":(i===idx?"cur":"");
+    li.innerHTML='<span class="ck">'+(i<idx?"✓":"")+'</span><span class="tx">'+s.t+'<small>'+s.st+'</small></span>'+
+      (s.timer?'<span class="mins">'+Math.round(s.timer/60)+' min</span>':'');
+    li.addEventListener("click",function(){idx=i;renderStep()});
+    elList.appendChild(li);
   });
-}
-buildRail();
-
-function paintTimer(n){
-  if(!n.timerBtn) return;
-  n.timerBtn.textContent = mmss(n.left);
-  n.timerBtn.classList.toggle("run", n.running && n.left>0);
-  n.timerBtn.classList.toggle("zero", n.left<=0);
-  if(n.left<=0) n.timerBtn.textContent="fertig ↻";
-}
-
-/* ---------- Uhr ---------- */
-var elapsed=0, running=false, lock=null;
-var clockTime=document.getElementById("clockTime");
-var startBtn=document.getElementById("startBtn");
-
-startBtn.addEventListener("click",function(){
-  running=!running;
-  startBtn.textContent = running ? "Pause" : "Weiter";
-  if(running){
-    beep();
-    if("wakeLock" in navigator){ navigator.wakeLock.request("screen").then(function(l){lock=l;}).catch(function(){}); }
-  } else if(lock){ lock.release().catch(function(){}); lock=null; }
-});
-
-document.getElementById("resetBtn").addEventListener("click",function(){
-  running=false; elapsed=0; startBtn.textContent="Start";
-  nodes.forEach(function(n,i){
-    n.running=false; n.left=STEPS[i].timer||0; n.done=false;
-    n.el.classList.remove("done"); paintTimer(n);
-    n.el.querySelector('[data-act="done"]').textContent="abgehakt";
-  });
-  tick(0);
-});
-
-function activeIndex(){
-  var mins=elapsed/60, idx=-1;
-  for(var i=0;i<STEPS.length;i++){ if(mins>=STEPS[i].t) idx=i; }
-  return idx;
-}
-
-function placeNow(){
-  var mins=elapsed/60;
-  if(!running && elapsed===0){ nowLine.style.display="none"; return; }
-  nowLine.style.display="block";
-  var railTop=rail.getBoundingClientRect().top+window.scrollY;
-  function dotY(i){
-    var r=nodes[i].dot.getBoundingClientRect();
-    return r.top+window.scrollY-railTop+r.height/2;
-  }
-  var y;
-  if(mins<=STEPS[0].t) y=dotY(0);
-  else if(mins>=STEPS[STEPS.length-1].t) y=dotY(STEPS.length-1);
-  else{
-    var i=activeIndex();
-    var span=STEPS[i+1].t-STEPS[i].t;
-    y=dotY(i)+((mins-STEPS[i].t)/span)*(dotY(i+1)-dotY(i));
-  }
-  nowLine.style.transform="translateY("+y+"px)";
-}
-
-function tick(dt){
-  if(running) elapsed+=dt;
-  clockTime.textContent = pad(Math.floor(elapsed/60))+":"+pad(Math.floor(elapsed%60));
-
-  nodes.forEach(function(n){
-    if(n.running && n.left>0){
-      n.left-=dt;
-      if(n.left<=0){ n.left=0; n.running=false; beep(); }
-      paintTimer(n);
-    }
-  });
-
-  var a=activeIndex();
-  nodes.forEach(function(n,i){ n.el.classList.toggle("on", i===a && (running||elapsed>0)); });
-  placeNow();
 }
 
 var last=Date.now();
 setInterval(function(){
-  var now=Date.now(), dt=(now-last)/1000; last=now;
-  tick(dt);
+  var now=Date.now(),dt=(now-last)/1000;last=now;var dirty=false;
+  tState.forEach(function(st,i){
+    if(st.running&&st.left>0){st.left-=dt;if(st.left<=0){st.left=0;st.running=false;beep()}if(i===idx)dirty=true}
+  });
+  if(dirty)paintTimer();
 },250);
-window.addEventListener("resize",placeNow);
-document.addEventListener("visibilitychange",function(){ last=Date.now(); });
+document.addEventListener("visibilitychange",function(){last=Date.now()});
 
-/* ---------- Temperaturleisten ---------- */
-function buildScale(cfg){
-  var pos=function(t){ return ((t-cfg.lo)/(cfg.hi-cfg.lo))*100; };
-  var scale=document.getElementById(cfg.scale);
-  var lab=document.getElementById(cfg.lab);
-  if(!scale||!lab) return;
-
-  var bands = cfg.bands || (cfg.band ? [cfg.band] : []);
-  bands.forEach(function(b){
-    var band=document.createElement("div");
-    band.className="band";
-    band.style.left=pos(b[0])+"%";
-    band.style.width=(pos(b[1])-pos(b[0]))+"%";
-    scale.appendChild(band);
-  });
-  cfg.marks.forEach(function(m){
-    var p=document.createElement("div");
-    p.className="pin"; p.style.left=pos(m.t)+"%";
-    scale.appendChild(p);
-    var s=document.createElement("span");
-    if(m.hit) s.className="hit";
-    s.style.left=pos(m.t)+"%";
-    s.innerHTML=m.n+" °C<b>"+m.c+"</b>";
-    lab.appendChild(s);
-  });
+/* ---------- garstufe ---------- */
+var doneBtns=document.querySelectorAll(".doneness button");
+function paintMode(){
+  doneBtns.forEach(function(b){b.classList.toggle("on",b.dataset.done===mode)});
+  document.getElementById("stK").textContent=mode==="m"?"60°":"50°";
 }
-
-buildScale({
-  lo:150, hi:300, scale:"scaleP", lab:"scaleLabP", band:[240,260],
-  marks:[
-    {t:180, n:"180", c:"zu kalt"},
-    {t:210, n:"210", c:"Tortillas"},
-    {t:250, n:"250", c:"Steak", hit:true},
-    {t:285, n:"285", c:"zu heiß"}
-  ]
+doneBtns.forEach(function(b){
+  b.addEventListener("click",function(){
+    if(b.dataset.done===mode)return;
+    mode=b.dataset.done;store("faj:mode",mode);
+    STEPS=HEAD.concat(mode==="m"?TAIL_M:TAIL_MR);
+    if(idx>=STEPS.length)idx=STEPS.length-1;
+    resetTimers();paintMode();renderStep();
+  });
 });
+paintMode();
 
-buildScale({
-  lo:45, hi:70, scale:"scale", lab:"scaleLab", bands:[[52,54],[60,65]],
-  marks:[
-    {t:48, n:"48",    c:"blutig"},
-    {t:53, n:"52–54", c:"medium rare", hit:true},
-    {t:62, n:"60–65", c:"medium", hit:true},
-    {t:68, n:"68",    c:"zäh"}
-  ]
-});
-
-/* ---------- Vorlauf-Zeitstrahl ---------- */
-var railVor=document.getElementById("railVor");
+/* ---------- vorlauf ---------- */
+var VOR=[
+  {off:null,w:"Nach Abholung",t:"Auspacken und abspülen"},
+  {off:null,w:"Direkt danach",t:"Trocken tupfen"},
+  {off:null,w:"Direkt danach",t:"Parieren (Silberhaut ab)"},
+  {off:null,w:"Bis Rub-Zeit",t:"Offen in den Kühlschrank"},
+  {off:180,w:"",t:"Ölen (hauchdünn, als Haftgrund)"},
+  {off:175,w:"",t:"Rub auftragen, zurück in den Kühlschrank"},
+  {off:50,w:"",t:"Gemüse schneiden (1 cm Streifen)"},
+  {off:45,w:"",t:"Beilagen fertig machen"},
+  {off:30,w:"",t:"Fleisch rausnehmen, akklimatisieren"}
+];
+var vorDone=[];try{vorDone=JSON.parse(load("faj:vor")||"[]")}catch(e){}
 var anchorInput=document.getElementById("anchorTime");
-var vorNodes=[];
-
-VOR.forEach(function(s,i){
-  var li=document.createElement("li");
-  li.className="step"+(s.flag?" flag":"");
-  li.innerHTML='<span class="tick"><small>'+(s.off===null?"vorab":"−"+s.off+"′")+"</small></span>"+
-               '<span class="dot"></span>'+
-               '<div class="card"><h3>'+s.title+"</h3><p>"+s.body+"</p>"+
-               '<div class="card-foot"><button class="tick-btn" data-act="done">abgehakt</button>'+
-               '<span class="at" data-at></span></div></div>';
-  railVor.appendChild(li);
-  vorNodes.push({el:li, at:li.querySelector("[data-at]"), done:false});
-
-  li.querySelector('[data-act="done"]').addEventListener("click",function(){
-    var n=vorNodes[i]; n.done=!n.done; n.el.classList.toggle("done",n.done);
-    this.textContent = n.done ? "erledigt" : "abgehakt";
-  });
-});
-
+anchorInput.value=load("faj:anchor")||"18:00";
+var vorList=document.getElementById("vorList");
 function renderVor(){
-  var v=anchorInput.value;
-  if(!v || v.indexOf(":")<0) return;
-  var parts=v.split(":");
-  var base=new Date();
-  base.setHours(parseInt(parts[0],10), parseInt(parts[1],10), 0, 0);
+  var v=anchorInput.value,base=null;
+  if(v&&v.indexOf(":")>0){var p=v.split(":");base=new Date();base.setHours(+p[0],+p[1],0,0)}
+  vorList.innerHTML="";
   VOR.forEach(function(s,i){
-    if(s.off===null){ vorNodes[i].at.textContent = s.when; return; }
-    var d=new Date(base.getTime()-s.off*60000);
-    vorNodes[i].at.textContent = pad(d.getHours())+":"+pad(d.getMinutes())+" Uhr";
+    var when=s.w;
+    if(s.off!==null&&base){var d=new Date(base.getTime()-s.off*60000);when=pad(d.getHours())+":"+pad(d.getMinutes())}
+    var li=document.createElement("li");
+    li.className=vorDone[i]?"done":"";
+    li.innerHTML='<span class="ck">'+(vorDone[i]?"✓":"")+'</span><span class="tx">'+s.t+'</span><span class="mins">'+when+'</span>';
+    li.addEventListener("click",function(){vorDone[i]=!vorDone[i];store("faj:vor",JSON.stringify(vorDone));renderVor()});
+    vorList.appendChild(li);
   });
 }
-anchorInput.addEventListener("input", renderVor);
-anchorInput.addEventListener("change", renderVor);
+anchorInput.addEventListener("input",function(){store("faj:anchor",anchorInput.value);renderVor()});
+anchorInput.addEventListener("change",function(){store("faj:anchor",anchorInput.value);renderVor()});
 renderVor();
 
-/* ---------- Zutaten ---------- */
-var portions=4;
-var pVal=document.getElementById("pVal");
-
-function fill(el, arr, f){
+/* ---------- zutaten ---------- */
+var ING_A=[
+  {n:"Flank Steak",a:800,u:"g",nt:"am Stück, pariert"},
+  {n:"Paprika, gemischt",a:3,u:"",nt:"rot, gelb, grün"},
+  {n:"Zwiebeln",a:2,u:"",nt:"rot oder weiß, in Streifen"},
+  {n:"Weizentortillas",a:12,u:"",nt:"ca. 20 cm"},
+  {n:"Neutrales Öl",a:2,u:"EL",nt:"Raps oder Erdnuss"},
+  {n:"Limetten",a:2,u:""}
+];
+var ING_B=[
+  {n:"Kreuzkümmel, gemahlen",a:2,u:"TL"},
+  {n:"Paprikapulver edelsüß",a:2,u:"TL"},
+  {n:"Paprikapulver geräuchert",a:1,u:"TL",nt:"Pimentón de la Vera"},
+  {n:"Knoblauchpulver",a:1.5,u:"TL"},
+  {n:"Zwiebelpulver",a:1,u:"TL"},
+  {n:"Oregano, getrocknet",a:1,u:"TL",nt:"mexikanischer, falls greifbar"},
+  {n:"Koriandersaat, gemahlen",a:1,u:"TL"},
+  {n:"Chipotle oder Cayenne",a:0.5,u:"TL"},
+  {n:"Rohrzucker",a:1,u:"TL"},
+  {n:"Salz",a:2,u:"TL"},
+  {n:"Schwarzer Pfeffer",a:1,u:"TL"}
+];
+var ING_C=[
+  {n:"Sour Cream",a:200,u:"g"},
+  {n:"Guacamole",a:250,u:"g",nt:"oder 2 reife Avocados"},
+  {n:"Käse, gerieben",a:150,u:"g",nt:"Cheddar oder junger Gouda"},
+  {n:"Koriandergrün",a:1,u:"",nt:"Bund, grob gezupft"},
+  {n:"Frühlingszwiebeln",a:3,u:"",nt:"in feine Ringe"},
+  {n:"Salsa",a:200,u:"g",nt:"nach Wunsch"}
+];
+function frac(v){var r=Math.round(v*4)/4,w=Math.floor(r),rest=+(r-w).toFixed(2);
+  var m={0:"",0.25:"¼",0.5:"½",0.75:"¾"};
+  if(w===0)return m[rest]||String(r);return w+(m[rest]||"")}
+function amount(v,u){
+  if(u==="g"||u==="ml"){var r=v>=100?Math.round(v/10)*10:v>=20?Math.round(v/5)*5:Math.round(v);return r+" "+u}
+  return frac(v)+(u?" "+u:"")}
+var portions=4,pVal=document.getElementById("pVal");
+function fill(el,arr,f){
   el.innerHTML="";
   arr.forEach(function(g){
     var li=document.createElement("li");
-    li.innerHTML='<span class="amt">'+amount(g.a*f,g.u)+"</span>"+
-                 '<span class="nm">'+g.n+(g.nt?'<span class="nt">'+g.nt+"</span>":"")+"</span>";
-    li.addEventListener("click",function(){ li.classList.toggle("have"); });
+    li.innerHTML='<span class="amt">'+amount(g.a*f,g.u)+'</span><span class="nm">'+g.n+(g.nt?'<span class="nt">'+g.nt+'</span>':'')+'</span>';
+    li.addEventListener("click",function(){li.classList.toggle("have")});
     el.appendChild(li);
   });
 }
 function renderIng(){
-  pVal.textContent=portions;
-  var f=portions/4;
-  fill(document.getElementById("ingA"), ING_A, f);
-  fill(document.getElementById("ingB"), ING_B, f);
-  fill(document.getElementById("ingC"), ING_C, f);
+  pVal.textContent=portions;var f=portions/4;
+  fill(document.getElementById("ingA"),ING_A,f);
+  fill(document.getElementById("ingB"),ING_B,f);
+  fill(document.getElementById("ingC"),ING_C,f);
 }
-document.getElementById("pMinus").addEventListener("click",function(){ if(portions>2){portions--;renderIng();} });
-document.getElementById("pPlus").addEventListener("click",function(){ if(portions<8){portions++;renderIng();} });
+document.getElementById("pMinus").addEventListener("click",function(){if(portions>2){portions--;renderIng()}});
+document.getElementById("pPlus").addEventListener("click",function(){if(portions<8){portions++;renderIng()}});
 renderIng();
 
-/* ---------- Tabs ---------- */
-var tabs=document.querySelectorAll(".tab");
-tabs.forEach(function(b){
-  b.addEventListener("click",function(){
-    tabs.forEach(function(x){x.classList.remove("on");});
-    b.classList.add("on");
-    var v=b.dataset.view;
-    document.getElementById("view-vor").classList.toggle("hidden", v!=="vor");
-    document.getElementById("view-grill").classList.toggle("hidden", v!=="grill");
-    document.getElementById("view-zutaten").classList.toggle("hidden", v!=="zutaten");
-    if(v==="grill") placeNow();
-  });
-});
+/* ---------- ansichten ---------- */
+var navVor=document.getElementById("navVor"),navIng=document.getElementById("navIng");
+var view="plan";
+function setView(v){
+  view=(view===v)?"plan":v;
+  document.getElementById("view-plan").classList.toggle("hidden",view!=="plan");
+  document.getElementById("view-vor").classList.toggle("hidden",view!=="vor");
+  document.getElementById("view-ing").classList.toggle("hidden",view!=="ing");
+  navVor.classList.toggle("on",view==="vor");
+  navIng.classList.toggle("on",view==="ing");
+}
+navVor.addEventListener("click",function(){setView("vor")});
+navIng.addEventListener("click",function(){setView("ing")});
 
-/* ---------- Garstufe umschalten ---------- */
-var doneBtns=document.querySelectorAll(".doneness button");
-doneBtns.forEach(function(b){
-  b.addEventListener("click",function(){
-    if(b.classList.contains("on")) return;
-    doneBtns.forEach(function(x){x.classList.remove("on");});
-    b.classList.add("on");
-    STEPS = (b.dataset.done==="m") ? STEPS_M : STEPS_MR;
-    running=false; elapsed=0; startBtn.textContent="Start";
-    if(lock){ lock.release().catch(function(){}); lock=null; }
-    buildRail();
-    tick(0);
-  });
-});
-
-tick(0);
+renderStep();
 })();
 </script>
 </body>
