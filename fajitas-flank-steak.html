@@ -131,6 +131,17 @@ button{cursor:pointer}
   width:112px;text-align:center;
 }
 
+/* ---------- Garstufen-Umschalter ---------- */
+.doneness{display:flex;margin:20px 20px 0;border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.doneness button{
+  flex:1;border:0;background:transparent;padding:11px 4px;
+  font-family:var(--data);font-size:10px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ash);line-height:1.5;
+}
+.doneness button b{display:block;font-size:12px;font-weight:400;letter-spacing:.04em}
+.doneness button.on{background:var(--ink);color:var(--enamel)}
+.doneness button + button{border-left:1px solid var(--line)}
+
 /* ---------- Zeitstrahl ---------- */
 .rail{position:relative;margin:0;padding:22px 20px 40px;list-style:none}
 .rail::before{
@@ -278,7 +289,7 @@ button{cursor:pointer}
 <header class="masthead">
   <p class="eyebrow">Genesis II LX S-240 · Platte und Wok</p>
   <h1>Fajitas<em>vom Flank Steak</em></h1>
-  <p class="lede">Kern <b>52 bis 54 °C</b>, dann <b>8 Minuten ruhen</b>, dann <b>quer zur Faser</b> schneiden. Diese drei Zahlen entscheiden alles.</p>
+  <p class="lede">Platte auf <b>260 °C</b>, Kern <b>2 bis 3 °C vor dem Ziel</b> runter, <b>8 Minuten ruhen</b>, dann <b>quer zur Faser</b> schneiden.</p>
 </header>
 
 <div class="deck">
@@ -309,6 +320,10 @@ button{cursor:pointer}
   </section>
 
   <section id="view-grill">
+    <div class="doneness">
+      <button data-done="mr" class="on">Medium rare<b>52–54 °C</b></button>
+      <button data-done="m">Medium<b>60–65 °C</b></button>
+    </div>
     <ol class="rail" id="rail"><div id="now"></div></ol>
 
     <div class="thermo">
@@ -322,7 +337,14 @@ button{cursor:pointer}
       <h4>Kerntemperatur Flank Steak</h4>
       <div class="scale" id="scale"></div>
       <div class="scale-lab" id="scaleLab"></div>
-      <p>Flank ist ein Muskel mit langen Fasern. Über 57 °C wird er trocken und zäh, darunter bleibt er saftig. Am dicksten Punkt messen, flach von der Seite einstechen.</p>
+      <p>Nimm das Steak immer <b>2 bis 3 °C vor dem Ziel</b> runter, es zieht beim Ruhen nach. Für medium rare also bei 50, für medium bei 60. Und miss am dicksten Punkt: sitzt die Sonde zu flach, zeigt sie den Rand und du nimmst zu früh runter.</p>
+    </div>
+
+    <div class="pin-card">
+      <h4>Die Deckelregel</h4>
+      <p><b>Aufheizen: zu.</b> Nur mit geschlossenem Deckel kommt die Platte über 250 °C. Offen pendelt sie sich bei rund 200 ein.</p>
+      <p><b>Anbraten: offen.</b> Die Masse des Gusseisens liefert die Kruste. Deckel zu würde den Kern von oben mitgaren, und bei 2 cm Flank ist das Fenster zu eng dafür.</p>
+      <p><b>Indirekt: zu.</b> Ohne Deckel zirkuliert keine Umluft, dann passiert auf der ausgeschalteten Seite schlicht nichts.</p>
     </div>
 
     <div class="pin-card">
@@ -350,6 +372,7 @@ button{cursor:pointer}
 
     <div class="notes">
       <h4>Notizen</h4>
+      <p><b>Bosch-Modus:</b> Das Gerät hat drei Emissionsgrad-Stufen. Bosch ordnet <b>Gusseisen und Emaille dem mittleren</b> zu — also das mittlere der drei Pfeilsymbole. Die rechte Stufe ist für matte Wände und Holz und liest auf der Platte deutlich zu niedrig.</p>
       <p><b>Richtig messen mit dem Bosch:</b> Infrarot misst keine Temperatur, sondern abgestrahlte Wärme. Poliertes Metall strahlt wenig ab und spiegelt stattdessen die Umgebung — deshalb liest das Gerät dort 30 bis 50 °C zu niedrig. Auf eingebrannter, matter Patina oder auf einem Ölfilm stimmt der Wert.</p>
       <p><b>Messfehler vermeiden:</b> Senkrecht von oben halten, etwa 30 cm Abstand, nicht schräg durch den Hitzeschleier. Immer dieselbe Stelle messen, sonst vergleichst du Ränder mit Mitte. Der Wassertropfen-Test bleibt die schnelle Gegenprobe.</p>
       <p><b>Wok auf dem Seitenbrenner:</b> Das Gemüse läuft parallel zum Steak, deshalb muss die Platte nicht geteilt werden. Wok leer vorheizen, Öl erst danach — kaltes Öl im kalten Wok wird klebrig statt heiß. Nicht überfüllen: zu viel Gemüse auf einmal kühlt den Wok aus und alles dünstet.</p>
@@ -357,6 +380,9 @@ button{cursor:pointer}
       <p><b>Meater:</b> Funktioniert hier gut, aber seitlich einführen — an der dicksten Stelle parallel zur Oberfläche, nicht von oben. So sitzt der Sensor mittig und die Markierung ist sicher im Fleisch. Beim Wenden den Griff mitdrehen, damit er nicht flach auf dem heißen Metall liegt.</p>
       <p><b>Rub-Salz:</b> Der Rub bringt das Salz schon mit. Nicht zusätzlich salzen, sonst zieht die Oberfläche Wasser und du bekommst keine Kruste.</p>
       <p><b>Gemüse vorher:</b> Paprika und Zwiebeln brauchen länger als das Steak und vertragen Wartezeit. Deshalb zuerst auf die Platte, danach auf den Warmhalterost.</p>
+      <p><b>Indirekt richtig dosieren:</b> Für alles über medium rare geht das Steak nach der Kruste auf den Rost über den ausgeschalteten Brenner. Umgebung auf 160 bis 180 °C halten, nicht Vollgas — über 200 °C entsteht ein grauer Rand um einen noch rohen Kern. Bei 170 °C steigt der Kern mit rund 1,2 °C pro Minute.</p>
+      <p><b>Meater-Außenwert hinkt:</b> Der Ambient-Sensor braucht zwei bis drei Minuten, bis er die tatsächliche Grilltemperatur zeigt. Nicht sofort nachregeln, sonst überschießt du in beide Richtungen.</p>
+      <p><b>Grill nicht zwischendurch ausmachen:</b> Klingt banal, kostet aber sofort fünf bis zehn Minuten. Das Fleisch nimmt keinen Schaden, solange es unter 55 °C bleibt, aber der Ablauf verschiebt sich komplett.</p>
       <p><b>Reste:</b> Aufgeschnittenes Flank am nächsten Tag nicht heiß aufwärmen, sondern kalt in den Salat oder lauwarm in die Tortilla. Erneutes Erhitzen macht es zäh.</p>
     </div>
   </section>
@@ -390,13 +416,13 @@ var VOR = [
 ];
 
 /* ---------- Grillablauf ---------- */
-var STEPS = [
+var COMMON_HEAD = [
   {t:0, st:"Grill", title:"Grill anwerfen",
-   body:"Beide Hauptbrenner auf volle Leistung, Deckel zu. Der Seitenbrenner bleibt vorerst aus. Der Rost rechts bleibt frei als Abstellzone."},
+   body:"Beide Hauptbrenner voll, <b>Deckel zu</b>. Bei offenem Deckel bleibt die Platte bei rund 200 °C hängen und wird nie heiß genug fürs Steak. Der Seitenbrenner bleibt vorerst aus."},
   {t:5, st:"Grill", title:"Letzter Check",
-   body:"Gemüse geschnitten, Beilagen bereit, Fleisch liegt seit 25 Minuten draußen. Wok, Spachtel und Zange griffbereit. Meater jetzt setzen: seitlich an der dicksten Stelle, parallel zur Oberfläche."},
+   body:"Gemüse geschnitten, Beilagen bereit, Fleisch liegt seit 25 Minuten draußen. Meater jetzt setzen: seitlich an der dicksten Stelle, parallel zur Oberfläche, <b>ganz rein bis zur Markierung</b>. Sitzt die Sonde zu flach, misst sie den Rand statt den Kern."},
   {t:12, st:"Platte", title:"Platte messen",
-   body:"Mit dem Bosch auf eine dunkle, eingebrannte Stelle zielen, senkrecht von oben. Ziel sind rund 250 °C — die Platte macht heute nur Steak und Tortillas. Gegenprobe mit Wassertropfen: sie sollen perlen und wandern, nicht sofort verpuffen."},
+   body:"Bosch auf <b>Modus mitte</b> stellen — Gusseisen und Emaille liegen beim mittleren Emissionsgrad. Auf eine dunkle, eingebrannte Stelle zielen, senkrecht von oben. <b>Ziel 260 bis 270 °C</b>, nicht 250: beim Deckelöffnen und Auflegen fällt sie sofort ab."},
   {t:14, st:"Platte", title:"Abziehen und ölen",
    body:"Die heiße Platte mit dem Spachtel abziehen und mit einem geölten Küchentuch dünn auswischen. Nur ein Film, keine Pfütze."},
   {t:15, st:"Wok", title:"Wok vorheizen", timer:180,
@@ -406,13 +432,16 @@ var STEPS = [
   {t:21, st:"Wok", title:"Paprika dazu", timer:360,
    body:"Paprikastreifen in den Wok. Weiter regelmäßig schwenken. Ziel sind bissfeste Streifen mit dunklen Kanten, kein Matsch."},
   {t:25, st:"Platte", title:"Steak auflegen", timer:210,
-   body:"Flank Steak auf die heiße Platte legen und nicht mehr bewegen. Der Wok läuft parallel weiter — einmal umrühren, dann Hände weg vom Steak. Nicht drücken, nicht schieben."},
+   body:"Steak auf die heiße Platte, <b>Deckel bleibt jetzt offen</b>. Die gespeicherte Wärme im Gusseisen reicht für die Kruste, mit Deckel würde die Umluft den Kern zu schnell hochtreiben. Nicht bewegen, nicht drücken."},
   {t:27, st:"Wok", title:"Gemüse warm stellen", flag:true,
    body:"Seitenbrenner auf die kleinste Flamme. Das Gemüse ist fertig und bleibt jetzt einfach im Wok stehen. Ab hier gehört deine Aufmerksamkeit dem Steak."},
   {t:29, st:"Platte", title:"Wenden", timer:180,
-   body:"Einmal wenden, den Meater-Griff dabei mitdrehen. Ab jetzt die Kerntemperatur im Blick behalten, bei einem dünnen Flank geht das Fenster schnell zu."},
-  {t:33, st:"Platte", title:"Kern messen", flag:true,
-   body:"Ziel sind 52 bis 54 °C für medium rare. Der Meater zeigt es laufend an, sonst flach von der Seite einstechen. Bei 50 °C runternehmen, es zieht beim Ruhen noch 2 bis 3 °C nach."},
+   body:"Einmal wenden, den Meater-Griff dabei mitdrehen. Die Kruste ist nach diesen zwei Seiten fertig — alles Weitere entscheidet nur noch der Kern."}
+];
+
+var TAIL_MR = [
+  {t:32, st:"Platte", title:"Kern messen", flag:true,
+   body:"Ziel medium rare. <b>Bei 50 °C runter</b> — es zieht beim Ruhen noch 2 bis 3 °C nach und landet bei 52 bis 54. Nach zweimal 3,5 Minuten auf 260 °C ist das meist schon erreicht."},
   {t:34, st:"Brett", title:"Ruhen lassen", timer:480,
    body:"Auf ein Brett legen, locker mit Folie abdecken. Acht Minuten. Jetzt anschneiden heißt, den Saft auf dem Brett zu verlieren."},
   {t:36, st:"Platte", title:"Tortillas erwärmen", timer:180,
@@ -420,8 +449,31 @@ var STEPS = [
   {t:42, st:"Brett", title:"Quer zur Faser schneiden",
    body:"Faserrichtung suchen, sie läuft längs durch das Stück. Quer dazu, im 45-Grad-Winkel, etwa 5 mm dünn schneiden. Das ist der wichtigste Schnitt des Abends."},
   {t:44, st:"Tisch", title:"Anrichten",
-   body:"Fleischscheiben zum Gemüse in den Wok oder in eine Pfanne, den Saft vom Brett darüber. Limette drüberdrücken, Koriander und Frühlingszwiebeln drauf. Tortillas, Sour Cream und Guacamole dazu."}
+   body:"Fleischscheiben zum Gemüse in den Wok oder in eine Pfanne, den Saft vom Brett darüber. Limette drüberdrücken, Koriander und Frühlingszwiebeln drauf."}
 ];
+
+var TAIL_M = [
+  {t:32, st:"Rost", title:"Rüber auf indirekt", flag:true,
+   body:"Kruste ist fertig, Kern noch weit weg. Steak auf den Rost über den <b>ausgeschalteten</b> Brenner, anderer Brenner auf mittel, <b>Deckel zu</b>. Ohne Deckel passiert indirekt gar nichts — es zirkuliert keine Umluft."},
+  {t:34, st:"Rost", title:"Umgebung einregeln",
+   body:"<b>Ziel 160 bis 180 °C</b> Umgebung. Nicht Vollgas: über 200 °C gart der Rand schneller als der Kern und du bekommst einen grauen Ring. Der Meater-Außenwert hinkt zwei bis drei Minuten hinterher, also nicht sofort nachregeln."},
+  {t:36, st:"Rost", title:"Ziehen lassen", timer:600,
+   body:"Bei 170 °C Umgebung steigt der Kern mit etwa <b>1,2 °C pro Minute</b>. Von 47 auf 60 sind das rund elf Minuten. Deckel zu lassen, jedes Öffnen kostet Zeit."},
+  {t:47, st:"Rost", title:"Bei 60 °C runter", flag:true,
+   body:"Ab 57 °C nicht mehr weggehen. <b>Bei 60 runternehmen</b>, beim Ruhen zieht es auf 64 bis 66 nach. Wer bis 63 wartet, landet über dem Ziel."},
+  {t:49, st:"Brett", title:"Ruhen lassen", timer:480,
+   body:"Auf ein Brett legen, locker mit Folie abdecken. Acht Minuten. Jetzt anschneiden heißt, den Saft auf dem Brett zu verlieren."},
+  {t:51, st:"Platte", title:"Tortillas erwärmen", timer:180,
+   body:"Platte ist inzwischen abgekühlt, das passt für Tortillas. Einzeln auflegen, 20 bis 30 Sekunden je Seite, dann gestapelt in ein Küchentuch."},
+  {t:57, st:"Brett", title:"Quer zur Faser schneiden",
+   body:"Faserrichtung suchen, sie läuft längs durch das Stück. Quer dazu, im 45-Grad-Winkel, <b>sehr dünn</b> schneiden. Bei medium ist der Querschnitt noch wichtiger als bei rare."},
+  {t:59, st:"Tisch", title:"Anrichten",
+   body:"Fleischscheiben zum Gemüse in den Wok oder in eine Pfanne, den Saft vom Brett darüber. Limette drüberdrücken, Koriander und Frühlingszwiebeln drauf."}
+];
+
+var STEPS_MR = COMMON_HEAD.concat(TAIL_MR);
+var STEPS_M  = COMMON_HEAD.concat(TAIL_M);
+var STEPS = STEPS_MR;
 
 /* ---------- Zutaten, Basis 4 Personen ---------- */
 var ING_A = [
@@ -494,36 +546,42 @@ var rail=document.getElementById("rail");
 var nowLine=document.getElementById("now");
 var nodes=[];
 
-STEPS.forEach(function(s,i){
-  var li=document.createElement("li");
-  li.className="step"+(s.flag?" flag":"");
+function buildRail(){
+  rail.innerHTML="";
+  rail.appendChild(nowLine);
+  nodes=[];
+  STEPS.forEach(function(s,i){
+    var li=document.createElement("li");
+    li.className="step"+(s.flag?" flag":"");
 
-  var html='<span class="tick">'+s.t+"&#8242;"+(s.st?"<small>"+s.st+"</small>":"")+"</span><span class=\"dot\"></span>"+
-           '<div class="card"><h3>'+s.title+"</h3><p>"+s.body+"</p>"+
-           '<div class="card-foot"><button class="tick-btn" data-act="done">abgehakt</button>';
-  if(s.timer) html+='<button class="timer" data-act="timer">'+mmss(s.timer)+"</button>";
-  html+="</div></div>";
-  li.innerHTML=html;
+    var html='<span class="tick">'+s.t+"&#8242;"+(s.st?"<small>"+s.st+"</small>":"")+"</span><span class=\"dot\"></span>"+
+             '<div class="card"><h3>'+s.title+"</h3><p>"+s.body+"</p>"+
+             '<div class="card-foot"><button class="tick-btn" data-act="done">abgehakt</button>';
+    if(s.timer) html+='<button class="timer" data-act="timer">'+mmss(s.timer)+"</button>";
+    html+="</div></div>";
+    li.innerHTML=html;
 
-  rail.appendChild(li);
-  nodes.push({el:li,dot:li.querySelector(".dot"),
-              timerBtn:li.querySelector('[data-act="timer"]'),
-              left:s.timer||0, running:false, done:false});
+    rail.appendChild(li);
+    nodes.push({el:li,dot:li.querySelector(".dot"),
+                timerBtn:li.querySelector('[data-act="timer"]'),
+                left:s.timer||0, running:false, done:false});
 
-  li.querySelector('[data-act="done"]').addEventListener("click",function(){
-    var n=nodes[i]; n.done=!n.done; n.el.classList.toggle("done",n.done);
-    this.textContent = n.done ? "erledigt" : "abgehakt";
-  });
-
-  if(s.timer){
-    nodes[i].timerBtn.addEventListener("click",function(){
-      var n=nodes[i];
-      if(n.left<=0){ n.left=s.timer; n.running=false; paintTimer(n); return; }
-      n.running=!n.running; if(n.running) beep();
-      paintTimer(n);
+    li.querySelector('[data-act="done"]').addEventListener("click",function(){
+      var n=nodes[i]; n.done=!n.done; n.el.classList.toggle("done",n.done);
+      this.textContent = n.done ? "erledigt" : "abgehakt";
     });
-  }
-});
+
+    if(s.timer){
+      nodes[i].timerBtn.addEventListener("click",function(){
+        var n=nodes[i];
+        if(n.left<=0){ n.left=s.timer; n.running=false; paintTimer(n); return; }
+        n.running=!n.running; if(n.running) beep();
+        paintTimer(n);
+      });
+    }
+  });
+}
+buildRail();
 
 function paintTimer(n){
   if(!n.timerBtn) return;
@@ -615,13 +673,14 @@ function buildScale(cfg){
   var lab=document.getElementById(cfg.lab);
   if(!scale||!lab) return;
 
-  if(cfg.band){
+  var bands = cfg.bands || (cfg.band ? [cfg.band] : []);
+  bands.forEach(function(b){
     var band=document.createElement("div");
     band.className="band";
-    band.style.left=pos(cfg.band[0])+"%";
-    band.style.width=(pos(cfg.band[1])-pos(cfg.band[0]))+"%";
+    band.style.left=pos(b[0])+"%";
+    band.style.width=(pos(b[1])-pos(b[0]))+"%";
     scale.appendChild(band);
-  }
+  });
   cfg.marks.forEach(function(m){
     var p=document.createElement("div");
     p.className="pin"; p.style.left=pos(m.t)+"%";
@@ -645,12 +704,12 @@ buildScale({
 });
 
 buildScale({
-  lo:45, hi:65, scale:"scale", lab:"scaleLab", band:[52,54],
+  lo:45, hi:70, scale:"scale", lab:"scaleLab", bands:[[52,54],[60,65]],
   marks:[
     {t:48, n:"48",    c:"blutig"},
     {t:53, n:"52–54", c:"medium rare", hit:true},
-    {t:57, n:"57",    c:"medium"},
-    {t:63, n:"63",    c:"durch, zäh"}
+    {t:62, n:"60–65", c:"medium", hit:true},
+    {t:68, n:"68",    c:"zäh"}
   ]
 });
 
@@ -728,6 +787,21 @@ tabs.forEach(function(b){
     document.getElementById("view-grill").classList.toggle("hidden", v!=="grill");
     document.getElementById("view-zutaten").classList.toggle("hidden", v!=="zutaten");
     if(v==="grill") placeNow();
+  });
+});
+
+/* ---------- Garstufe umschalten ---------- */
+var doneBtns=document.querySelectorAll(".doneness button");
+doneBtns.forEach(function(b){
+  b.addEventListener("click",function(){
+    if(b.classList.contains("on")) return;
+    doneBtns.forEach(function(x){x.classList.remove("on");});
+    b.classList.add("on");
+    STEPS = (b.dataset.done==="m") ? STEPS_M : STEPS_MR;
+    running=false; elapsed=0; startBtn.textContent="Start";
+    if(lock){ lock.release().catch(function(){}); lock=null; }
+    buildRail();
+    tick(0);
   });
 });
 
