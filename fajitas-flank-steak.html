@@ -181,7 +181,7 @@ input:focus{outline:none;border-color:var(--flame)}
       <div class="eyebrow" style="margin-bottom:10px">Notizen</div>
       <p><b>Wok auf dem Seitenbrenner:</b> Wok leer vorheizen, Öl erst danach. Nicht überfüllen, sonst dünstet alles.</p>
       <p><b>Kein Flank bekommen?</b> Bavette oder Skirt funktionieren identisch. Skirt ist dünner, je Seite eine Minute kürzer.</p>
-      <p><b>Meater:</b> Seitlich an der dicksten Stelle einführen, ganz rein bis zur Markierung. Beim Wenden den Griff mitdrehen. Der Außenwert hinkt 2–3 Minuten hinterher.</p>
+      <p><b>Meater:</b> Erst nach dem Wenden setzen — die Sonde verträgt außen max. ~275 °C Umgebung, direkter Kontakt mit der heißen Platte kann sie beschädigen. Seitlich an der dicksten Stelle, ganz rein bis zur Markierung. Der Außenwert hinkt 2–3 Minuten hinterher.</p>
       <p><b>Rub-Salz:</b> Der Rub bringt das Salz schon mit, nicht extra salzen.</p>
       <p><b>Indirekt dosieren:</b> 160–180 °C Umgebung, nicht Vollgas. Bei 170 °C steigt der Kern mit rund 1,2 °C pro Minute.</p>
       <p><b>Grill nicht zwischendurch ausmachen:</b> Kostet sofort 5–10 Minuten, der ganze Ablauf verschiebt sich.</p>
@@ -227,7 +227,7 @@ document.getElementById("grillVis").innerHTML=grillVis();
 /* ---------- schritte ---------- */
 var HEAD=[
   {st:"Grill",t:"Grill anwerfen",b:"Beide Hauptbrenner voll, <b>Deckel zu</b>. Offen bleibt die Platte bei rund 200 °C hängen. Seitenbrenner bleibt vorerst aus."},
-  {st:"Grill",t:"Letzter Check",b:"Gemüse geschnitten, Beilagen bereit, Fleisch liegt seit 25 Minuten draußen. <b>Meater setzen</b>: seitlich an der dicksten Stelle, ganz rein bis zur Markierung."},
+  {st:"Grill",t:"Letzter Check",b:"Gemüse geschnitten, Beilagen bereit, Fleisch liegt seit 25 Minuten draußen. Meater nur <b>bereitlegen</b> — gesetzt wird er erst nach dem Wenden, direkter Kontakt mit der 260-Grad-Platte kann ihn beschädigen."},
   {st:"Platte",t:"Platte messen",b:"Bosch auf <b>Modus Mitte</b>, auf eine dunkle eingebrannte Stelle zielen, senkrecht von oben. <b>Ziel 260 bis 270 °C</b> — beim Deckelöffnen fällt sie sofort ab."},
   {st:"Platte",t:"Abziehen und ölen",b:"Heiße Platte mit dem Spachtel abziehen, mit geöltem Küchentuch <b>dünn</b> auswischen. Nur ein Film, keine Pfütze."},
   {st:"Wok",t:"Wok vorheizen",timer:180,b:"Seitenbrenner voll auf, Wok <b>leer und trocken</b> heiß werden lassen. Öl erst in den heißen Wok — sonst klebt alles."},
@@ -235,7 +235,7 @@ var HEAD=[
   {st:"Wok",t:"Paprika dazu",timer:360,b:"Paprikastreifen dazu, regelmäßig schwenken. Ziel: <b>bissfest mit dunklen Kanten</b>, kein Matsch."},
   {st:"Platte",t:"Steak auflegen",timer:210,b:"Steak auf die heiße Platte, <b>Deckel bleibt offen</b>. Nicht bewegen, nicht drücken — es löst sich von selbst, wenn die Kruste steht."},
   {st:"Wok",t:"Gemüse warm stellen",b:"Seitenbrenner auf kleinste Flamme. Das Gemüse ist fertig und wartet im Wok. <b>Ab jetzt gehört alles dem Steak.</b>"},
-  {st:"Platte",t:"Wenden",timer:180,b:"Einmal wenden, <b>Meater-Griff mitdrehen</b>. Die Kruste ist nach zwei Seiten fertig — alles Weitere entscheidet der Kern."}
+  {st:"Platte",t:"Wenden + Meater setzen",timer:180,b:"Einmal wenden. <b>Jetzt den Meater setzen</b>: seitlich an der dicksten Stelle, parallel zur Oberfläche, ganz rein bis zur Markierung. Ab hier entscheidet nur noch der Kern."}
 ];
 var TAIL_MR=[
   {st:"Platte",t:"Kern messen",b:"Ziel medium rare. <b>Bei 50 °C runter</b> — beim Ruhen zieht es auf 52 bis 54 nach. Nach zweimal 3,5 Minuten meist erreicht."},
