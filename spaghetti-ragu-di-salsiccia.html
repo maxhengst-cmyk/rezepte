@@ -2,496 +2,274 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Ragù">
-<meta name="theme-color" content="#1E211C">
+<meta name="theme-color" content="#12100E">
 <title>Spaghetti al Ragù di Salsiccia</title>
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 :root{
-  --enamel:#E7E9E1;
-  --enamel-hi:#F2F3EE;
-  --enamel-lo:#DCE0D5;
-  --line:#C4CABA;
-  --ink:#1E211C;
-  --ash:#6B7065;
-  --madder:#B3271B;
-  --zest:#B8830A;
-  --rail-x:58px;
-  --display:"Superclarendon","Bookman Old Style",Georgia,"Times New Roman",serif;
-  --body:"Avenir Next",Avenir,"Segoe UI","Helvetica Neue",sans-serif;
-  --data:Menlo,"SF Mono",Consolas,monospace;
+  --ground:#12100E; --panel:#1B1714; --panelHi:#241E19; --line:#342C24;
+  --bone:#EAE2D6; --ash:#8B7F72; --ashDim:#5E554B;
+  --flame:#5B8CF7; --ember:#FF7A1A; --ok:#79C06B; --warn:#E5B33C;
 }
-*{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--ground);min-height:100%}
 body{
-  margin:0;
-  background:var(--enamel);
-  color:var(--ink);
-  font-family:var(--body);
-  font-size:17px;
-  line-height:1.45;
-  padding-bottom:64px;
-  -webkit-tap-highlight-color:transparent;
+  font-family:'Barlow',system-ui,-apple-system,sans-serif;color:var(--bone);
+  -webkit-font-smoothing:antialiased;
+  padding:calc(env(safe-area-inset-top) + 16px) 16px calc(env(safe-area-inset-bottom) + 32px);
 }
-button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
-:focus-visible{outline:2px solid var(--madder);outline-offset:2px}
-
-/* ---------- Kopf ---------- */
-.masthead{
-  background:var(--ink);
-  color:var(--enamel);
-  padding:calc(env(safe-area-inset-top) + 26px) 20px 22px;
+#wrap{max-width:460px;margin:0 auto}
+.disp{font-family:'Barlow Condensed','Barlow',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ashDim)}
+header{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:16px}
+.chip{
+  font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.05em;
+  font-size:14px;font-weight:600;border:1px solid var(--line);background:transparent;
+  color:var(--ash);border-radius:999px;padding:8px 13px;width:auto;margin:0;cursor:pointer;
 }
-.eyebrow{
-  margin:0 0 12px;
-  font-family:var(--data);
-  font-size:10px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:#9AA394;
+.chip.on{border-color:var(--flame);color:var(--flame);background:rgba(91,140,247,.10)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 4px;text-align:center}
+.stat .k{display:block;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--ashDim)}
+.stat .v{display:block;margin-top:6px;font-family:'IBM Plex Mono',monospace;font-size:15px;color:var(--bone);white-space:nowrap}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.stepno{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ashDim)}
+.step-title{font-size:26px;margin:8px 0 10px}
+.step-body{margin:0;font-size:17px;line-height:1.55;color:#D9D0C2}
+.step-body b{color:var(--ember);font-weight:600}
+button{
+  font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.07em;
+  font-weight:600;font-size:18px;border:1px solid var(--line);background:var(--panelHi);
+  color:var(--bone);border-radius:12px;padding:15px 16px;width:100%;cursor:pointer;margin-bottom:10px;
 }
-.masthead h1{
-  margin:0;
-  font-family:var(--display);
-  font-weight:400;
-  font-size:31px;
-  line-height:1.06;
-  letter-spacing:-.01em;
-}
-.masthead h1 em{
-  display:block;
-  font-style:normal;
-  font-size:20px;
-  color:#B9C0B0;
-  margin-top:4px;
-}
-.lede{
-  margin:16px 0 0;
-  padding-top:14px;
-  border-top:1px solid #3A3F38;
-  font-size:14px;
-  color:#AFB6A8;
-}
-.lede b{color:var(--enamel);font-weight:600}
-
-/* ---------- Steuerleiste ---------- */
-.deck{
-  position:sticky;top:0;z-index:20;
-  display:flex;align-items:center;gap:14px;
-  padding:11px 20px;
-  background:rgba(231,233,225,.94);
-  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line);
-}
-.clock{display:flex;flex-direction:column;line-height:1;flex:0 0 auto}
-.clock-time{font-family:var(--data);font-size:24px;font-variant-numeric:tabular-nums}
-.clock-cap{font-family:var(--data);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--ash);margin-top:5px}
-.deck-btns{margin-left:auto;display:flex;gap:8px}
-.btn{
-  border:1px solid var(--ink);
-  background:transparent;
-  border-radius:2px;
-  padding:9px 14px;
-  font-size:14px;
-  letter-spacing:.01em;
-}
-.btn-solid{background:var(--ink);color:var(--enamel)}
-.btn-quiet{border-color:var(--line);color:var(--ash)}
-
-/* ---------- Tabs ---------- */
-.tabs{display:flex;border-bottom:1px solid var(--line);background:var(--enamel)}
-.tab{
-  flex:1;border:0;background:transparent;
-  padding:13px 0 11px;
-  font-family:var(--data);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--ash);
-  border-bottom:2px solid transparent;
-}
-.tab.on{color:var(--ink);border-bottom-color:var(--madder)}
-
-/* ---------- Zeitstrahl ---------- */
-.rail{position:relative;margin:0;padding:26px 20px 40px;list-style:none}
-.rail::before{
-  content:"";position:absolute;top:26px;bottom:40px;
-  left:var(--rail-x);width:1px;background:var(--line);
-}
-#now{
-  position:absolute;left:20px;right:20px;height:0;
-  border-top:1.5px dashed var(--madder);
-  display:none;pointer-events:none;z-index:5;
-  transition:transform .6s linear;
-}
-#now::after{
-  content:"jetzt";position:absolute;right:0;top:-16px;
-  font-family:var(--data);font-size:9px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--madder);
-}
-.step{position:relative;padding-left:calc(var(--rail-x) - 20px + 22px);margin-bottom:22px}
-.tick{
-  position:absolute;left:0;top:2px;width:34px;text-align:right;
-  font-family:var(--data);font-size:12px;color:var(--ash);font-variant-numeric:tabular-nums;
-}
-.dot{
-  position:absolute;left:calc(var(--rail-x) - 20px - 4.5px);top:7px;
-  width:10px;height:10px;border-radius:50%;
-  background:var(--enamel);border:1.5px solid var(--line);
-}
-.step.on .dot{border-color:var(--madder);background:var(--madder)}
-.step.flag .dot{border-color:var(--madder)}
-.step.done .dot{background:var(--ash);border-color:var(--ash)}
-.card{
-  background:var(--enamel-hi);
-  border:1px solid var(--line);
-  border-left:3px solid var(--enamel-lo);
-  border-radius:2px;
-  padding:13px 15px 14px;
-}
-.step.on .card{border-left-color:var(--madder);box-shadow:0 2px 0 var(--enamel-lo)}
-.step.flag .card{border-left-color:var(--madder);background:#F6EEEC}
-.step.done .card{opacity:.5}
-.card h3{
-  margin:0 0 6px;
-  font-family:var(--display);font-weight:400;font-size:19px;line-height:1.2;
-}
-.card p{margin:0;color:#3A3F38;font-size:16px}
-.card-foot{display:flex;align-items:center;gap:10px;margin-top:12px;flex-wrap:wrap}
-.tick-btn{
-  border:1px solid var(--line);background:transparent;border-radius:2px;
-  padding:6px 11px;font-size:13px;color:var(--ash);
-}
-.step.done .tick-btn{border-color:var(--ash);color:var(--ink)}
-.timer{
-  border:1px solid var(--ink);background:transparent;border-radius:2px;
-  padding:6px 11px;font-family:var(--data);font-size:14px;font-variant-numeric:tabular-nums;
-}
-.timer.run{background:var(--zest);border-color:var(--zest);color:#fff}
-.timer.zero{background:var(--madder);border-color:var(--madder);color:#fff}
-
-/* ---------- Zutaten ---------- */
-.pane{padding:22px 20px 40px}
-.portions{
-  display:flex;align-items:center;gap:14px;
-  padding-bottom:16px;margin-bottom:6px;border-bottom:1px solid var(--line);
-}
-.portions-cap{font-family:var(--data);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ash)}
-.stepper{margin-left:auto;display:flex;align-items:center;gap:2px}
-.stepper button{
-  width:38px;height:38px;border:1px solid var(--ink);background:transparent;
-  font-size:19px;line-height:1;border-radius:2px;
-}
-.stepper span{
-  width:44px;text-align:center;
-  font-family:var(--data);font-size:19px;font-variant-numeric:tabular-nums;
-}
+button:focus-visible{outline:2px solid var(--flame);outline-offset:2px}
+button.primary{background:var(--flame);border-color:var(--flame);color:#08101F}
+button.ghost{background:transparent;color:var(--ash);font-size:15px;padding:11px}
+button:disabled{opacity:.35}
+.timer{width:auto;margin:14px 0 0;font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:0;padding:9px 14px;border-radius:10px}
+.timer.run{background:var(--warn);border-color:var(--warn);color:#1A1200}
+.timer.zero{background:var(--ember);border-color:var(--ember);color:#1A0A00}
+.list{list-style:none;margin:0;padding:0}
+.list li{display:flex;align-items:center;gap:11px;padding:12px 2px;border-bottom:1px solid var(--line);cursor:pointer}
+.list li:last-child{border-bottom:0}
+.ck{flex:0 0 auto;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--ashDim);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ok)}
+li.done .ck{border-color:var(--ok)}
+li.done .tx{color:var(--ashDim);text-decoration:line-through;text-decoration-thickness:1px}
+li.cur .ck{border-color:var(--flame)}
+li.cur .tx{color:var(--flame)}
+.tx{font-size:16px;min-width:0}
+.mins{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ashDim);white-space:nowrap}
+.portions{display:flex;align-items:center;gap:12px}
+.stepper{margin-left:auto;display:flex;align-items:center;gap:4px}
+.stepper button{width:44px;height:44px;padding:0;margin:0;font-size:22px;border-radius:10px}
+.stepper span{min-width:44px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:19px}
 .ing{list-style:none;margin:0;padding:0}
-.ing li{
-  display:flex;align-items:baseline;gap:12px;
-  padding:11px 0;border-bottom:1px solid var(--enamel-lo);
-  cursor:pointer;
-}
-.ing .amt{
-  flex:0 0 82px;
-  font-family:var(--data);font-size:14px;font-variant-numeric:tabular-nums;
-}
-.ing .nm{flex:1}
+.ing li{display:flex;gap:12px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.ing li:last-child{border-bottom:0}
+.ing .amt{flex:0 0 84px;font-family:'IBM Plex Mono',monospace;font-size:14px;font-variant-numeric:tabular-nums}
+.ing .nm{flex:1;font-size:16px}
 .ing .nt{display:block;font-size:13px;color:var(--ash);margin-top:2px}
-.ing li.have{color:var(--ash)}
-.ing li.have .nm{text-decoration:line-through;text-decoration-thickness:1px}
-.notes{
-  margin-top:28px;padding-top:18px;border-top:1px solid var(--line);
-  font-size:15px;color:#3A3F38;
-}
-.notes h4{
-  margin:0 0 10px;
-  font-family:var(--data);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ash);font-weight:400;
-}
-.notes p{margin:0 0 10px}
+.ing li.have{opacity:.42}
+.ing li.have .nm{text-decoration:line-through}
+.hint{color:var(--ash);font-size:14px;line-height:1.55}
+.note p{margin:0 0 11px;font-size:15px;line-height:1.55;color:#D9D0C2}
+.note p:last-child{margin-bottom:0}
+.note b{color:var(--bone)}
 .hidden{display:none}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
+<div id="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Cooking Italy · Domenico Gentile</div>
+      <div class="disp" style="font-size:27px;line-height:1.05;margin-top:2px">Spaghetti al Ragù di Salsiccia</div>
+    </div>
+    <button class="chip" id="navBtn">Zutaten</button>
+  </header>
 
-<header class="masthead">
-  <p class="eyebrow">Cooking Italy · Domenico Gentile</p>
-  <h1>Spaghetti al Ragù<em>di Salsiccia</em></h1>
-  <p class="lede">Ohne Erbsen. Sugo köchelt <b>mindestens 60 Minuten offen</b>. Der einzige Deckel ist das Nudelwasser.</p>
-</header>
-
-<div class="deck">
-  <div class="clock">
-    <span class="clock-time" id="clockTime">00:00</span>
-    <span class="clock-cap">Ablauf</span>
+  <div class="stats">
+    <div class="stat"><span class="k">Portionen</span><span class="v" id="stP">4</span></div>
+    <div class="stat"><span class="k">Gesamt</span><span class="v">85 min</span></div>
+    <div class="stat"><span class="k">Sugo</span><span class="v">60 min</span></div>
+    <div class="stat"><span class="k">Deckel</span><span class="v">offen</span></div>
   </div>
-  <div class="deck-btns">
-    <button class="btn btn-solid" id="startBtn">Start</button>
-    <button class="btn btn-quiet" id="resetBtn">Reset</button>
-  </div>
-</div>
 
-<nav class="tabs">
-  <button class="tab on" data-view="plan">Zeitplan</button>
-  <button class="tab" data-view="zutaten">Zutaten</button>
-</nav>
-
-<main>
+  <!-- ================= ABLAUF ================= -->
   <section id="view-plan">
-    <ol class="rail" id="rail"><div id="now"></div></ol>
+    <div class="card">
+      <div class="stepno" id="stepNo"></div>
+      <div class="disp step-title" id="stepTitle"></div>
+      <p class="step-body" id="stepBody"></p>
+      <button class="timer hidden" id="stepTimer">00:00</button>
+    </div>
+    <button class="primary" id="nextBtn">Weiter</button>
+    <button class="ghost" id="backBtn">Schritt zurück</button>
+    <div class="card"><ul class="list" id="stepList"></ul></div>
   </section>
 
-  <section id="view-zutaten" class="pane hidden">
-    <div class="portions">
-      <span class="portions-cap">Portionen</span>
+  <!-- ================= ZUTATEN ================= -->
+  <section id="view-ing" class="hidden">
+    <div class="card portions">
+      <span class="eyebrow">Portionen</span>
       <div class="stepper">
         <button id="pMinus" aria-label="weniger">–</button>
         <span id="pVal">4</span>
         <button id="pPlus" aria-label="mehr">+</button>
       </div>
     </div>
-    <ul class="ing" id="ingList"></ul>
-    <div class="notes">
-      <h4>Notizen</h4>
-      <p>Keine Salsiccia bekommen? Grobe Bratwurst mit Fenchelsamen und gemahlenem Peperoncino nachschärfen — kommt dem Original sehr nah.</p>
-      <p>Getrocknete Tomaten statt Kirschtomaten funktionieren auch, dann etwas mehr Nudelwasser in die Sauce.</p>
-      <p>Pecorino statt Parmesan geht, dann beim Salz vorsichtiger sein.</p>
+    <div class="card"><ul class="ing" id="ingList"></ul></div>
+    <div class="card note">
+      <div class="eyebrow" style="margin-bottom:10px">Notizen</div>
+      <p><b>Keine Salsiccia bekommen?</b> Grobe Bratwurst mit Fenchelsamen und gemahlenem Peperoncino nachschärfen — kommt dem Original sehr nah.</p>
+      <p><b>Tomaten:</b> Getrocknete Tomaten statt Kirschtomaten funktionieren auch, dann etwas mehr Nudelwasser in die Sauce.</p>
+      <p><b>Käse:</b> Pecorino statt Parmesan geht, dann beim Salz vorsichtiger sein.</p>
     </div>
+    <p class="hint" style="text-align:center;margin:20px 0 0">Nach Domenico Gentile, Cooking Italy · private Nutzung</p>
   </section>
-</main>
+</div>
 
 <script>
 (function(){
 "use strict";
-
-/* ---------- Daten ---------- */
-var STEPS = [
-  {t:0,  title:"Vorbereiten",
-   body:"Salsiccia aus der Pelle drücken und grob zerteilen. Zwiebel und Knoblauch fein würfeln. Kirschtomaten von der Rispe zupfen und halbieren."},
-  {t:10, title:"Soffritto & Salsiccia",
-   body:"Olivenöl im großen Topf erhitzen, Zwiebel und Knoblauch anschwitzen. Salsiccia dazu und krümelig anbraten. Mit Peperoncino, Salz und Pfeffer würzen."},
-  {t:18, title:"Kräuter, Tomaten, Rotwein",
-   body:"Lorbeer, Rosmarin und die halbierten Kirschtomaten dazugeben. Mit Rotwein ablöschen und fast vollständig verkochen lassen."},
-  {t:24, title:"Passata dazu", timer:1800,
-   body:"Passierte Tomaten angießen, offen auf kleiner Stufe köcheln. Kocht es zu stark ein, später Nudelwasser nachgießen."},
-  {t:54, title:"Zitronenschale einreiben", timer:1800,
-   body:"Schale der Bio-Zitrone direkt in die Sauce reiben. Weitere 30 Minuten sanft köcheln — damit kommt der Sugo auf seine Stunde."},
-  {t:64, title:"Nudelwasser aufsetzen", flag:true,
-   body:"Großer Topf, reichlich Wasser, Deckel drauf. Salzen, sobald es sprudelt. Ab hier läuft die Uhr für den Teller."},
-  {t:76, title:"Spaghetti kochen", timer:480,
-   body:"Spaghetti ins sprudelnde Wasser, al dente ziehen lassen. Eine Kelle Nudelwasser zurückbehalten."},
-  {t:84, title:"Mantecare & anrichten",
-   body:"Spaghetti direkt ins Ragù, gründlich mischen, bei Bedarf Nudelwasser dazu. Auf vorgewärmten Tellern mit Petersilie und Parmesan."}
-];
-
-var ING = [
-  {n:"Spaghetti alla Chitarra", a:400, u:"g"},
-  {n:"Salsiccia, frisch",       a:500, u:"g", nt:"oder grobe Bratwurst"},
-  {n:"Zwiebel",                 a:1,   u:""},
-  {n:"Knoblauchzehe",           a:1,   u:""},
-  {n:"Olivenöl extra vergine",  a:3,   u:"EL"},
-  {n:"Peperoncino, gemahlen",   a:0.5, u:"TL"},
-  {n:"Lorbeerblätter",          a:2,   u:""},
-  {n:"Rosmarinzweige",          a:2,   u:""},
-  {n:"Kirschtomaten",           a:250, u:"g", nt:"an der Rispe, halbiert"},
-  {n:"Rotwein, trocken",        a:150, u:"ml"},
-  {n:"Passata",                 a:700, u:"ml"},
-  {n:"Bio-Zitrone",             a:1,   u:"",  nt:"nur die Schale"},
-  {n:"Salz",                    a:0.5, u:"TL", nt:"plus zum Abschmecken"},
-  {n:"Schwarzer Pfeffer",       a:0.25,u:"TL"},
-  {n:"Petersilie, gehackt",     a:2,   u:"EL"},
-  {n:"Parmesan, gerieben",      a:40,  u:"g"}
-];
-
-/* ---------- Hilfen ---------- */
-function pad(n){return (n<10?"0":"")+n;}
-function mmss(s){s=Math.max(0,Math.round(s));return pad(Math.floor(s/60))+":"+pad(s%60);}
-
-function frac(v){
-  var r=Math.round(v*4)/4, w=Math.floor(r), rest=+(r-w).toFixed(2);
-  var m={0:"",0.25:"¼",0.5:"½",0.75:"¾"};
-  if(w===0) return m[rest]||String(r);
-  return w+(m[rest]||"");
-}
-function amount(v,u){
-  if(u==="g"||u==="ml"){
-    var r = v>=100 ? Math.round(v/10)*10 : v>=20 ? Math.round(v/5)*5 : Math.round(v);
-    return r+" "+u;
-  }
-  return frac(v)+(u?" "+u:"");
-}
-
+var mem={};
+function store(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}}
+function load(k){try{var v=localStorage.getItem(k);if(v!==null)return v}catch(e){}return Object.prototype.hasOwnProperty.call(mem,k)?mem[k]:null}
+function pad(n){return (n<10?"0":"")+n}
+function mmss(s){s=Math.max(0,Math.round(s));return pad(Math.floor(s/60))+":"+pad(s%60)}
 var ac=null;
-function beep(){
-  try{
-    ac = ac || new (window.AudioContext||window.webkitAudioContext)();
-    [0,.28,.56].forEach(function(off){
-      var o=ac.createOscillator(), g=ac.createGain();
-      o.type="triangle"; o.frequency.value=880;
-      o.connect(g); g.connect(ac.destination);
-      var t=ac.currentTime+off;
-      g.gain.setValueAtTime(.0001,t);
-      g.gain.exponentialRampToValueAtTime(.25,t+.02);
-      g.gain.exponentialRampToValueAtTime(.0001,t+.20);
-      o.start(t); o.stop(t+.22);
-    });
-  }catch(e){}
+function beep(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();[0,.3,.6].forEach(function(off){var o=ac.createOscillator(),g=ac.createGain();o.type="triangle";o.frequency.value=880;o.connect(g);g.connect(ac.destination);var t=ac.currentTime+off;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.3,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.25);o.start(t);o.stop(t+.28)})}catch(e){}}
+
+/* ---------- schritte ---------- */
+var STEPS=[
+  {t:"Vorbereiten",b:"Salsiccia <b>aus der Pelle drücken</b> und grob zerteilen. Zwiebel und Knoblauch fein würfeln. Kirschtomaten halbieren."},
+  {t:"Soffritto & Salsiccia",timer:480,b:"Olivenöl im großen Topf erhitzen, Zwiebel und Knoblauch anschwitzen. Salsiccia dazu und <b>krümelig anbraten</b>. Mit Peperoncino, Salz und Pfeffer würzen."},
+  {t:"Kräuter, Tomaten, Rotwein",timer:360,b:"Lorbeer, Rosmarin und die halbierten Kirschtomaten dazu. Mit Rotwein ablöschen und <b>fast vollständig verkochen</b> lassen."},
+  {t:"Passata dazu",timer:1800,b:"Passierte Tomaten angießen, <b>offen auf kleiner Stufe</b> köcheln. Kocht es zu stark ein, später Nudelwasser nachgießen."},
+  {t:"Zitronenschale einreiben",timer:1800,b:"Schale der Bio-Zitrone direkt in die Sauce reiben. Weitere <b>30 Min sanft köcheln</b> — damit kommt der Sugo auf seine Stunde."},
+  {t:"Nudelwasser aufsetzen",b:"Großer Topf, reichlich Wasser, <b>Deckel drauf</b> — der einzige Deckel des Abends. Salzen, sobald es sprudelt."},
+  {t:"Spaghetti kochen",timer:480,b:"Spaghetti ins sprudelnde Wasser, <b>al dente</b> ziehen lassen. Eine Kelle <b>Nudelwasser zurückbehalten</b>."},
+  {t:"Mantecare & anrichten",b:"Spaghetti direkt ins Ragù, gründlich mischen, bei Bedarf Nudelwasser dazu. Auf <b>vorgewärmten Tellern</b> mit Petersilie und Parmesan."}
+];
+var idx=+(load("ragu:idx")||0);if(!(idx>=0&&idx<STEPS.length))idx=0;
+var tState=STEPS.map(function(s){return {left:s.timer||0,running:false}});
+
+var elNo=document.getElementById("stepNo"),elTi=document.getElementById("stepTitle"),
+    elBo=document.getElementById("stepBody"),elTm=document.getElementById("stepTimer"),
+    elNext=document.getElementById("nextBtn"),elBack=document.getElementById("backBtn"),
+    elList=document.getElementById("stepList");
+
+function renderStep(){
+  var s=STEPS[idx];
+  elNo.textContent="Schritt "+(idx+1)+" von "+STEPS.length;
+  elTi.textContent=s.t;
+  elBo.innerHTML=s.b;
+  paintTimer();
+  elNext.textContent=(idx===STEPS.length-1)?"Von vorn":"Weiter";
+  elBack.disabled=(idx===0);
+  renderList();
+  store("ragu:idx",idx);
 }
-
-/* ---------- Zeitstrahl bauen ---------- */
-var rail=document.getElementById("rail");
-var nowLine=document.getElementById("now");
-var nodes=[];
-
-STEPS.forEach(function(s,i){
-  var li=document.createElement("li");
-  li.className="step"+(s.flag?" flag":"");
-
-  var html='<span class="tick">'+s.t+"&#8242;</span><span class=\"dot\"></span>"+
-           '<div class="card"><h3>'+s.title+"</h3><p>"+s.body+"</p>"+
-           '<div class="card-foot"><button class="tick-btn" data-act="done">abgehakt</button>';
-  if(s.timer) html+='<button class="timer" data-act="timer">'+mmss(s.timer)+"</button>";
-  html+="</div></div>";
-  li.innerHTML=html;
-
-  rail.appendChild(li);
-  nodes.push({el:li,dot:li.querySelector(".dot"),
-              timerBtn:li.querySelector('[data-act="timer"]'),
-              left:s.timer||0, running:false, done:false});
-
-  li.querySelector('[data-act="done"]').addEventListener("click",function(){
-    var n=nodes[i]; n.done=!n.done; n.el.classList.toggle("done",n.done);
-    this.textContent = n.done ? "erledigt" : "abgehakt";
-  });
-
-  if(s.timer){
-    nodes[i].timerBtn.addEventListener("click",function(){
-      var n=nodes[i];
-      if(n.left<=0){ n.left=s.timer; n.running=false; paintTimer(n); return; }
-      n.running=!n.running; if(n.running) beep();
-      paintTimer(n);
-    });
-  }
+function paintTimer(){
+  var s=STEPS[idx],st=tState[idx];
+  if(!s.timer){elTm.classList.add("hidden");return}
+  elTm.classList.remove("hidden");
+  elTm.textContent=st.left<=0?"fertig ↻":mmss(st.left);
+  elTm.classList.toggle("run",st.running&&st.left>0);
+  elTm.classList.toggle("zero",st.left<=0);
+}
+elTm.addEventListener("click",function(){
+  var s=STEPS[idx],st=tState[idx];
+  if(st.left<=0){st.left=s.timer;st.running=false}
+  else{st.running=!st.running;if(st.running)beep()}
+  paintTimer();
 });
-
-function paintTimer(n){
-  if(!n.timerBtn) return;
-  n.timerBtn.textContent = mmss(n.left);
-  n.timerBtn.classList.toggle("run", n.running && n.left>0);
-  n.timerBtn.classList.toggle("zero", n.left<=0);
-  if(n.left<=0) n.timerBtn.textContent="fertig ↻";
-}
-
-/* ---------- Uhr ---------- */
-var elapsed=0, running=false, lock=null;
-var clockTime=document.getElementById("clockTime");
-var startBtn=document.getElementById("startBtn");
-
-startBtn.addEventListener("click",function(){
-  running=!running;
-  startBtn.textContent = running ? "Pause" : "Weiter";
-  if(running){
-    beep();
-    if("wakeLock" in navigator){ navigator.wakeLock.request("screen").then(function(l){lock=l;}).catch(function(){}); }
-  } else if(lock){ lock.release().catch(function(){}); lock=null; }
+elNext.addEventListener("click",function(){
+  if(idx>=STEPS.length-1){idx=0;tState=STEPS.map(function(s){return {left:s.timer||0,running:false}})}
+  else idx++;
+  renderStep();window.scrollTo({top:0,behavior:"smooth"});
 });
+elBack.addEventListener("click",function(){if(idx>0){idx--;renderStep()}});
 
-document.getElementById("resetBtn").addEventListener("click",function(){
-  running=false; elapsed=0; startBtn.textContent="Start";
-  nodes.forEach(function(n,i){
-    n.running=false; n.left=STEPS[i].timer||0; n.done=false;
-    n.el.classList.remove("done"); paintTimer(n);
-    n.el.querySelector('[data-act="done"]').textContent="abgehakt";
+function renderList(){
+  elList.innerHTML="";
+  STEPS.forEach(function(s,i){
+    var li=document.createElement("li");
+    li.className=i<idx?"done":(i===idx?"cur":"");
+    li.innerHTML='<span class="ck">'+(i<idx?"✓":"")+'</span><span class="tx">'+s.t+'</span>'+
+      (s.timer?'<span class="mins">'+Math.round(s.timer/60)+' min</span>':'');
+    li.addEventListener("click",function(){idx=i;renderStep()});
+    elList.appendChild(li);
   });
-  tick(0);
-});
-
-function activeIndex(){
-  var mins=elapsed/60, idx=-1;
-  for(var i=0;i<STEPS.length;i++){ if(mins>=STEPS[i].t) idx=i; }
-  return idx;
-}
-
-function placeNow(){
-  var mins=elapsed/60;
-  if(!running && elapsed===0){ nowLine.style.display="none"; return; }
-  nowLine.style.display="block";
-  var railTop=rail.getBoundingClientRect().top+window.scrollY;
-  function dotY(i){
-    var r=nodes[i].dot.getBoundingClientRect();
-    return r.top+window.scrollY-railTop+r.height/2;
-  }
-  var y;
-  if(mins<=STEPS[0].t) y=dotY(0);
-  else if(mins>=STEPS[STEPS.length-1].t) y=dotY(STEPS.length-1);
-  else{
-    var i=activeIndex();
-    var span=STEPS[i+1].t-STEPS[i].t;
-    y=dotY(i)+((mins-STEPS[i].t)/span)*(dotY(i+1)-dotY(i));
-  }
-  nowLine.style.transform="translateY("+y+"px)";
-}
-
-function tick(dt){
-  if(running) elapsed+=dt;
-  clockTime.textContent = pad(Math.floor(elapsed/60))+":"+pad(Math.floor(elapsed%60));
-
-  nodes.forEach(function(n,i){
-    if(n.running && n.left>0){
-      n.left-=dt;
-      if(n.left<=0){ n.left=0; n.running=false; beep(); }
-      paintTimer(n);
-    }
-  });
-
-  var a=activeIndex();
-  nodes.forEach(function(n,i){ n.el.classList.toggle("on", i===a && (running||elapsed>0)); });
-  placeNow();
 }
 
 var last=Date.now();
 setInterval(function(){
-  var now=Date.now(), dt=(now-last)/1000; last=now;
-  tick(dt);
+  var now=Date.now(),dt=(now-last)/1000;last=now;var dirty=false;
+  tState.forEach(function(st,i){
+    if(st.running&&st.left>0){st.left-=dt;if(st.left<=0){st.left=0;st.running=false;beep()}if(i===idx)dirty=true}
+  });
+  if(dirty)paintTimer();
 },250);
-window.addEventListener("resize",placeNow);
-document.addEventListener("visibilitychange",function(){ last=Date.now(); });
+document.addEventListener("visibilitychange",function(){last=Date.now()});
 
-/* ---------- Zutaten ---------- */
-var portions=4;
-var pVal=document.getElementById("pVal");
-var list=document.getElementById("ingList");
-
+/* ---------- zutaten ---------- */
+var ING=[
+  {n:"Spaghetti alla Chitarra",a:400,u:"g"},
+  {n:"Salsiccia, frisch",a:500,u:"g",nt:"oder grobe Bratwurst"},
+  {n:"Zwiebel",a:1,u:""},
+  {n:"Knoblauchzehe",a:1,u:""},
+  {n:"Olivenöl extra vergine",a:3,u:"EL"},
+  {n:"Peperoncino, gemahlen",a:0.5,u:"TL"},
+  {n:"Lorbeerblätter",a:2,u:""},
+  {n:"Rosmarinzweige",a:2,u:""},
+  {n:"Kirschtomaten",a:250,u:"g",nt:"an der Rispe, halbiert"},
+  {n:"Rotwein, trocken",a:150,u:"ml"},
+  {n:"Passata",a:700,u:"ml"},
+  {n:"Bio-Zitrone",a:1,u:"",nt:"nur die Schale"},
+  {n:"Salz",a:0.5,u:"TL",nt:"plus zum Abschmecken"},
+  {n:"Schwarzer Pfeffer",a:0.25,u:"TL"},
+  {n:"Petersilie, gehackt",a:2,u:"EL"},
+  {n:"Parmesan, gerieben",a:40,u:"g"}
+];
+function frac(v){var r=Math.round(v*4)/4,w=Math.floor(r),rest=+(r-w).toFixed(2);
+  var m={0:"",0.25:"¼",0.5:"½",0.75:"¾"};
+  if(w===0)return m[rest]||String(r);return w+(m[rest]||"")}
+function amount(v,u){
+  if(u==="g"||u==="ml"){var r=v>=100?Math.round(v/10)*10:v>=20?Math.round(v/5)*5:Math.round(v);return r+" "+u}
+  return frac(v)+(u?" "+u:"")}
+var portions=4,pVal=document.getElementById("pVal"),list=document.getElementById("ingList");
 function renderIng(){
   pVal.textContent=portions;
-  var f=portions/4;
-  list.innerHTML="";
+  document.getElementById("stP").textContent=portions;
+  var f=portions/4;list.innerHTML="";
   ING.forEach(function(g){
     var li=document.createElement("li");
-    li.innerHTML='<span class="amt">'+amount(g.a*f,g.u)+"</span>"+
-                 '<span class="nm">'+g.n+(g.nt?'<span class="nt">'+g.nt+"</span>":"")+"</span>";
-    li.addEventListener("click",function(){ li.classList.toggle("have"); });
+    li.innerHTML='<span class="amt">'+amount(g.a*f,g.u)+'</span><span class="nm">'+g.n+(g.nt?'<span class="nt">'+g.nt+'</span>':'')+'</span>';
+    li.addEventListener("click",function(){li.classList.toggle("have")});
     list.appendChild(li);
   });
 }
-document.getElementById("pMinus").addEventListener("click",function(){ if(portions>2){portions--;renderIng();} });
-document.getElementById("pPlus").addEventListener("click",function(){ if(portions<8){portions++;renderIng();} });
-renderIng();
+document.getElementById("pMinus").addEventListener("click",function(){if(portions>2){portions--;renderIng()}});
+document.getElementById("pPlus").addEventListener("click",function(){if(portions<8){portions++;renderIng()}});
 
-/* ---------- Tabs ---------- */
-var tabs=document.querySelectorAll(".tab");
-tabs.forEach(function(b){
-  b.addEventListener("click",function(){
-    tabs.forEach(function(x){x.classList.remove("on");});
-    b.classList.add("on");
-    var v=b.dataset.view;
-    document.getElementById("view-plan").classList.toggle("hidden", v!=="plan");
-    document.getElementById("view-zutaten").classList.toggle("hidden", v!=="zutaten");
-    if(v==="plan") placeNow();
-  });
+/* ---------- ansicht ---------- */
+var navBtn=document.getElementById("navBtn"),ing=false;
+navBtn.addEventListener("click",function(){
+  ing=!ing;
+  document.getElementById("view-plan").classList.toggle("hidden",ing);
+  document.getElementById("view-ing").classList.toggle("hidden",!ing);
+  navBtn.textContent=ing?"Ablauf":"Zutaten";
+  navBtn.classList.toggle("on",ing);
 });
 
-tick(0);
+renderIng();renderStep();
 })();
 </script>
 </body>
