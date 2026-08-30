@@ -73,8 +73,10 @@ input,select{
 }
 input:focus,select:focus{outline:none;border-color:var(--flame)}
 input[type=range]{padding:0;border:0;background:transparent;accent-color:var(--flame)}
-.row{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}.row>*{flex:1 1 130px;min-width:0}
-input[type=date],input[type=time]{-webkit-appearance:none;appearance:none;min-width:0;height:46px;line-height:1.2}
+.row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-bottom:14px}
+.row>*{min-width:0}
+.row.one{grid-template-columns:minmax(0,1fr)}
+input[type=date],input[type=time]{-webkit-appearance:none;appearance:none;display:block;width:100%;min-width:0;max-width:100%;height:46px;line-height:1.2;text-align:left}
 select{height:46px}
 .row:last-child{margin-bottom:0}
 table{width:100%;border-collapse:collapse;font-size:15px}
@@ -127,15 +129,15 @@ tr.total td{font-weight:600;border-top:2px solid var(--line)}
         <div><label class="lab">Teig je Brot: <span class="mono" id="wOut">1050</span> g</label>
           <input type="range" id="fW" min="400" max="2000" step="10" value="1050" style="margin-top:12px"></div>
       </div>
-      <div class="row">
-        <div style="flex:1 1 100%"><label class="lab">Anker</label>
+      <div class="row one">
+        <div><label class="lab">Anker</label>
           <select id="fA"><option value="start">Startzeit (Sauerteig ansetzen)</option><option value="end">Fertig-Zeit (Brot aus dem Ofen)</option></select></div>
       </div>
       <div class="row">
         <div><label class="lab">Datum</label><input type="date" id="fD"></div>
         <div><label class="lab">Uhrzeit</label><input type="time" id="fT" value="16:00"></div>
       </div>
-      <div class="row">
+      <div class="row one">
         <div><label class="lab">Kalte Gare: <span class="mono" id="cOut">9</span> Std (8–12) bei 5 °C</label>
           <input type="range" id="fC" min="8" max="12" step="0.5" value="9" style="margin-top:12px"></div>
       </div>
