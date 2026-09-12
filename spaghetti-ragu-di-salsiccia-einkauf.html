@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Einkauf Ragù">
+<meta name="theme-color" content="#12100E">
+<title>Ragù di Salsiccia · Einkaufsliste</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{
+  --ground:#12100E; --panel:#1B1714; --panelHi:#241E19; --line:#342C24;
+  --bone:#EAE2D6; --ash:#8B7F72; --ashDim:#5E554B;
+  --flame:#5B8CF7; --ember:#FF7A1A; --amber:#E5B33C; --sage:#79C06B;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--ground);min-height:100%}
+body{
+  font-family:'Barlow',system-ui,-apple-system,sans-serif;color:var(--bone);
+  -webkit-font-smoothing:antialiased;font-size:17px;line-height:1.45;
+  padding:calc(env(safe-area-inset-top) + 20px) 16px calc(env(safe-area-inset-bottom) + 40px);
+}
+#wrap{max-width:460px;margin:0 auto}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ashDim);margin:0 0 8px}
+h1{
+  font-family:'Barlow Condensed','Barlow',sans-serif;text-transform:uppercase;
+  letter-spacing:.06em;font-weight:600;font-size:32px;line-height:1.05;margin:0;
+}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.chips{display:flex;gap:8px;flex-shrink:0;margin-top:2px}
+.chip{
+  display:inline-block;text-decoration:none;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--panel);border:1px solid var(--line);color:var(--ash);
+  border-radius:999px;padding:8px 13px;cursor:pointer;
+}
+.chip.on{background:var(--flame);border-color:var(--flame);color:#0D1220;font-weight:600}
+/* Portionen + Fortschritt */
+.portions{display:flex;align-items:center;justify-content:space-between;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:18px 0 0}
+.portions span{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash)}
+.pctrl{display:flex;align-items:center;gap:14px}
+.pctrl button{
+  width:40px;height:40px;border-radius:11px;border:1px solid var(--line);cursor:pointer;
+  background:var(--panelHi);color:var(--bone);font-size:20px;font-weight:600;
+}
+.pctrl b{font-family:'IBM Plex Mono',monospace;font-size:19px;min-width:24px;text-align:center}
+.prog{display:flex;align-items:center;gap:12px;margin:12px 0 0;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ashDim)}
+.bar{flex:1;height:4px;background:var(--line);border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--sage);transition:width .2s ease}
+/* Geschäft */
+.store{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px 16px 6px;margin:16px 0 0}
+.store.all{border-color:var(--sage)}
+.store header{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.store h2{
+  font-family:'Barlow Condensed','Barlow',sans-serif;text-transform:uppercase;
+  letter-spacing:.04em;font-weight:600;font-size:21px;line-height:1.1;margin:0;
+}
+.store .cnt{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ashDim);white-space:nowrap}
+.store.all .cnt{color:var(--sage)}
+.store .info{margin:6px 0 2px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ashDim)}
+.store .info b{color:var(--amber);font-weight:500}
+.items{margin:0;padding:0;list-style:none}
+.items li{
+  display:flex;align-items:center;gap:12px;padding:11px 0;
+  border-bottom:1px solid var(--line);cursor:pointer;
+}
+.items li:last-child{border-bottom:0}
+.box{
+  width:24px;height:24px;flex-shrink:0;border-radius:7px;
+  border:1.5px solid var(--ashDim);display:flex;align-items:center;justify-content:center;
+  font-size:14px;color:transparent;
+}
+.items li.done .box{background:var(--sage);border-color:var(--sage);color:#0D1220}
+.items .n{flex:1;font-size:16px}
+.items .n small{display:block;font-size:13px;color:var(--ash)}
+.items li.done .n{color:var(--ashDim);text-decoration:line-through}
+.items li.done .n small{text-decoration:none}
+.items .m{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--ember);white-space:nowrap}
+.items li.done .m{color:var(--ashDim)}
+.share{
+  width:100%;margin-top:18px;padding:14px;border:1px solid var(--line);border-radius:12px;cursor:pointer;
+  background:var(--panelHi);color:var(--bone);
+  font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;
+}
+.share.ok{border-color:var(--sage);color:var(--sage)}
+.reset{
+  width:100%;margin-top:6px;padding:11px;border:0;border-radius:11px;cursor:pointer;
+  background:transparent;color:var(--ashDim);
+  font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+}
+.note{margin:16px 0 0;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 16px;font-size:14px;color:var(--ash)}
+.note b{color:var(--bone);font-weight:600}
+button:focus-visible,.chip:focus-visible,li:focus-visible{outline:2px solid var(--flame);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="wrap">
+
+<header>
+  <p class="eyebrow">Einkauf · Starnberg</p>
+  <div class="head">
+    <h1>Ragù di Salsiccia<br>Einkaufsliste</h1>
+    <div class="chips">
+      <a class="chip" href="spaghetti-ragu-di-salsiccia.html">Rezept</a>
+      <span class="chip on">Einkauf</span>
+    </div>
+  </div>
+</header>
+
+<div class="portions">
+  <span>Portionen</span>
+  <div class="pctrl">
+    <button onclick="setPortions(-1)" aria-label="Weniger Portionen">−</button>
+    <b id="pVal">4</b>
+    <button onclick="setPortions(1)" aria-label="Mehr Portionen">+</button>
+  </div>
+</div>
+<div class="prog"><span id="progTxt">0 von 0</span><div class="bar"><i id="progBar"></i></div></div>
+
+<div id="stores"></div>
+
+<div class="note">
+  <b>Zuhause prüfen:</b> Olivenöl extra vergine, Peperoncino gemahlen, Lorbeerblätter, Salz, schwarzer Pfeffer.
+</div>
+
+<button class="share" onclick="shareList()">Liste teilen</button>
+<button class="reset" onclick="resetAll()">Alle Häkchen zurücksetzen</button>
+
+</div>
+<script>
+'use strict';
+/* ---------- Konfiguration ---------- */
+var KEY='ragu-einkauf';
+var BASE=4;              /* Portionen */
+var STORES=[
+  {id:'silletti',n:'Silletti Buon Gusto',info:'Hauptstraße 3 · <b>Sa 9–14 Uhr, Di nur bis 15 Uhr, So zu</b> · 08151 9727527'},
+  {id:'gemuese',n:'Türkischer Gemüsemann',info:'Gemüse und Kräuter – frisch und günstig'},
+  {id:'rewe',n:'REWE / EDEKA / Denns',info:'Rotwein'}
+];
+/* per: Menge pro Person · perN: 1 Stück je N Personen · fix: feste Menge */
+var ITEMS=[
+  {s:'silletti',n:'Spaghetti alla Chitarra',sub:'ersatzweise normale Spaghetti',per:100,u:'g'},
+  {s:'silletti',n:'Salsiccia, frisch',sub:'oder grobe Bratwurst mit Fenchelsamen',per:125,u:'g'},
+  {s:'silletti',n:'Passata',sub:'Flasche à 700 ml',perN:4,u:'Fl.'},
+  {s:'silletti',n:'Parmesan am Stück',sub:'~40 g gerieben je 4 Portionen',fix:1,u:'Stk'},
+  {s:'gemuese',n:'Zwiebel',sub:'',perN:4,u:'Stk'},
+  {s:'gemuese',n:'Knoblauchzehe',sub:'1 Knolle reicht',perN:4,u:'Stk'},
+  {s:'gemuese',n:'Kirschtomaten',sub:'an der Rispe',per:62.5,u:'g'},
+  {s:'gemuese',n:'Bio-Zitrone',sub:'nur die Schale – unbehandelt',perN:4,u:'Stk'},
+  {s:'gemuese',n:'Rosmarin',sub:'2 Zweige je 4 Portionen',perN:2,u:'Zweig'},
+  {s:'gemuese',n:'Petersilie',sub:'glatt',fix:1,u:'Bund'},
+  {s:'rewe',n:'Rotwein, trocken',sub:'150 ml je 4 Portionen – Rest ins Glas',fix:1,u:'Fl.'}
+];
+/* ---------- State ---------- */
+var portions=BASE, checked={};
+try{
+  var s=JSON.parse(localStorage.getItem(KEY)||'{}');
+  if(typeof s.portions==='number'&&s.portions>=1&&s.portions<=8)portions=s.portions;
+  if(s.checked)checked=s.checked;
+}catch(e){}
+/* Geteilter Stand im Link: #p=4&c=0.2 */
+try{
+  var hp=location.hash.replace('#','');
+  if(hp){
+    var q={};hp.split('&').forEach(function(kv){var a=kv.split('=');q[a[0]]=decodeURIComponent(a[1]||'')});
+    if(q.p&&+q.p>=1&&+q.p<=8)portions=+q.p;
+    if(q.c!=null){checked={};if(q.c)q.c.split('.').forEach(function(i){if(ITEMS[+i])checked[+i]=true});}
+    history.replaceState(null,'',location.pathname+location.search);
+  }
+}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({portions:portions,checked:checked}))}catch(e){}}
+function shareList(){
+  var ids=Object.keys(checked).filter(function(i){return checked[i]}).sort(function(a,b){return a-b});
+  var url=location.origin+location.pathname+'#p='+portions+'&c='+ids.join('.');
+  var open=ITEMS.filter(function(it,i){return !checked[i]}).map(function(it){return '· '+it.n+' '+amount(it)}).join('\n');
+  var text='Ragù Einkauf ('+portions+' Portionen)\nNoch offen:\n'+open;
+  var btn=document.querySelector('.share');
+  function ok(){btn.className='share ok';btn.textContent='✓ Link kopiert';setTimeout(function(){btn.className='share';btn.textContent='Liste teilen'},2000)}
+  if(navigator.share){navigator.share({title:'Ragù Einkauf',text:text,url:url}).catch(function(){})}
+  else if(navigator.clipboard){navigator.clipboard.writeText(url).then(ok)}
+  else{prompt('Link kopieren:',url)}
+}
+/* ---------- Mengen ---------- */
+function amount(it){
+  var v;
+  if(it.per!=null)v=it.per*portions;
+  else if(it.perN!=null)v=Math.ceil(portions/it.perN);
+  else v=it.fix;
+  if(it.u==='g'){v=v>=100?Math.round(v/10)*10:Math.round(v/5)*5}
+  if(it.u==='g'&&v>=1000)return (Math.round(v/50)*50/1000).toString().replace('.',',')+' kg';
+  if(it.u==='ml'&&v>=1000)return (v/1000).toString().replace('.',',')+' l';
+  return v+' '+it.u;
+}
+/* ---------- Render ---------- */
+function render(){
+  document.getElementById('pVal').textContent=portions;
+  var root=document.getElementById('stores');root.innerHTML='';
+  var total=0,done=0;
+  STORES.forEach(function(st){
+    var its=ITEMS.map(function(it,i){it._i=i;return it}).filter(function(it){return it.s===st.id});
+    if(!its.length)return;
+    var d=its.filter(function(it){return checked[it._i]}).length;
+    total+=its.length;done+=d;
+    var sec=document.createElement('section');
+    sec.className='store'+(d===its.length?' all':'');
+    sec.innerHTML='<header><h2>'+st.n+'</h2><span class="cnt">'+d+' / '+its.length+'</span></header>'
+      +(st.info?'<p class="info">'+st.info+'</p>':'');
+    var ul=document.createElement('ul');ul.className='items';
+    its.forEach(function(it){
+      var li=document.createElement('li');
+      if(checked[it._i])li.className='done';
+      li.setAttribute('tabindex','0');
+      li.onclick=function(){toggle(it._i)};
+      li.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle(it._i)}};
+      li.innerHTML='<span class="box">✓</span>'
+        +'<span class="n">'+it.n+(it.sub?'<small>'+it.sub+'</small>':'')+'</span>'
+        +'<span class="m">'+amount(it)+'</span>';
+      ul.appendChild(li);
+    });
+    sec.appendChild(ul);root.appendChild(sec);
+  });
+  document.getElementById('progTxt').textContent=done+' von '+total;
+  document.getElementById('progBar').style.width=(total?Math.round(done/total*100):0)+'%';
+  save();
+}
+function toggle(i){if(checked[i])delete checked[i];else checked[i]=true;render();}
+function setPortions(d){portions=Math.min(8,Math.max(1,portions+d));render();}
+function resetAll(){checked={};render();}
+render();
+</script>
+</body>
+</html>
