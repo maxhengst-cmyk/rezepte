@@ -29,6 +29,7 @@ body {
 .disp { font-family:'Barlow Condensed','Barlow',-apple-system,sans-serif; text-transform:uppercase; letter-spacing:.06em; font-weight:600; }
 .mono { font-family:'IBM Plex Mono', ui-monospace, Menlo, monospace; font-variant-numeric:tabular-nums; }
 .eyebrow { font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--ashDim); }
+.chip { display:inline-block; text-decoration:none; flex:none; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; background:var(--panel); border:1px solid var(--line); color:var(--ash); border-radius:999px; padding:8px 13px; }
 .card { background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px; margin-bottom:12px; }
 button {
   font-family:'Barlow Condensed',-apple-system,sans-serif; text-transform:uppercase; letter-spacing:.07em;
@@ -72,7 +73,10 @@ button.ghost { background:transparent; color:var(--ash); font-size:14px; padding
 <div id="wrap">
   <header style="margin-bottom:14px">
     <div class="eyebrow">Weber · Plancha links, Rost rechts</div>
-    <div class="disp" style="font-size:26px;line-height:1.1;margin-top:2px">Marinierte Hähnchenschenkel</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+      <div class="disp" style="font-size:26px;line-height:1.1;margin-top:2px">Marinierte Hähnchenschenkel</div>
+      <a class="chip" href="gegrillte-haehnchenschenkel-einkauf.html" style="margin-top:4px">Einkauf</a>
+    </div>
   </header>
 
   <div class="specs">
