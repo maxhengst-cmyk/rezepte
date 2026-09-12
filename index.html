@@ -32,6 +32,27 @@ h1{
 }
 .lede{margin:14px 0 0;padding-top:13px;border-top:1px solid var(--line);font-size:14px;color:var(--ash)}
 .sect{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--ashDim);margin:26px 0 12px}
+.view{display:none}
+.view.on{display:block}
+.tile{
+  display:block;text-decoration:none;color:inherit;
+  background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--flame);
+  border-radius:16px;padding:20px 18px;margin-bottom:14px;
+  transition:transform .12s ease;
+}
+.tile:active{transform:translateY(1px)}
+.tile h2{
+  font-family:'Barlow Condensed','Barlow',sans-serif;text-transform:uppercase;
+  letter-spacing:.05em;font-weight:600;font-size:27px;line-height:1.05;margin:0 0 7px;
+}
+.tile p{margin:0;font-size:14.5px;color:#C9C0B2}
+.tile .cnt{display:block;margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ashDim)}
+.backchip{
+  display:inline-block;text-decoration:none;margin:0 0 4px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--panel);border:1px solid var(--line);color:var(--ash);
+  border-radius:999px;padding:8px 13px;
+}
 .card{
   display:block;text-decoration:none;color:inherit;
   background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--ember);
@@ -62,7 +83,32 @@ a:focus-visible{outline:2px solid var(--flame);outline-offset:3px}
 </header>
 
 <main>
-  <p class="sect">Grillen</p>
+  <section class="view on" id="view-home">
+    <p class="sect">Kategorien</p>
+
+  <a class="tile" href="#grillen">
+    <h2>Grillen</h2>
+    <p>Hähnchenschenkel, Fajitas, Smash Burger – alles für den Weber.</p>
+    <span class="cnt">3 Planer</span>
+  </a>
+
+  <a class="tile" href="#pasta">
+    <h2>Pasta</h2>
+    <p>Ragù di Salsiccia, Scarpariello, Bolognese – italienische Klassiker.</p>
+    <span class="cnt">3 Planer</span>
+  </a>
+
+  <a class="tile" href="#backen">
+    <h2>Backen</h2>
+    <p>Mildes Weizensauerteigbrot nach Lutz Geißler.</p>
+    <span class="cnt">1 Planer</span>
+  </a>
+
+  </section>
+
+  <section class="view" id="view-grillen">
+    <a class="backchip" href="#">← Übersicht</a>
+    <p class="sect">Grillen</p>
 
   <a class="card" href="gegrillte-haehnchenschenkel.html">
     <span class="kind">Grill</span>
@@ -84,8 +130,11 @@ a:focus-visible{outline:2px solid var(--flame);outline-offset:3px}
     <p>Double Smash auf der Plancha in Runden à 2 Burger, Bacon on top, Jalapeño-Zwiebel-Jam. Rundenzähler und Timer je Schritt.</p>
     <span class="meta">6 Burger · ca. 60 Min · nach Tender Belly</span>
   </a>
+  </section>
 
-  <p class="sect">Pasta</p>
+  <section class="view" id="view-pasta">
+    <a class="backchip" href="#">← Übersicht</a>
+    <p class="sect">Pasta</p>
 
   <a class="card" href="spaghetti-ragu-di-salsiccia.html">
     <span class="kind">Pasta</span>
@@ -107,8 +156,11 @@ a:focus-visible{outline:2px solid var(--flame);outline-offset:3px}
     <p>Der Klassiker aus Bologna: Soffritto, Pancetta und Rinderhack, mindestens 2 Stunden geköchelt, Milch zum Finale.</p>
     <span class="meta">4 Portionen · ca. 140 Min · ORO di Parma</span>
   </a>
+  </section>
 
-  <p class="sect">Backen</p>
+  <section class="view" id="view-backen">
+    <a class="backchip" href="#">← Übersicht</a>
+    <p class="sect">Backen</p>
 
   <a class="card" href="Mildes-Weizensauerteigbrot-Backplaner.html">
     <span class="kind">Brot</span>
@@ -116,10 +168,29 @@ a:focus-visible{outline:2px solid var(--flame);outline-offset:3px}
     <p>Schritt-für-Schritt-Backplaner nach Lutz Geißler. Bäckerprozente, Zeitplan ab Start- oder Fertig-Zeit, Timer je Schritt.</p>
     <span class="meta">TA 174 % · ca. 16 Std · Ploetzblog</span>
   </a>
+  </section>
 
   <footer>
     <b>Aufs iPhone holen:</b> Diese Seite in Safari öffnen, Teilen-Symbol antippen, „Zum Home-Bildschirm" wählen. Dann liegt die ganze Sammlung als App auf dem Bildschirm.
   </footer>
+
+  <script>
+  'use strict';
+  (function(){
+    var ids=['grillen','pasta','backen'];
+    function render(){
+      var h=location.hash.replace('#','');
+      var cat=ids.indexOf(h)>=0?h:null;
+      document.getElementById('view-home').classList.toggle('on',!cat);
+      ids.forEach(function(id){
+        document.getElementById('view-'+id).classList.toggle('on',cat===id);
+      });
+      window.scrollTo(0,0);
+    }
+    window.addEventListener('hashchange',render);
+    render();
+  })();
+  </script>
 </main>
 
 </div>
