@@ -35,6 +35,7 @@ h1{
   background:var(--panel);border:1px solid var(--line);color:var(--ash);
   border-radius:999px;padding:8px 13px;cursor:pointer;
 }
+a.chip{text-decoration:none;display:inline-flex;align-items:center}
 .chip.on{background:var(--flame);border-color:var(--flame);color:#0D1220;font-weight:600}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0 0}
 .kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center}
@@ -120,6 +121,7 @@ button:focus-visible,.chip:focus-visible,li:focus-visible{outline:2px solid var(
     <div class="chips">
       <button class="chip on" id="chipGrill" onclick="showView('grill')">Grillen</button>
       <button class="chip" id="chipZutaten" onclick="showView('zutaten')">Zutaten</button>
+      <a class="chip" href="smash-burger-einkauf.html">Einkauf</a>
     </div>
   </div>
 </header>
