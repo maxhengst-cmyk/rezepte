@@ -79,8 +79,14 @@ h1{
 .items li.done .n small{text-decoration:none}
 .items .m{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--ember);white-space:nowrap}
 .items li.done .m{color:var(--ashDim)}
+.share{
+  width:100%;margin-top:18px;padding:14px;border:1px solid var(--line);border-radius:12px;cursor:pointer;
+  background:var(--panelHi);color:var(--bone);
+  font-family:'IBM Plex Mono',monospace;font-size:14px;font-weight:600;
+}
+.share.ok{border-color:var(--sage);color:var(--sage)}
 .reset{
-  width:100%;margin-top:18px;padding:11px;border:0;border-radius:11px;cursor:pointer;
+  width:100%;margin-top:6px;padding:11px;border:0;border-radius:11px;cursor:pointer;
   background:transparent;color:var(--ashDim);
   font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
 }
@@ -120,6 +126,7 @@ button:focus-visible,.chip:focus-visible,li:focus-visible{outline:2px solid var(
   <b>Zuhause prüfen:</b> Rocka-Saucen (Honey &amp; Mustard, BBQ, Chili Cheese), Salz, Pfeffer, Öl fürs Rost, Küchenpapier. <b>Jam-Zutaten</b> entfallen, wenn der Jam schon gekocht ist – einfach abhaken.
 </div>
 
+<button class="share" onclick="shareList()">Liste teilen</button>
 <button class="reset" onclick="resetAll()">Alle Häkchen zurücksetzen</button>
 
 </div>
@@ -159,7 +166,28 @@ try{
   }
   if(s.checked)checked=s.checked;
 }catch(e){}
+/* Geteilter Stand im Link: #p=6&c=0.1.3 */
+try{
+  var hp=location.hash.replace('#','');
+  if(hp){
+    var q={};hp.split('&').forEach(function(kv){var a=kv.split('=');q[a[0]]=decodeURIComponent(a[1]||'')});
+    if(q.p&&+q.p>=1&&+q.p<=16)portions=+q.p;
+    if(q.c!=null){checked={};if(q.c)q.c.split('.').forEach(function(i){if(ITEMS[+i])checked[+i]=true});}
+    history.replaceState(null,'',location.pathname+location.search);
+  }
+}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify({portions:portions,checked:checked}))}catch(e){}}
+function shareList(){
+  var ids=Object.keys(checked).filter(function(i){return checked[i]}).sort(function(a,b){return a-b});
+  var url=location.origin+location.pathname+'#p='+portions+'&c='+ids.join('.');
+  var open=ITEMS.filter(function(it,i){return !checked[i]}).map(function(it){return '· '+it.n+' '+amount(it)}).join('\n');
+  var text='Smash Burger Einkauf ('+portions+' Burger)\nNoch offen:\n'+open;
+  var btn=document.querySelector('.share');
+  function ok(){btn.className='share ok';btn.textContent='✓ Link kopiert';setTimeout(function(){btn.className='share';btn.textContent='Liste teilen'},2000)}
+  if(navigator.share){navigator.share({title:'Smash Burger Einkauf',text:text,url:url}).catch(function(){})}
+  else if(navigator.clipboard){navigator.clipboard.writeText(url).then(ok)}
+  else{prompt('Link kopieren:',url)}
+}
 /* ---------- Mengen ---------- */
 function amount(it){
   var jamF=Math.ceil(portions/JAM_BURGER);
