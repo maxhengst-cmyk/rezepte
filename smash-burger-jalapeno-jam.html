@@ -129,7 +129,7 @@ button:focus-visible,.chip:focus-visible,li:focus-visible{outline:2px solid var(
 <div class="kpis">
   <div class="kpi"><b id="kpiBurger">6</b><span>Burger</span></div>
   <div class="kpi"><b id="kpiPatties">12</b><span>Patties 115 g</span></div>
-  <div class="kpi"><b id="kpiRunden">3</b><span>Runden à 2</span></div>
+  <div class="kpi"><b id="kpiRunden">3</b><span>Runden à 4 Patties</span></div>
   <div class="kpi"><b>2+1</b><span>Min je Seite</span></div>
 </div>
 
@@ -163,7 +163,7 @@ button:focus-visible,.chip:focus-visible,li:focus-visible{outline:2px solid var(
   <p class="sect">Jalapeño-Zwiebel-Jam (eine Charge, reicht für 6–8 Burger)</p>
   <ul class="zut" id="jamList"></ul>
   <div class="note">
-    <b>Hack:</b> 20 % Fett (80/20), sonst wird's trocken – mager taugt nicht zum Smashen. <b>Kugeln:</b> locker formen, nicht kneten, erst auf der Plancha salzen. <b>Bacon-Fett</b> bleibt auf der Plancha – darin werden die Patties gesmasht und die Buns getoastet. <b>Kinder:</b> BBQ-Sauce statt Jam, kein Jalapeño.
+    <b>Hack:</b> 20 % Fett (80/20), sonst wird's trocken – mager taugt nicht zum Smashen. <b>Kugeln:</b> locker formen, nicht kneten, erst auf der Plancha salzen. <b>Smashen</b> mit dem Schaber, die <b>Glocken</b> sind Hauben fürs Käseschmelzen. <b>Bacon-Fett</b> bleibt auf der Plancha – darin werden die Patties gesmasht und die Buns getoastet. <b>Kinder:</b> BBQ-Sauce statt Jam, kein Jalapeño.
   </div>
 </div>
 
@@ -198,8 +198,8 @@ var STEPS = [
   {t:'Kugeln formen', min:0, txt:'Hack zu Kugeln à <b>115 g</b> formen – <b>locker</b>, nicht kneten, nicht würzen. Auf ein Blech, abdecken, <b>kalt stellen</b> bis zum Smashen.'},
   {t:'Station richten', min:15, txt:'Buns halbieren, Saucen, Jam, Käse, Salat, Glocken, Schaber und Küchenpapier neben den Grill. Plancha dünn einölen, Grill <b>hochheizen</b>.'},
   {t:'Bacon braten', min:6, txt:'Bacon-Scheiben nebeneinander auf die Plancha, mittlere bis hohe Hitze. Nach <b>2–3 Min wenden</b>, insgesamt <b>5–6 Min</b> bis knusprig. Auf Küchenpapier parken – <b>Fett bleibt auf der Plancha!</b>'},
-  {t:'Smashen', min:2, loop:true, txt:'Plancha auf <b>Vollgas</b>. <b>2 Kugeln</b> ins Bacon-Fett, Glocken drauf, <b>10 Sek</b> fest drücken, Glocken ab. <b>Kugel 3 + 4</b> daneben, gleiches Spiel. Alle <b>salzen</b>. Buns mit der Schnittseite <b>30–60 Sek</b> ins Fett – danebenbleiben, Brioche bräunt schnell.'},
-  {t:'Wenden + Käse', min:1, loop:true, txt:'Unterseite <b>dunkelbraun und knusprig</b>? Schaber flach drunter, in Smash-Reihenfolge wenden. Auf jedes Patty eine <b>Käsescheibe</b>, <b>~1 Min</b> schmelzen lassen.'},
+  {t:'Smashen', min:2, loop:true, txt:'Plancha auf <b>Vollgas</b>. <b>4 Kugeln</b> ins Bacon-Fett, jede mit dem <b>Schaber 10 Sek</b> kräftig flach drücken (zweiten Wender quer drauflegen, mit beiden Händen pressen). Alle <b>salzen</b>. Buns mit der Schnittseite <b>30–60 Sek</b> ins Fett – danebenbleiben, Brioche bräunt schnell.'},
+  {t:'Wenden + Käse', min:1, loop:true, txt:'Unterseite <b>dunkelbraun und knusprig</b>? Schaber flach drunter, wenden. Auf jedes Patty eine <b>Käsescheibe</b>, Schuss Wasser daneben, <b>Glocke drüber</b> – <b>30–45 Sek</b> im Dampf schmelzen. Mit 2 Glocken erst Patty 1+2, dann 3+4.'},
   {t:'Bauen + servieren', min:0, loop:true, txt:'Bun → <b>Sauce</b> (Honey & Mustard, Kinder: BBQ) → Salat → <b>2 Patties</b> übereinander → <b>Bacon</b> → <b>Jam</b> (nicht bei den Kindern) → Deckel. Sofort raus damit, die nächste Runde startet gleich.'},
   {t:'Fertig', min:0, txt:'Alle Runden durch. Plancha noch warm mit dem Schaber grob abziehen – <b>nicht blitzblank</b>, die dunkle Schicht ist gewollt. Reste vom Jam halten 1–2 Wochen im Kühlschrank.'}
 ];
