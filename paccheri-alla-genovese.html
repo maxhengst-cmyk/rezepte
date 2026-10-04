@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Genovese">
+<meta name="theme-color" content="#12100E">
+<title>Paccheri alla Genovese</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{
+  --ground:#12100E; --panel:#1B1714; --panelHi:#241E19; --line:#342C24;
+  --bone:#EAE2D6; --ash:#8B7F72; --ashDim:#5E554B;
+  --flame:#5B8CF7; --ember:#FF7A1A; --ok:#79C06B; --warn:#E5B33C;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--ground);min-height:100%}
+body{
+  font-family:'Barlow',system-ui,-apple-system,sans-serif;color:var(--bone);
+  -webkit-font-smoothing:antialiased;
+  padding:calc(env(safe-area-inset-top) + 16px) 16px calc(env(safe-area-inset-bottom) + 32px);
+}
+#wrap{max-width:460px;margin:0 auto}
+.disp{font-family:'Barlow Condensed','Barlow',sans-serif;text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ashDim)}
+header{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}
+.sub{margin:0 0 16px;font-size:14px;line-height:1.5;color:var(--ash)}
+.chip{
+  font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.05em;
+  font-size:14px;font-weight:600;border:1px solid var(--line);background:transparent;
+  color:var(--ash);border-radius:999px;padding:8px 13px;width:auto;margin:0;cursor:pointer;
+}
+.chip.on{border-color:var(--flame);color:var(--flame);background:rgba(91,140,247,.10)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 4px;text-align:center}
+.stat .k{display:block;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--ashDim)}
+.stat .v{display:block;margin-top:6px;font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--bone);white-space:nowrap}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.stepno{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ashDim)}
+.roundno{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--warn);margin-top:5px}
+.step-title{font-size:26px;margin:8px 0 10px}
+.step-body{margin:0;font-size:17px;line-height:1.55;color:#D9D0C2}
+.step-body b{color:var(--ember);font-weight:600}
+button{
+  font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.07em;
+  font-weight:600;font-size:18px;border:1px solid var(--line);background:var(--panelHi);
+  color:var(--bone);border-radius:12px;padding:15px 16px;width:100%;cursor:pointer;margin-bottom:10px;
+}
+button:focus-visible{outline:2px solid var(--flame);outline-offset:2px}
+button.primary{background:var(--flame);border-color:var(--flame);color:#08101F}
+button.ghost{background:transparent;color:var(--ash);font-size:15px;padding:11px}
+button:disabled{opacity:.35}
+.timer{width:auto;margin:14px 0 0;font-family:'IBM Plex Mono',monospace;font-size:15px;letter-spacing:0;padding:9px 14px;border-radius:10px}
+.timer.run{background:var(--warn);border-color:var(--warn);color:#1A1200}
+.timer.zero{background:var(--ember);border-color:var(--ember);color:#1A0A00}
+.tadj{display:flex;gap:8px;margin-top:10px}
+.tadj button{width:auto;margin:0;padding:8px 14px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0;text-transform:none;font-weight:500;border-radius:9px;background:transparent;color:var(--ash)}
+.list{list-style:none;margin:0;padding:0}
+.list li{display:flex;align-items:center;gap:11px;padding:12px 2px;border-bottom:1px solid var(--line);cursor:pointer}
+.list li:last-child{border-bottom:0}
+.ck{flex:0 0 auto;width:20px;height:20px;border-radius:50%;border:1.5px solid var(--ashDim);display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--ok)}
+li.done .ck{border-color:var(--ok)}
+li.done .tx{color:var(--ashDim);text-decoration:line-through;text-decoration-thickness:1px}
+li.cur .ck{border-color:var(--flame)}
+li.cur .tx{color:var(--flame)}
+.tx{font-size:16px;min-width:0}
+.mins{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ashDim);white-space:nowrap}
+.portions{display:flex;align-items:center;gap:12px}
+.stepper{margin-left:auto;display:flex;align-items:center;gap:4px}
+.stepper button{width:44px;height:44px;padding:0;margin:0;font-size:22px;border-radius:10px}
+.stepper span{min-width:44px;text-align:center;font-family:'IBM Plex Mono',monospace;font-size:19px}
+.ing{list-style:none;margin:0;padding:0}
+.ing li{display:flex;gap:12px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.ing li:last-child{border-bottom:0}
+.ing .amt{flex:0 0 84px;font-family:'IBM Plex Mono',monospace;font-size:14px;font-variant-numeric:tabular-nums}
+.ing .nm{flex:1;font-size:16px}
+.ing .nt{display:block;font-size:13px;color:var(--ash);margin-top:2px}
+.ing li.have{opacity:.42}
+.ing li.have .nm{text-decoration:line-through}
+.hint{color:var(--ash);font-size:14px;line-height:1.55}
+.note p{margin:0 0 11px;font-size:15px;line-height:1.55;color:#D9D0C2}
+.note p:last-child{margin-bottom:0}
+.note b{color:var(--bone)}
+.hidden{display:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">Neapel · Bräter · Induktion</div>
+      <div class="disp" style="font-size:27px;line-height:1.05;margin-top:2px">Paccheri alla Genovese</div>
+    </div>
+    <div style="display:flex;gap:8px;flex-shrink:0">
+      <a class="chip" href="paccheri-alla-genovese-einkauf.html" style="text-decoration:none;display:inline-block">Einkauf</a>
+      <button class="chip" id="navBtn">Zutaten</button>
+    </div>
+  </header>
+  <p class="sub">Neapolitanisches Zwiebel-Rind-Ragù, ohne Tomate. Zwei Gänge: erst Pasta, dann Fleisch.</p>
+
+  <div class="stats">
+    <div class="stat"><span class="k">Portionen</span><span class="v" id="stP">4</span></div>
+    <div class="stat"><span class="k">Gesamt</span><span class="v">ca. 3,5 h</span></div>
+    <div class="stat"><span class="k">Schmoren</span><span class="v">2h + 45m</span></div>
+    <div class="stat"><span class="k">Zwiebeln</span><span class="v" id="stZw">1,5 kg</span></div>
+  </div>
+
+  <!-- ================= ABLAUF ================= -->
+  <section id="view-plan">
+    <div class="card">
+      <div class="stepno" id="stepNo"></div>
+      <div class="roundno hidden" id="roundNo"></div>
+      <div class="disp step-title" id="stepTitle"></div>
+      <p class="step-body" id="stepBody"></p>
+      <button class="timer hidden" id="stepTimer">00:00</button>
+      <div class="tadj hidden" id="tAdj">
+        <button id="tMinus" aria-label="Timer eine Minute kürzer">−1 min</button>
+        <button id="tPlus" aria-label="Timer eine Minute länger">+1 min</button>
+      </div>
+    </div>
+    <button class="primary" id="nextBtn">Weiter</button>
+    <button class="ghost" id="backBtn">Schritt zurück</button>
+    <div class="card"><ul class="list" id="stepList"></ul></div>
+  </section>
+
+  <!-- ================= ZUTATEN ================= -->
+  <section id="view-ing" class="hidden">
+    <div class="card portions">
+      <span class="eyebrow">Portionen</span>
+      <div class="stepper">
+        <button id="pMinus" aria-label="weniger">−</button>
+        <span id="pVal">4</span>
+        <button id="pPlus" aria-label="mehr">+</button>
+      </div>
+    </div>
+    <div class="card"><ul class="ing" id="ingList"></ul></div>
+    <div class="card note">
+      <div class="eyebrow" style="margin-bottom:10px">Notizen</div>
+      <p><b>Zwiebeln:</b> Das Original nimmt die Ramata di Montoro. Gelbe Zwiebeln kommen ihr am nächsten, rote werden zu süß.</p>
+      <p><b>Fleisch:</b> Rinderwade (Muscolo) bringt Gelatine, die Sauce wird samtig. Ersatzweise Schulter oder dicke Rippe.</p>
+      <p><b>Zwei Gänge:</b> Die Sauce kommt an die Pasta als erster Gang. Die ganzen Fleischstücke folgen danach als zweiter Gang, klassisch neapolitanisch.</p>
+      <p><b>Kinder:</b> Das Gericht ist von Haus aus mild. Pfeffer erst am Teller.</p>
+    </div>
+    <p class="hint" style="text-align:center;margin:20px 0 0">Neapolitanischer Klassiker · private Nutzung</p>
+  </section>
+</div>
+
+<script>
+(function(){
+"use strict";
+var KEY="genovese";
+var mem={};
+function store(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}}
+function load(k){try{var v=localStorage.getItem(k);if(v!==null)return v}catch(e){}return Object.prototype.hasOwnProperty.call(mem,k)?mem[k]:null}
+function pad(n){return (n<10?"0":"")+n}
+function mmss(s){s=Math.max(0,Math.round(s));return pad(Math.floor(s/60))+":"+pad(s%60)}
+var ac=null;
+function beep(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();[0,.3,.6].forEach(function(off){var o=ac.createOscillator(),g=ac.createGain();o.type="triangle";o.frequency.value=880;o.connect(g);g.connect(ac.destination);var t=ac.currentTime+off;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.3,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.25);o.start(t);o.stop(t+.28)})}catch(e){}}
+
+/* ---------- schritte ---------- */
+var STEPS=[
+  {t:"Fleisch temperieren",timer:1800,b:"Rinderwade <b>30 Min vorher</b> aus dem Kühlschrank nehmen."},
+  {t:"Schneiden",note:"ca. 20 min",b:"Zwiebeln in <b>dünne Halbringe</b>. Karotte, Sellerie und Pancetta <b>fein würfeln</b>. Fleisch in <b>4 bis 5 große Stücke</b> schneiden."},
+  {t:"Anbraten",timer:600,b:"Öl und Pancetta im Bräter auslassen. Karotte und Sellerie <b>3 Min</b> mitschwitzen. Fleisch rundum <b>kräftig anbräunen</b>."},
+  {t:"Zwiebeln schmoren",loop:{rounds:6,timer:1200},b:function(r){
+    return r===1
+      ?"Zwiebeln und Lorbeer auf das Fleisch, <b>kräftig salzen</b>, Deckel zu, <b>kleinste Stufe</b>. Die Zwiebeln ziehen eigenes Wasser."
+      :"<b>Umrühren</b>, Boden prüfen. Wird es trocken, ein Schluck Wasser. Die Zwiebeln dürfen <b>nie anbrennen</b>.";
+  }},
+  {t:"Einkochen mit Wein",loop:{rounds:3,timer:900},b:function(r){
+    if(r===1)return "Deckel ab. <b>Erstes Drittel des Weins</b> angießen und einkochen lassen.";
+    if(r===2)return "<b>Zweites Drittel des Weins</b> angießen und einkochen lassen. Jetzt das <b>Nudelwasser aufsetzen</b>.";
+    return "<b>Letztes Drittel des Weins</b> angießen. Ziel: <b>cremig, karamellbraun</b>, das Fleisch zerfällt.";
+  }},
+  {t:"Fleisch vorbereiten",b:"Fleisch herausnehmen. Für den <b>zweiten Gang</b> ganze Stücke warm stellen. Oder zerzupfen und zurück in die Sauce. Lorbeer raus, mit Salz und Pfeffer abschmecken."},
+  {t:"Paccheri kochen",timer:720,adjust:true,b:"Paccheri in kräftig gesalzenem Wasser kochen: <b>Packungszeit minus 2 Min</b>, Timer unten anpassen. Eine Tasse <b>Kochwasser</b> aufheben."},
+  {t:"Mantecare",b:"Paccheri in die Sauce, mit etwas Kochwasser <b>1 bis 2 Min schwenken</b>. Parmigiano und frischer Pfeffer drüber. Servieren als <b>erster Gang</b>. Kinder: Pfeffer erst am Teller."},
+  {t:"Zweiter Gang",b:"Fleischstücke mit etwas Sauce und einer <b>Gemüsebeilage</b> servieren."}
+];
+function stepDur(s){return s.loop?s.loop.timer:(s.timer||0)}
+function freshTimers(){return STEPS.map(function(s){return {left:stepDur(s),running:false}})}
+
+/* ---------- state laden ---------- */
+var saved={};
+try{saved=JSON.parse(load(KEY)||"{}")||{}}catch(e){saved={}}
+var idx=+saved.idx;if(!(idx>=0&&idx<STEPS.length))idx=0;
+var rounds={};
+STEPS.forEach(function(s,i){
+  if(s.loop){var v=saved.r?+saved.r[i]:1;rounds[i]=(v>=1&&v<=s.loop.rounds)?v:1}
+});
+var portions=+saved.portions;if(!(portions>=1&&portions<=12))portions=4;
+var tState=freshTimers();
+function persist(){store(KEY,JSON.stringify({idx:idx,r:rounds,portions:portions}))}
+
+var elNo=document.getElementById("stepNo"),elRd=document.getElementById("roundNo"),
+    elTi=document.getElementById("stepTitle"),elBo=document.getElementById("stepBody"),
+    elTm=document.getElementById("stepTimer"),elAdj=document.getElementById("tAdj"),
+    elNext=document.getElementById("nextBtn"),elBack=document.getElementById("backBtn"),
+    elList=document.getElementById("stepList");
+
+function body(s,i){return typeof s.b==="function"?s.b(rounds[i]||1):s.b}
+
+function renderStep(){
+  var s=STEPS[idx];
+  elNo.textContent="Schritt "+(idx+1)+" von "+STEPS.length;
+  if(s.loop){
+    elRd.classList.remove("hidden");
+    elRd.textContent="Runde "+rounds[idx]+" von "+s.loop.rounds;
+  }else{
+    elRd.classList.add("hidden");
+  }
+  elTi.textContent=s.t;
+  elBo.innerHTML=body(s,idx);
+  paintTimer();
+  elNext.textContent=(s.loop&&rounds[idx]<s.loop.rounds)?"Nächste Runde":(idx===STEPS.length-1?"Von vorn":"Weiter");
+  elBack.disabled=(idx===0&&!(s.loop&&rounds[idx]>1));
+  renderList();
+  persist();
+}
+function paintTimer(){
+  var s=STEPS[idx],st=tState[idx],dur=stepDur(s);
+  if(!dur){elTm.classList.add("hidden");elAdj.classList.add("hidden");return}
+  elTm.classList.remove("hidden");
+  elTm.textContent=st.left<=0?"fertig ↻":mmss(st.left);
+  elTm.classList.toggle("run",st.running&&st.left>0);
+  elTm.classList.toggle("zero",st.left<=0);
+  elAdj.classList.toggle("hidden",!s.adjust);
+}
+elTm.addEventListener("click",function(){
+  var s=STEPS[idx],st=tState[idx],dur=stepDur(s);
+  if(st.left<=0){st.left=dur;st.running=false}
+  else{st.running=!st.running;if(st.running)beep()}
+  paintTimer();
+});
+function adjustTimer(d){
+  var s=STEPS[idx],st=tState[idx];
+  if(!s.timer)return;
+  s.timer=Math.max(60,s.timer+d);
+  st.left=Math.max(0,st.left+d);
+  paintTimer();renderList();
+}
+document.getElementById("tMinus").addEventListener("click",function(){adjustTimer(-60)});
+document.getElementById("tPlus").addEventListener("click",function(){adjustTimer(60)});
+
+elNext.addEventListener("click",function(){
+  var s=STEPS[idx];
+  if(s.loop&&rounds[idx]<s.loop.rounds){
+    rounds[idx]++;
+    tState[idx]={left:s.loop.timer,running:false};
+  }else if(idx>=STEPS.length-1){
+    idx=0;
+    STEPS.forEach(function(st,i){if(st.loop)rounds[i]=1});
+    tState=freshTimers();
+  }else{
+    idx++;
+  }
+  renderStep();window.scrollTo({top:0,behavior:"smooth"});
+});
+elBack.addEventListener("click",function(){
+  var s=STEPS[idx];
+  if(s.loop&&rounds[idx]>1){
+    rounds[idx]--;
+    tState[idx]={left:s.loop.timer,running:false};
+    renderStep();return;
+  }
+  if(idx>0){idx--;renderStep()}
+});
+
+function renderList(){
+  elList.innerHTML="";
+  STEPS.forEach(function(s,i){
+    var li=document.createElement("li");
+    li.className=i<idx?"done":(i===idx?"cur":"");
+    var mins=s.loop
+      ? s.loop.rounds+" × "+Math.round(s.loop.timer/60)+" min"
+      : (s.timer?Math.round(s.timer/60)+" min":(s.note||""));
+    li.innerHTML='<span class="ck">'+(i<idx?"✓":"")+'</span><span class="tx">'+s.t+'</span>'+
+      (mins?'<span class="mins">'+mins+'</span>':'');
+    li.addEventListener("click",function(){idx=i;renderStep()});
+    elList.appendChild(li);
+  });
+}
+
+var last=Date.now();
+setInterval(function(){
+  var now=Date.now(),dt=(now-last)/1000;last=now;var dirty=false;
+  tState.forEach(function(st,i){
+    if(st.running&&st.left>0){st.left-=dt;if(st.left<=0){st.left=0;st.running=false;beep()}if(i===idx)dirty=true}
+  });
+  if(dirty)paintTimer();
+},250);
+document.addEventListener("visibilitychange",function(){last=Date.now()});
+
+/* ---------- zutaten ---------- */
+var ING=[
+  {n:"Rinderwade am Stück",nt:"Muscolo, für Schmorgericht",a:700,u:"g"},
+  {n:"Gelbe Zwiebeln",a:1500,u:"g"},
+  {n:"Karotte",nt:"ca. 100 g je Stück",a:1,u:"Stk",mode:"half"},
+  {n:"Staudensellerie",a:1,u:"Stange",mode:"half"},
+  {n:"Pancetta",a:80,u:"g"},
+  {n:"Olivenöl",a:100,u:"ml"},
+  {n:"Trockener Weißwein",a:150,u:"ml"},
+  {n:"Lorbeerblätter",mode:"laurel"},
+  {n:"Paccheri",a:400,u:"g"},
+  {n:"Parmigiano Reggiano",a:60,u:"g"},
+  {n:"Salz, schwarzer Pfeffer",nt:"nach Geschmack",mode:"taste"}
+];
+function frac(v){var r=Math.round(v*4)/4,w=Math.floor(r),rest=+(r-w).toFixed(2);
+  var m={0:"",0.25:"¼",0.5:"½",0.75:"¾"};
+  if(w===0)return m[rest]||String(r);return w+(m[rest]||"")}
+function amount(v,u){
+  if(u==="g"||u==="ml"){
+    var r=v>=100?Math.round(v/10)*10:v>=20?Math.round(v/5)*5:Math.round(v);
+    if(r>=1000){var t=Math.round(r/50)*50/1000;return String(t).replace(".",",")+(u==="g"?" kg":" l")}
+    return r+" "+u;
+  }
+  return frac(v)+(u?" "+u:"");
+}
+function ingAmount(g){
+  var f=portions/4;
+  if(g.mode==="taste")return "";
+  if(g.mode==="laurel")return (portions>=7?3:2)+" Stk";
+  if(g.mode==="half"){
+    var v=Math.max(0.5,Math.round(g.a*f*2)/2);
+    var u=(g.u==="Stange"&&v>1)?"Stangen":g.u;
+    return frac(v)+" "+u;
+  }
+  return amount(g.a*f,g.u);
+}
+function zwFmt(){
+  var g=375*portions;
+  if(g>=1000){var kg=Math.round(g/50)*50/1000;return String(kg).replace(".",",")+" kg"}
+  return g+" g";
+}
+var pVal=document.getElementById("pVal"),list=document.getElementById("ingList");
+function renderIng(){
+  pVal.textContent=portions;
+  document.getElementById("stP").textContent=portions;
+  document.getElementById("stZw").textContent=zwFmt();
+  list.innerHTML="";
+  ING.forEach(function(g){
+    var li=document.createElement("li");
+    li.innerHTML='<span class="amt">'+ingAmount(g)+'</span><span class="nm">'+g.n+(g.nt?'<span class="nt">'+g.nt+'</span>':'')+'</span>';
+    li.addEventListener("click",function(){li.classList.toggle("have")});
+    list.appendChild(li);
+  });
+  persist();
+}
+document.getElementById("pMinus").addEventListener("click",function(){if(portions>1){portions--;renderIng()}});
+document.getElementById("pPlus").addEventListener("click",function(){if(portions<12){portions++;renderIng()}});
+
+/* ---------- ansicht ---------- */
+var navBtn=document.getElementById("navBtn"),ing=false;
+navBtn.addEventListener("click",function(){
+  ing=!ing;
+  document.getElementById("view-plan").classList.toggle("hidden",ing);
+  document.getElementById("view-ing").classList.toggle("hidden",!ing);
+  navBtn.textContent=ing?"Ablauf":"Zutaten";
+  navBtn.classList.toggle("on",ing);
+});
+
+renderIng();renderStep();
+})();
+</script>
+</body>
+</html>
