@@ -104,6 +104,12 @@ a:focus-visible{outline:2px solid var(--flame);outline-offset:3px}
     <span class="cnt">1 Planer</span>
   </a>
 
+  <a class="tile" href="#schmoren">
+    <h2>Schmoren</h2>
+    <p>Ungarisches Gulasch mit Spätzle aus dem Le Creuset.</p>
+    <span class="cnt">1 Planer</span>
+  </a>
+
   </section>
 
   <section class="view" id="view-grillen">
@@ -177,6 +183,18 @@ a:focus-visible{outline:2px solid var(--flame);outline-offset:3px}
   </a>
   </section>
 
+  <section class="view" id="view-schmoren">
+    <a class="backchip" href="#">← Übersicht</a>
+    <p class="sect">Schmoren</p>
+
+  <a class="card" href="gulasch-spaetzle.html">
+    <span class="kind">Schmoren</span>
+    <h2>Gulasch mit Spätzle</h2>
+    <p>Ungarisches Marhapörkölt: Rinderwade und ebenso viel Zwiebeln, Kalocsa-Paprika, im Le Creuset bei 150 °C geschmort, Spätzle aus der Presse in Chargen.</p>
+    <span class="meta">4 Portionen · ca. 4 Std · Ungarn</span>
+  </a>
+  </section>
+
   <footer>
     <b>Aufs iPhone holen:</b> Diese Seite in Safari öffnen, Teilen-Symbol antippen, „Zum Home-Bildschirm" wählen. Dann liegt die ganze Sammlung als App auf dem Bildschirm.
   </footer>
@@ -184,7 +202,7 @@ a:focus-visible{outline:2px solid var(--flame);outline-offset:3px}
   <script>
   'use strict';
   (function(){
-    var ids=['grillen','pasta','backen'];
+    var ids=['grillen','pasta','backen','schmoren'];
     function render(){
       var h=location.hash.replace('#','');
       var cat=ids.indexOf(h)>=0?h:null;
