@@ -164,6 +164,11 @@ tr.total td{font-weight:600;border-top:2px solid var(--line)}
 </div>
 
 <script>
+/* iPhone-Timer: startet den Kurzbefehl "Rezept-Timer" (Eingabe in Sekunden).
+   Der Timer der Uhr-App klingelt auch bei gesperrtem Bildschirm. */
+function iphoneTimer(sec){sec=Math.round(sec);if(!(sec>0))return;try{window.location.href="shortcuts://run-shortcut?name=Rezept-Timer&input=text&text="+sec}catch(e){}}
+</script>
+<script>
 (function(){
 "use strict";
 /* ---------- speicher ---------- */
@@ -253,8 +258,8 @@ function paintTimer(){
 }
 elTm.addEventListener("click",function(){
   var s=STEPS[S.idx],st=tState[S.idx];
-  if(st.left<=0){st.left=s.timer;st.running=false}
-  else{st.running=!st.running;if(st.running)beep()}
+  if(st.left<=0){st.left=s.timer;st.running=false;st.ios=false}
+  else{st.running=!st.running;if(st.running){beep();if(!st.ios){st.ios=true;iphoneTimer(st.left)}}}
   paintTimer();
 });
 elNext.addEventListener("click",function(){
@@ -284,7 +289,6 @@ setInterval(function(){
   });
   if(dirty)paintTimer();
 },250);
-document.addEventListener("visibilitychange",function(){last=Date.now()});
 
 /* ---------- zutaten ---------- */
 var OV=[["Weizenmehl 550",92.5],["Wasser",64.5],["Weizenanstellgut TA 200 (weich)",15],["Salz",2.2]];
