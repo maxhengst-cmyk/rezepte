@@ -162,11 +162,16 @@ button:focus-visible,.chip:focus-visible,li:focus-visible{outline:2px solid var(
 
 </div>
 <script>
+/* iPhone-Timer: startet den Kurzbefehl "Rezept-Timer" (Eingabe in Sekunden).
+   Der Timer der Uhr-App klingelt auch bei gesperrtem Bildschirm. */
+function iphoneTimer(sec){sec=Math.round(sec);if(!(sec>0))return;try{window.location.href="shortcuts://run-shortcut?name=Rezept-Timer&input=text&text="+sec}catch(e){}}
+</script>
+<script>
 'use strict';
 /* ---------- Daten ---------- */
 var BASE = 4;
 var ZUT = [
-  {m:400,u:'g',n:'Spaghetti alla Chitarra (z. B. Rummo № 104)'},
+  {m:400,u:'g',n:'Spaghetti alla Chitarra (z. B. Rummo № 104)'},
   {m:500,u:'g',n:'Kirschtomaten (Datterini o. Piennolo), halbiert'},
   {m:3,u:'',n:'Knoblauchzehen, leicht angedrückt'},
   {m:5,u:'EL',n:'Natives Olivenöl extra'},
@@ -185,7 +190,7 @@ var STEPS = [
   {t:'Anrichten', min:0, txt:'Basilikum zerzupft unterheben, sofort servieren. Nach Belieben extra Pecorino und ein Faden Olivenöl obendrauf.'}
 ];
 /* ---------- State ---------- */
-var cur=0, portions=BASE, timerId=null, timerLeft=0, timerStep=-1, doneTimers={};
+var cur=0, portions=BASE, timerId=null, timerEnd=0, timerLeft=0, timerStep=-1, doneTimers={};
 try{
   var s=JSON.parse(localStorage.getItem('scarpariello')||'{}');
   if(typeof s.cur==='number'&&s.cur>=0&&s.cur<STEPS.length)cur=s.cur;
@@ -243,7 +248,7 @@ function toggleTimer(){
   var st=STEPS[cur];
   if(timerId&&timerStep===cur){stopTick();renderStep();return}
   stopTick();
-  timerStep=cur;timerLeft=st.min*60;
+  timerStep=cur;timerLeft=st.min*60;timerEnd=Date.now()+timerLeft*1000;iphoneTimer(timerLeft);
   var tb=document.getElementById('timerBtn');
   tb.className='timerbtn run';
   tick();
@@ -251,6 +256,7 @@ function toggleTimer(){
 }
 function tick(){
   var tb=document.getElementById('timerBtn');
+  timerLeft=Math.max(0,Math.ceil((timerEnd-Date.now())/1000));
   if(timerLeft<=0){
     stopTick();doneTimers[timerStep]=true;save();
     tb.className='timerbtn done';tb.textContent='✓ Timer fertig';
@@ -258,7 +264,6 @@ function tick(){
   }
   var m=Math.floor(timerLeft/60),s=timerLeft%60;
   tb.textContent='⏸ '+m+':'+(s<10?'0':'')+s;
-  timerLeft--;
 }
 function stopTick(){if(timerId){clearInterval(timerId);timerId=null}}
 function beep(){
