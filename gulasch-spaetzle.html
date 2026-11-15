@@ -141,16 +141,22 @@ li.cur .tx{color:var(--flame)}
     <div class="card"><ul class="ing" id="ingList"></ul></div>
     <div class="card note">
       <div class="eyebrow" style="margin-bottom:10px">Notizen</div>
-      <p><b>Fleisch:</b> Rinderwade bringt Sehnen und Gelatine, die Sauce bindet von selbst. Ersatzweise Schulter. Kein Mehl, keine Stärke.</p>
-      <p><b>Zwiebeln:</b> Gleiche Menge wie Fleisch. Sie zerfallen beim Schmoren und werden zur Sauce.</p>
-      <p><b>Paprika:</b> Edelsüß aus Kalocsa. Immer vom Herd gezogen einrühren und sofort mit Wasser binden, sonst wird er bitter.</p>
-      <p><b>Spätzle:</b> Teig für die Westmark-Presse etwas weicher als fürs Brett. Er muss zäh vom Löffel reißen, nicht fließen.</p>
-      <p><b>Kinder:</b> Der Topf bleibt mild. Schärfe (Gulyáskrém, Rubin-Chili) nur in die Erwachsenen-Portion.</p>
+      <p><b>Fleisch:</b> Rinderwade bringt Sehnen und Gelatine, die Sauce bindet von selbst. Schulter funktioniert genauso gut. Glänzende Silberhaut abschneiden, Fett und feine Fasern dranlassen. Kein Mehl, keine Stärke.</p>
+      <p><b>Zwiebeln:</b> Gleiche Menge wie Fleisch. Sie zerfallen beim Schmoren und werden zur Sauce. Weich und hellgelb reicht, braun werden sollen sie nicht.</p>
+      <p><b>Paprika:</b> Edelsüß aus Kalocsa. Immer vom Herd gezogen einrühren und sofort mit Wasser binden, sonst wird er bitter. Dazu je 1 EL <b>Gulyáskrém</b> und <b>Piros Arany</b> von Univer, beide in der Variante „Csemege“ (mild). „Erős“ wäre scharf.</p>
+      <p><b>Fett:</b> Schweineschmalz oder Butterschmalz, beides geht, Butterschmalz schmeckt etwas nussiger.</p>
+      <p><b>Spätzle:</b> Teig für die Westmark-Presse etwas weicher als fürs Brett. Er muss zäh vom Löffel reißen, nicht fließen. Faustregel: 125 g Mehl und gut 1 Ei pro Portion. Zu zweit mit großem Hunger 400 g Mehl und 4 Eier.</p>
+      <p><b>Kinder:</b> Der Topf bleibt mild. Schärfe (Rubin-Chili oder eine „Erős“-Paste) nur in die Erwachsenen-Portion.</p>
     </div>
     <p class="hint" style="text-align:center;margin:20px 0 0">Ungarischer Klassiker · private Nutzung</p>
   </section>
 </div>
 
+<script>
+/* iPhone-Timer: startet den Kurzbefehl "Rezept-Timer" (Eingabe in Sekunden).
+   Der Timer der Uhr-App klingelt auch bei gesperrtem Bildschirm. */
+function iphoneTimer(sec){sec=Math.round(sec);if(!(sec>0))return;try{window.location.href="shortcuts://run-shortcut?name=Rezept-Timer&input=text&text="+sec}catch(e){}}
+</script>
 <script>
 (function(){
 "use strict";
@@ -172,21 +178,21 @@ function spaetzleRounds(){return Math.max(1,Math.ceil(portions/2))}
 /* ---------- schritte ---------- */
 var STEPS=[
   {t:"Fleisch temperieren",timer:1800,b:"Rinderwade <b>30 Min vorher</b> aus dem Kühlschrank. Trocken tupfen und in <b>3 bis 4 cm Würfel</b> schneiden. Sehnen dranlassen, sie werden weich und binden die Sauce."},
-  {t:"Schneiden",note:"ca. 20 min",b:"Zwiebeln <b>fein würfeln</b>, gleiche Menge wie Fleisch. Knoblauch hacken, Kümmel im Mörser <b>grob zerstoßen</b>. Tomate und Spitzpaprika klein würfeln."},
-  {t:"Zwiebeln schmelzen",timer:1500,b:"Schmalz im Le Creuset bei <b>mittlerer Hitze</b> schmelzen. Zwiebeln mit <b>1 TL Salz</b> hinein, Deckel halb drauf, <b>20 bis 25 Min</b> weich und goldgelb rühren. Nicht braun werden lassen. Jetzt den <b>Ofen auf 150 °C</b> Ober-/Unterhitze vorheizen."},
+  {t:"Schneiden",note:"ca. 20 min",b:"Zwiebeln <b>fein würfeln</b>, gleiche Menge wie Fleisch. Knoblauch hacken, <b>1 gestrichenen TL Kümmel</b> grob zerstoßen (Mörser oder breite Messerklinge drücken). Tomate und Spitzpaprika klein würfeln."},
+  {t:"Zwiebeln schmelzen",timer:1800,b:"Schmalz im Le Creuset auf <b>Stufe 5</b> schmelzen. Zwiebeln mit <b>1 TL Salz</b> hinein, Deckel halb drauf, <b>25 bis 30 Min</b> rühren. Bleiben sie weiß, für die letzten Minuten auf <b>Stufe 6</b>, Deckel ab. Ziel: <b>weich und hellgelb</b>, nicht braun. Jetzt den <b>Ofen auf 150 °C</b> Ober-/Unterhitze vorheizen (Umluft 140 °C), Rost auf die <b>unterste Schiene</b>."},
   {t:"Paprika einrühren",b:"Topf <b>vom Herd ziehen</b>. Paprika, Knoblauch und Kümmel einrühren, <b>30 Sekunden</b>, dann sofort <b>100 ml Wasser</b> dazu. Paprika darf nie braten, sonst wird er bitter."},
-  {t:"Fleisch dazu",timer:300,b:"Fleisch, Tomate, Spitzpaprika und Tomatenmark einrühren, <b>1 TL Salz</b>. Zurück auf den Herd, <b>5 Min</b> rühren, bis das Fleisch außen grau ist. Kein Anbraten. Flüssigkeit steht <b>knapp unter dem Fleisch</b>, sonst ein Schluck Wasser."},
+  {t:"Fleisch dazu",timer:300,b:"Fleisch, Tomate, Spitzpaprika, <b>1 EL Gulyáskrém</b>, <b>1 EL Piros Arany</b> (ersatzweise 1 EL Tomatenmark) und <b>1 TL Salz</b> einrühren. Zurück auf den Herd, <b>Stufe 6</b>, Deckel ab, <b>5 Min</b> rühren, bis das Fleisch außen grau ist. Kein Anbraten. Dann <b>150 ml Wasser</b> dazu, Boden loskratzen, kurz aufkochen. Am Boden muss sichtbar Flüssigkeit stehen."},
   {t:"Schmoren im Ofen",loop:{rounds:3,timer:2700},b:function(r){
     if(r===1)return "Deckel zu, in den Ofen bei <b>150 °C</b>. Das Fleisch gart im eigenen Saft, nichts kochen lassen.";
     if(r===2)return "Kurz <b>umrühren</b>, Boden prüfen. Ist es trocken, ein Schluck Wasser. Deckel zu, zurück in den Ofen.";
-    return "Letzte Runde. Umrühren, Deckel zu. Währenddessen den <b>Spätzleteig</b> anrühren (nächster Schritt) und einen großen Topf <b>Salzwasser</b> aufsetzen.";
+    return "Letzte Runde. Umrühren. Ist die Sauce noch flüssig, <b>Deckel ab</b> oder schräg auflegen, dann reduziert sie im Ofen. Währenddessen den <b>Spätzleteig</b> anrühren (nächster Schritt) und einen großen Topf <b>Salzwasser</b> aufsetzen.";
   }},
   {t:"Spätzleteig",timer:900,b:"Mehl, Eier, Salz, Muskat und Sprudel mit dem Kochlöffel schlagen, bis der Teig <b>Blasen wirft</b> und zäh vom Löffel reißt. Für die Presse etwas <b>weicher</b> als fürs Brett. <b>15 Min</b> ruhen lassen."},
-  {t:"Garprobe und abschmecken",b:"Gulasch aus dem Ofen. Das Fleisch muss sich mit der Gabel <b>mühelos teilen</b> lassen, sonst 20 Min länger. Majoran einrühren, mit Salz abschmecken. Sauce zu dünn? Deckel ab und auf dem Herd <b>offen einkochen</b>. Schärfe nur für die Erwachsenen: <b>Gulyáskrém oder Rubin-Chili</b> in eine kleine Schüssel Gulasch rühren. Kinder bleiben beim milden Topf."},
+  {t:"Garprobe und abschmecken",b:"Gulasch aus dem Ofen. Das Fleisch muss sich mit der Gabel <b>mühelos teilen</b> lassen, sonst 20 Min länger. Majoran einrühren, mit Salz abschmecken. Sauce zu dünn? Deckel ab und auf dem Herd <b>offen einkochen</b>. Schärfe nur für die Erwachsenen: <b>Rubin-Chili</b> in eine kleine Schüssel Gulasch rühren. Kinder bleiben beim milden Topf."},
   {t:"Spätzle pressen",loop:{rounds:spaetzleRounds,timer:150},b:function(r){
     return (r===1?"Butter in eine große Schüssel. ":"")+"Eine Portion Teig in die Presse, <b>direkt über dem sprudelnden Salzwasser</b> durchdrücken. Sobald die Spätzle <b>oben schwimmen</b>, noch 30 Sekunden, dann mit dem Schaumlöffel in die Butterschüssel. Presse kurz abspülen, nächste Charge.";
   }},
-  {t:"Anrichten",b:"Spätzle in der Butter schwenken, Gulasch darüber. Nach Wunsch ein Klecks <b>Sauerrahm</b>. Reste schmecken am nächsten Tag noch besser."}
+  {t:"Anrichten",b:"Spätzle in der Butter schwenken, Gulasch darüber. Nach Wunsch ein Klecks <b>Schmand</b> oder saure Sahne. Reste schmecken am nächsten Tag noch besser."}
 ];
 function loopRounds(s){return typeof s.loop.rounds==="function"?s.loop.rounds():s.loop.rounds}
 function stepDur(s){return s.loop?s.loop.timer:(s.timer||0)}
@@ -238,8 +244,8 @@ function paintTimer(){
 }
 elTm.addEventListener("click",function(){
   var s=STEPS[idx],st=tState[idx],dur=stepDur(s);
-  if(st.left<=0){st.left=dur;st.running=false}
-  else{st.running=!st.running;if(st.running)beep()}
+  if(st.left<=0){st.left=dur;st.running=false;st.ios=false}
+  else{st.running=!st.running;if(st.running){beep();if(!st.ios){st.ios=true;iphoneTimer(st.left)}}}
   paintTimer();
 });
 function adjustTimer(d){
@@ -299,31 +305,31 @@ setInterval(function(){
   });
   if(dirty)paintTimer();
 },250);
-document.addEventListener("visibilitychange",function(){last=Date.now()});
 
 /* ---------- zutaten (basis: 4 portionen) ---------- */
 var ING=[
   {hdr:"Gulasch"},
   {n:"Rinderwade",nt:"von Kandler, 3 bis 4 cm Würfel",a:1000,u:"g"},
   {n:"Gelbe Zwiebeln",nt:"gleiche Menge wie Fleisch",a:1000,u:"g"},
-  {n:"Schweineschmalz",nt:"ersatzweise Butterschmalz",a:60,u:"g"},
+  {n:"Schweine- oder Butterschmalz",a:60,u:"g"},
   {n:"Paprika edelsüß",nt:"Kalocsa, 25 g sind ca. 3 EL",a:25,u:"g"},
   {n:"Knoblauch",a:2,u:"Zehen",mode:"half"},
-  {n:"Kümmel, ganz",a:1,u:"TL"},
+  {n:"Kümmel, ganz",nt:"gestrichen, grob zerstoßen",a:1,u:"TL"},
   {n:"Majoran, getrocknet",a:1,u:"TL"},
-  {n:"Tomatenmark",a:1,u:"EL"},
+  {n:"Gulyáskrém, mild",nt:"Univer, Csemege",a:1,u:"EL"},
+  {n:"Piros Arany, mild",nt:"Univer, Csemege; ersatzweise Tomatenmark",a:1,u:"EL"},
   {n:"Reife Tomate",a:1,u:"Stk",mode:"half"},
   {n:"Rote Spitzpaprika",a:1,u:"Stk",mode:"half"},
-  {n:"Wasser",nt:"100 ml zum Binden, Rest nach Bedarf",a:150,u:"ml"},
-  {n:"Gulyáskrém oder Rubin-Chili",nt:"nur für die Erwachsenen, am Ende",mode:"taste"},
+  {n:"Wasser",nt:"100 ml zum Paprika, 150 ml vor dem Ofen",a:250,u:"ml"},
+  {n:"Rubin-Chili",nt:"nur für die Erwachsenen, am Ende",mode:"taste"},
   {n:"Salz",nt:"2 TL beim Kochen, dann abschmecken",mode:"taste"},
   {hdr:"Spätzle"},
   {n:"Mehl Type 405",nt:"oder Spätzlemehl (Dunst)",a:500,u:"g"},
   {n:"Eier, Größe M",a:5,u:"Stk",mode:"egg"},
-  {n:"Sprudelwasser",nt:"nach Gefühl, Teig muss zäh reißen",a:200,u:"ml"},
+  {n:"Sprudelwasser",nt:"nach Gefühl, Teig muss zäh reißen",a:150,u:"ml"},
   {n:"Butter",nt:"zum Schwenken",a:40,u:"g"},
   {n:"Salz, Muskat",nt:"1 TL Salz je 500 g Mehl",mode:"taste"},
-  {n:"Sauerrahm",nt:"optional zum Servieren",mode:"taste"}
+  {n:"Schmand oder saure Sahne",nt:"optional zum Servieren",mode:"taste"}
 ];
 function frac(v){var r=Math.round(v*4)/4,w=Math.floor(r),rest=+(r-w).toFixed(2);
   var m={0:"",0.25:"¼",0.5:"½",0.75:"¾"};

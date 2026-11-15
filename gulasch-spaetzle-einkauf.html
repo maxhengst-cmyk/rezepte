@@ -121,7 +121,7 @@ button:focus-visible,.chip:focus-visible,li:focus-visible{outline:2px solid var(
 <div id="stores"></div>
 
 <div class="note">
-  <b>Zuhause prüfen:</b> Paprika edelsüß aus Kalocsa (25 g bei 4 Portionen), Gulyáskrém oder Rubin-Chili, Kümmel, Majoran, Tomatenmark, Salz, Muskat, Butter (40 g), Sprudelwasser (200 ml).
+  <b>Zuhause prüfen:</b> Paprika edelsüß aus Kalocsa (25 g bei 4 Portionen), Gulyáskrém und Piros Arany von Univer (beide mild, „Csemege“), Rubin-Chili, Kümmel, Majoran, Salz, Muskat, Butter (40 g), Sprudelwasser (150 ml).
 </div>
 
 <button class="share" onclick="shareList()">Liste teilen</button>
@@ -136,19 +136,19 @@ var BASE=4;              /* Portionen */
 var STORES=[
   {id:'kandler',n:'Metzgerei Kandler',info:'Tutzinger-Hof-Platz 5 · <b>Sa nur bis 12 Uhr</b> · Vorbestellen 08151 12122'},
   {id:'gemuese',n:'Türkischer Gemüsemann',info:'Gemüse und Kräuter, frisch und günstig'},
-  {id:'edeka',n:'EDEKA / REWE',info:'Mehl, Eier, Schmalz, Sauerrahm'}
+  {id:'edeka',n:'EDEKA / REWE',info:'Mehl, Eier, Schmalz, Schmand'}
 ];
 /* per: Menge pro Person · perN: 1 Stück je N Personen · fix: feste Menge · egg: 1,25 je Person, aufgerundet */
 var ITEMS=[
-  {s:'kandler',n:'Rinderwade',sub:'250 g je Portion, am Stück oder in 3 bis 4 cm Würfeln',per:250,u:'g'},
-  {s:'gemuese',n:'Gelbe Zwiebeln',sub:'gleiche Menge wie Fleisch',per:250,u:'g'},
-  {s:'gemuese',n:'Knoblauch',sub:'2 Zehen je 4 Portionen, 1 Knolle reicht',fix:1,u:'Knolle'},
-  {s:'gemuese',n:'Reife Tomate',sub:'1 Stück je 4 Portionen',perN:4,u:'Stk'},
-  {s:'gemuese',n:'Rote Spitzpaprika',sub:'1 Stück je 4 Portionen',perN:4,u:'Stk'},
-  {s:'edeka',n:'Mehl Type 405',sub:'oder Spätzlemehl, 125 g je Portion',per:125,u:'g'},
-  {s:'edeka',n:'Eier, Größe M',sub:'5 Stück je 4 Portionen',egg:1.25,u:'Stk'},
-  {s:'edeka',n:'Schweineschmalz',sub:'60 g je 4 Portionen, ersatzweise Butterschmalz',per:15,u:'g'},
-  {s:'edeka',n:'Sauerrahm',sub:'optional zum Servieren',fix:1,u:'Becher'}
+  {s:'kandler',n:'Rinderwade',sub:'in 3 bis 4 cm Würfeln, Schulter geht auch',per:250,u:'g'},
+  {s:'gemuese',n:'Gelbe Zwiebeln',sub:'so viel wie Fleisch',per:250,u:'g'},
+  {s:'gemuese',n:'Knoblauch',sub:'gebraucht werden nur 2 Zehen',fix:1,u:'Knolle'},
+  {s:'gemuese',n:'Reife Tomate',sub:'wird gewürfelt mitgeschmort',perN:4,u:'Stk'},
+  {s:'gemuese',n:'Rote Spitzpaprika',sub:'zerfällt in der Sauce, gibt Aroma',perN:4,u:'Stk'},
+  {s:'edeka',n:'Mehl Type 405',sub:'für die Spätzle, Spätzlemehl geht auch',per:125,u:'g'},
+  {s:'edeka',n:'Eier, Größe M',sub:'für die Spätzle',egg:1.25,u:'Stk'},
+  {s:'edeka',n:'Schweine- oder Butterschmalz',sub:'Butterschmalz geht genauso',per:15,u:'g'},
+  {s:'edeka',n:'Schmand oder saure Sahne',sub:'optional zum Servieren',fix:1,u:'Becher'}
 ];
 /* ---------- State ---------- */
 var portions=BASE, checked={}, hasOwn=false;
