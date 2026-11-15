@@ -169,6 +169,11 @@ button:focus-visible,.chip:focus-visible,li:focus-visible{outline:2px solid var(
 
 </div>
 <script>
+/* iPhone-Timer: startet den Kurzbefehl "Rezept-Timer" (Eingabe in Sekunden).
+   Der Timer der Uhr-App klingelt auch bei gesperrtem Bildschirm. */
+function iphoneTimer(sec){sec=Math.round(sec);if(!(sec>0))return;try{window.location.href="shortcuts://run-shortcut?name=Rezept-Timer&input=text&text="+sec}catch(e){}}
+</script>
+<script>
 'use strict';
 /* ---------- Daten ---------- */
 var BASE = 6;                 /* Burger (Double) */
@@ -208,7 +213,7 @@ var STEPS = [
 ];
 var LOOP_START = 4, LOOP_END = 6;
 /* ---------- State ---------- */
-var cur=0, portions=BASE, round=1, timerId=null, timerLeft=0, timerStep=-1, doneTimers={};
+var cur=0, portions=BASE, round=1, timerId=null, timerEnd=0, timerLeft=0, timerStep=-1, doneTimers={};
 try{
   var s=JSON.parse(localStorage.getItem('smashburger')||'{}');
   if(typeof s.cur==='number'&&s.cur>=0&&s.cur<STEPS.length)cur=s.cur;
@@ -285,7 +290,7 @@ function toggleTimer(){
   var st=STEPS[cur];
   if(timerId&&timerStep===cur){stopTick();renderStep();return}
   stopTick();
-  timerStep=cur;timerLeft=st.min*60;
+  timerStep=cur;timerLeft=st.min*60;timerEnd=Date.now()+timerLeft*1000;iphoneTimer(timerLeft);
   var tb=document.getElementById('timerBtn');
   tb.className='timerbtn run';
   tick();
@@ -293,6 +298,7 @@ function toggleTimer(){
 }
 function tick(){
   var tb=document.getElementById('timerBtn');
+  timerLeft=Math.max(0,Math.ceil((timerEnd-Date.now())/1000));
   if(timerLeft<=0){
     stopTick();doneTimers[timerKey(timerStep)]=true;save();
     tb.className='timerbtn done';tb.textContent='✓ Timer fertig';
@@ -300,7 +306,6 @@ function tick(){
   }
   var m=Math.floor(timerLeft/60),s=timerLeft%60;
   tb.textContent='⏸ '+m+':'+(s<10?'0':'')+s;
-  timerLeft--;
 }
 function stopTick(){if(timerId){clearInterval(timerId);timerId=null}}
 function beep(){
