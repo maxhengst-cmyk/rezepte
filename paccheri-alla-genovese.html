@@ -150,6 +150,11 @@ li.cur .tx{color:var(--flame)}
 </div>
 
 <script>
+/* iPhone-Timer: startet den Kurzbefehl "Rezept-Timer" (Eingabe in Sekunden).
+   Der Timer der Uhr-App klingelt auch bei gesperrtem Bildschirm. */
+function iphoneTimer(sec){sec=Math.round(sec);if(!(sec>0))return;try{window.location.href="shortcuts://run-shortcut?name=Rezept-Timer&input=text&text="+sec}catch(e){}}
+</script>
+<script>
 (function(){
 "use strict";
 var KEY="genovese";
@@ -232,8 +237,8 @@ function paintTimer(){
 }
 elTm.addEventListener("click",function(){
   var s=STEPS[idx],st=tState[idx],dur=stepDur(s);
-  if(st.left<=0){st.left=dur;st.running=false}
-  else{st.running=!st.running;if(st.running)beep()}
+  if(st.left<=0){st.left=dur;st.running=false;st.ios=false}
+  else{st.running=!st.running;if(st.running){beep();if(!st.ios){st.ios=true;iphoneTimer(st.left)}}}
   paintTimer();
 });
 function adjustTimer(d){
@@ -293,7 +298,6 @@ setInterval(function(){
   });
   if(dirty)paintTimer();
 },250);
-document.addEventListener("visibilitychange",function(){last=Date.now()});
 
 /* ---------- zutaten ---------- */
 var ING=[
