@@ -93,6 +93,11 @@ button.ghost { background:transparent; color:var(--ash); font-size:14px; padding
 </div>
 
 <script>
+/* iPhone-Timer: startet den Kurzbefehl "Rezept-Timer" (Eingabe in Sekunden).
+   Der Timer der Uhr-App klingelt auch bei gesperrtem Bildschirm. */
+function iphoneTimer(sec){sec=Math.round(sec);if(!(sec>0))return;try{window.location.href="shortcuts://run-shortcut?name=Rezept-Timer&input=text&text="+sec}catch(e){}}
+</script>
+<script>
 /* ---------------------------------------------------------------- daten */
 var STEPS = [
   { t:'Fleisch rausholen', sec:1800, tl:'Temperieren',
@@ -229,6 +234,7 @@ function render() {
   if (q('tstart')) q('tstart').addEventListener('click', function(){
     if (!actx) { try { actx = new (window.AudioContext||window.webkitAudioContext)(); } catch(e){} }
     S.endAt = Date.now() + st.sec*1000; S.paused = null; S.alarm = false; save(); render();
+    iphoneTimer(st.sec);
   });
   if (q('tpause')) q('tpause').addEventListener('click', function(){ S.paused = tleft(); S.endAt = null; save(); render(); });
   if (q('tgo')) q('tgo').addEventListener('click', function(){ S.endAt = Date.now() + S.paused*1000; S.paused = null; save(); render(); });
