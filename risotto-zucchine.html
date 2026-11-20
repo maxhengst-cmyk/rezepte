@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Risotto">
+<meta name="theme-color" content="#12100E">
+<title>Risotto alle zucchine · Kochbegleiter</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{
+  --ground:#12100E; --panel:#1B1714; --panelHi:#241E19; --line:#342C24;
+  --bone:#EAE2D6; --ash:#8B7F72; --ashDim:#5E554B;
+  --flame:#5B8CF7; --ember:#FF7A1A; --amber:#E5B33C; --sage:#79C06B;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--ground);min-height:100%}
+body{
+  font-family:'Barlow',system-ui,-apple-system,sans-serif;color:var(--bone);
+  -webkit-font-smoothing:antialiased;font-size:17px;line-height:1.45;
+  padding:calc(env(safe-area-inset-top) + 20px) 16px calc(env(safe-area-inset-bottom) + 40px);
+}
+#wrap{max-width:460px;margin:0 auto}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ashDim);margin:0 0 8px}
+h1{
+  font-family:'Barlow Condensed','Barlow',sans-serif;text-transform:uppercase;
+  letter-spacing:.06em;font-weight:600;font-size:32px;line-height:1.05;margin:0;
+}
+.head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.chips{display:flex;gap:8px;flex-shrink:0;margin-top:2px}
+.chip{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--panel);border:1px solid var(--line);color:var(--ash);
+  border-radius:999px;padding:8px 13px;cursor:pointer;
+}
+.chip.on{background:var(--flame);border-color:var(--flame);color:#0D1220;font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:18px 0 0}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 8px;text-align:center}
+.kpi b{display:block;font-family:'IBM Plex Mono',monospace;font-size:16px;font-weight:600;color:var(--bone)}
+.kpi span{display:block;margin-top:3px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ashDim)}
+.view{display:none}
+.view.on{display:block}
+/* Schritt-Karte */
+.step{
+  background:var(--panel);border:1px solid var(--line);border-radius:16px;
+  padding:18px 18px 20px;margin:18px 0 0;
+}
+.stepnum{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--flame)}
+.step h2{
+  font-family:'Barlow Condensed','Barlow',sans-serif;text-transform:uppercase;
+  letter-spacing:.04em;font-weight:600;font-size:24px;line-height:1.1;margin:8px 0 8px;
+}
+.step p{margin:0;font-size:16.5px;color:#D8CFC1}
+.step p b{color:var(--ember);font-weight:600}
+.timerbtn{
+  display:flex;align-items:center;justify-content:center;gap:10px;width:100%;
+  margin-top:14px;padding:13px;border-radius:12px;cursor:pointer;
+  background:var(--panelHi);border:1px solid var(--line);color:var(--bone);
+  font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;
+}
+.timerbtn.run{border-color:var(--amber);color:var(--amber)}
+.timerbtn.done{border-color:var(--sage);color:var(--sage)}
+.btnrow{margin-top:14px}
+.next{
+  width:100%;padding:16px;border:0;border-radius:13px;cursor:pointer;
+  background:var(--flame);color:#0D1220;
+  font-family:'Barlow Condensed','Barlow',sans-serif;text-transform:uppercase;
+  letter-spacing:.1em;font-weight:700;font-size:19px;
+}
+.back{
+  width:100%;margin-top:9px;padding:11px;border:0;border-radius:11px;cursor:pointer;
+  background:transparent;color:var(--ashDim);
+  font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+}
+/* Checkliste */
+.list{margin:20px 0 0;padding:0;list-style:none}
+.list li{
+  display:flex;align-items:baseline;gap:10px;padding:9px 4px;
+  border-bottom:1px solid var(--line);font-size:15px;color:var(--ash);cursor:pointer;
+}
+.list li:last-child{border-bottom:0}
+.list li .tick{font-family:'IBM Plex Mono',monospace;font-size:12px;width:16px;flex-shrink:0;color:var(--ashDim)}
+.list li .t{flex:1}
+.list li .min{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ashDim)}
+.list li.done{color:var(--ashDim);text-decoration:line-through}
+.list li.done .tick{color:var(--sage);text-decoration:none}
+.list li.cur{color:var(--bone)}
+.list li.cur .tick{color:var(--flame)}
+/* Zutaten */
+.portions{display:flex;align-items:center;justify-content:space-between;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:18px 0 0}
+.portions span{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ash)}
+.pctrl{display:flex;align-items:center;gap:14px}
+.pctrl button{
+  width:40px;height:40px;border-radius:11px;border:1px solid var(--line);cursor:pointer;
+  background:var(--panelHi);color:var(--bone);font-size:20px;font-weight:600;
+}
+.pctrl b{font-family:'IBM Plex Mono',monospace;font-size:19px;min-width:24px;text-align:center}
+.zut{margin:14px 0 0;padding:0;list-style:none}
+.zut li{display:flex;gap:12px;padding:9px 4px;border-bottom:1px solid var(--line);font-size:16px}
+.zut li:last-child{border-bottom:0}
+.zut .m{font-family:'IBM Plex Mono',monospace;font-size:14px;color:var(--ember);min-width:86px;flex-shrink:0}
+.note{margin:18px 0 0;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:14.5px;color:var(--ash)}
+.note b{color:var(--bone);font-weight:600}
+button:focus-visible,.chip:focus-visible,li:focus-visible{outline:2px solid var(--flame);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div id="wrap">
+
+<header>
+  <p class="eyebrow">Herd · Italien · Primo piatto</p>
+  <div class="head">
+    <h1>Risotto alle<br>Zucchine</h1>
+    <div class="chips">
+      <button class="chip on" id="chipKochen" onclick="showView('kochen')">Kochen</button>
+      <button class="chip" id="chipZutaten" onclick="showView('zutaten')">Zutaten</button>
+      <a class="chip" href="risotto-zucchine-einkauf.html" style="text-decoration:none;display:inline-block">Einkauf</a>
+    </div>
+  </div>
+</header>
+
+<div class="kpis">
+  <div class="kpi"><b id="kpiPort">4</b><span>Portionen</span></div>
+  <div class="kpi"><b>~35</b><span>Min gesamt</span></div>
+  <div class="kpi"><b>16</b><span>Min Reis</span></div>
+  <div class="kpi"><b id="kpiBrue">1 l</b><span>Brühe</span></div>
+</div>
+
+<!-- ANSICHT: KOCHEN -->
+<div class="view on" id="viewKochen">
+  <div class="step">
+    <p class="stepnum" id="stepNum">Schritt 1 von 7</p>
+    <h2 id="stepTitle"></h2>
+    <p id="stepText"></p>
+    <button class="timerbtn" id="timerBtn" onclick="toggleTimer()" hidden></button>
+    <div class="btnrow">
+      <button class="next" id="btnNext" onclick="nextStep()">Weiter</button>
+      <button class="back" onclick="prevStep()">Schritt zurück</button>
+    </div>
+  </div>
+  <ul class="list" id="checklist"></ul>
+</div>
+
+<!-- ANSICHT: ZUTATEN -->
+<div class="view" id="viewZutaten">
+  <div class="portions">
+    <span>Portionen</span>
+    <div class="pctrl">
+      <button onclick="setPortions(-1)" aria-label="Weniger Portionen">−</button>
+      <b id="pVal">4</b>
+      <button onclick="setPortions(1)" aria-label="Mehr Portionen">+</button>
+    </div>
+  </div>
+  <ul class="zut" id="zutList"></ul>
+  <div class="note">
+    <b>Reis:</b> Carnaroli, ersatzweise Arborio oder Vialone Nano (dann 1 bis 2 Min früher probieren). <b>Brühe:</b> muss beim Angießen heiß sein, sonst stockt das Garen. <b>Cremiger:</b> das beiseitegestellte Drittel Zucchini mit etwas Brühe pürieren und kurz vor Ende unterrühren. <b>Quelle:</b> Mengen nach GialloZafferano (Ricette Pane e Dolci), Brühe und Zeiten ergänzt.
+  </div>
+</div>
+
+</div>
+<script>
+/* iPhone-Timer: startet den Kurzbefehl "Rezept-Timer" (Eingabe in Sekunden).
+   Der Timer der Uhr-App klingelt auch bei gesperrtem Bildschirm. */
+function iphoneTimer(sec){sec=Math.round(sec);if(!(sec>0))return;try{window.location.href="shortcuts://run-shortcut?name=Rezept-Timer&input=text&text="+sec}catch(e){}}
+</script>
+<script>
+'use strict';
+/* ---------- Daten ---------- */
+var BASE = 4;
+var ZUT = [
+  {m:320,u:'g',n:'Carnaroli-Reis'},
+  {m:500,u:'g',n:'Zucchini, klein und fest'},
+  {m:1,u:'',n:'Knoblauch (Zehen), geschält und angedrückt',ganz:true},
+  {m:2,u:'EL',n:'Natives Olivenöl extra'},
+  {m:40,u:'ml',n:'Trockener Weißwein'},
+  {m:1000,u:'ml',n:'Gemüsebrühe, heiß',id:'bruehe'},
+  {m:50,u:'g',n:'Butter, kalt in Stücken'},
+  {m:100,u:'g',n:'Parmigiano Reggiano, frisch gerieben'},
+  {m:0.5,u:'Bund',n:'Glatte Petersilie, gehackt'},
+  {m:1,u:'TL',n:'Salz, nach Geschmack'}
+];
+var STEPS = [
+  {t:'Brühe + Vorbereiten', min:0, txt:'Gemüsebrühe aufkochen und auf kleiner Flamme <b>heiß halten</b>. Zucchini in kleine Würfel oder dünne Halbmonde schneiden, Parmigiano reiben. Butter <b>kalt</b> in Stücke schneiden und zurück in den Kühlschrank.'},
+  {t:'Zucchini anbraten', min:6, txt:'Olivenöl in einem breiten Topf erhitzen, Knoblauch kurz anbraten. Zucchini dazu, leicht salzen und bei mittlerer bis hoher Hitze <b>6 Min goldgelb</b> braten. Knoblauch entfernen, <b>ein Drittel der Zucchini</b> beiseitestellen.'},
+  {t:'Reis anrösten', min:2, txt:'Reis zu den Zucchini in den Topf geben und <b>2 Min</b> unter Rühren rösten, bis die Körner am Rand <b>glasig</b> sind und sich heiß anfühlen.'},
+  {t:'Mit Wein ablöschen', min:0, txt:'Weißwein angießen und unter Rühren <b>vollständig verdampfen</b> lassen, bis es nicht mehr nach Alkohol riecht.'},
+  {t:'Risotto garen', min:16, txt:'Heiße Brühe <b>kellenweise</b> zugeben, erst nachgießen, wenn die Flüssigkeit fast aufgenommen ist. Regelmäßig rühren. Nach <b>16 Min</b> probieren: cremig, mit leichtem Biss. Am Ende eher flüssig lassen (<b>all’onda</b>).'},
+  {t:'Mantecatura', min:2, txt:'<b>Topf vom Herd!</b> Kalte Butter und Parmigiano kräftig einrühren, bis das Risotto glänzt und cremig bindet. Abschmecken, zugedeckt <b>2 Min ruhen</b> lassen.'},
+  {t:'Anrichten', min:0, txt:'Auf flache, vorgewärmte Teller geben. Mit den beiseitegestellten Zucchini und Petersilie bestreuen, sofort servieren.'}
+];
+/* ---------- State ---------- */
+var cur=0, portions=BASE, timerId=null, timerEnd=0, timerLeft=0, timerStep=-1, doneTimers={};
+try{
+  var s=JSON.parse(localStorage.getItem('risotto-zucchine')||'{}');
+  if(typeof s.cur==='number'&&s.cur>=0&&s.cur<STEPS.length)cur=s.cur;
+  if(typeof s.portions==='number'&&s.portions>=1&&s.portions<=12)portions=s.portions;
+  if(s.doneTimers)doneTimers=s.doneTimers;
+}catch(e){}
+function save(){try{localStorage.setItem('risotto-zucchine',JSON.stringify({cur:cur,portions:portions,doneTimers:doneTimers}))}catch(e){}}
+/* ---------- Views ---------- */
+function showView(v){
+  document.getElementById('viewKochen').classList.toggle('on',v==='kochen');
+  document.getElementById('viewZutaten').classList.toggle('on',v==='zutaten');
+  document.getElementById('chipKochen').classList.toggle('on',v==='kochen');
+  document.getElementById('chipZutaten').classList.toggle('on',v==='zutaten');
+}
+/* ---------- Schritte ---------- */
+function renderStep(){
+  var st=STEPS[cur];
+  document.getElementById('stepNum').textContent='Schritt '+(cur+1)+' von '+STEPS.length;
+  document.getElementById('stepTitle').textContent=st.t;
+  document.getElementById('stepText').innerHTML=st.txt;
+  document.getElementById('btnNext').textContent=(cur===STEPS.length-1)?'Von vorn':'Weiter';
+  var tb=document.getElementById('timerBtn');
+  stopTick();
+  if(st.min>0){
+    tb.hidden=false;
+    tb.className='timerbtn'+(doneTimers[cur]?' done':'');
+    tb.textContent=doneTimers[cur]?'✓ Timer fertig':'▶ Timer '+st.min+' Min';
+  }else{tb.hidden=true}
+  renderList();
+  save();
+}
+function nextStep(){
+  if(cur===STEPS.length-1){cur=0;doneTimers={};}
+  else cur++;
+  renderStep();
+}
+function prevStep(){if(cur>0){cur--;renderStep();}}
+function jumpTo(i){cur=i;renderStep();window.scrollTo({top:0});}
+function renderList(){
+  var ul=document.getElementById('checklist');ul.innerHTML='';
+  STEPS.forEach(function(st,i){
+    var li=document.createElement('li');
+    if(i<cur)li.className='done';else if(i===cur)li.className='cur';
+    li.setAttribute('tabindex','0');
+    li.onclick=function(){jumpTo(i)};
+    li.onkeydown=function(e){if(e.key==='Enter')jumpTo(i)};
+    li.innerHTML='<span class="tick">'+(i<cur?'✓':(i===cur?'▸':(i+1)))+'</span>'
+      +'<span class="t">'+st.t+'</span>'
+      +(st.min>0?'<span class="min">'+st.min+' min</span>':'');
+    ul.appendChild(li);
+  });
+}
+/* ---------- Timer ---------- */
+function toggleTimer(){
+  var st=STEPS[cur];
+  if(timerId&&timerStep===cur){stopTick();renderStep();return}
+  stopTick();
+  timerStep=cur;timerLeft=st.min*60;timerEnd=Date.now()+timerLeft*1000;iphoneTimer(timerLeft);
+  var tb=document.getElementById('timerBtn');
+  tb.className='timerbtn run';
+  tick();
+  timerId=setInterval(tick,1000);
+}
+function tick(){
+  var tb=document.getElementById('timerBtn');
+  timerLeft=Math.max(0,Math.ceil((timerEnd-Date.now())/1000));
+  if(timerLeft<=0){
+    stopTick();doneTimers[timerStep]=true;save();
+    tb.className='timerbtn done';tb.textContent='✓ Timer fertig';
+    beep();return;
+  }
+  var m=Math.floor(timerLeft/60),s=timerLeft%60;
+  tb.textContent='⏸ '+m+':'+(s<10?'0':'')+s;
+}
+function stopTick(){if(timerId){clearInterval(timerId);timerId=null}}
+function beep(){
+  try{
+    var ctx=new (window.AudioContext||window.webkitAudioContext)();
+    [0,0.35,0.7].forEach(function(off){
+      var o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g);g.connect(ctx.destination);
+      o.frequency.value=880;o.type='sine';
+      g.gain.setValueAtTime(0.001,ctx.currentTime+off);
+      g.gain.exponentialRampToValueAtTime(0.4,ctx.currentTime+off+0.03);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+off+0.3);
+      o.start(ctx.currentTime+off);o.stop(ctx.currentTime+off+0.32);
+    });
+  }catch(e){}
+}
+/* ---------- Zutaten ---------- */
+function fmt(v){
+  var x=Math.round(v*4)/4;
+  if(x%1===0)return String(x);
+  if(x===0.25)return '¼';if(x===0.5)return '½';if(x===0.75)return '¾';
+  var w=Math.floor(x),r=x-w,f=(r===0.25?'¼':r===0.5?'½':'¾');
+  return w+' '+f;
+}
+function menge(z){
+  var v=z.m*portions/BASE;
+  if(z.ganz)return String(Math.max(1,Math.round(v)));
+  if(z.u==='g')return Math.round(v)+' g';
+  if(z.u==='ml'){v=Math.round(v/10)*10;return v>=1000?String(v/1000).replace('.',',')+' l':v+' ml';}
+  return fmt(v)+(z.u?' '+z.u:'');
+}
+function renderZut(){
+  document.getElementById('pVal').textContent=portions;
+  document.getElementById('kpiPort').textContent=portions;
+  var ul=document.getElementById('zutList');ul.innerHTML='';
+  ZUT.forEach(function(z){
+    var mengen=menge(z);
+    if(z.id==='bruehe')document.getElementById('kpiBrue').textContent=mengen;
+    var li=document.createElement('li');
+    li.innerHTML='<span class="m">'+mengen+'</span><span>'+z.n+'</span>';
+    ul.appendChild(li);
+  });
+}
+function setPortions(d){
+  portions=Math.min(12,Math.max(1,portions+d));
+  renderZut();save();
+}
+/* ---------- Init ---------- */
+renderStep();renderZut();
+</script>
+</body>
+</html>

@@ -98,6 +98,12 @@ a:focus-visible{outline:2px solid var(--flame);outline-offset:3px}
     <span class="cnt">4 Planer</span>
   </a>
 
+  <a class="tile" href="#risotto">
+    <h2>Risotto</h2>
+    <p>Risotto alle zucchine, klassisch mit Carnaroli und Mantecatura.</p>
+    <span class="cnt">1 Planer</span>
+  </a>
+
   <a class="tile" href="#backen">
     <h2>Backen</h2>
     <p>Mildes Weizensauerteigbrot nach Lutz Geißler.</p>
@@ -171,6 +177,18 @@ a:focus-visible{outline:2px solid var(--flame);outline-offset:3px}
   </a>
   </section>
 
+  <section class="view" id="view-risotto">
+    <a class="backchip" href="#">← Übersicht</a>
+    <p class="sect">Risotto</p>
+
+  <a class="card" href="risotto-zucchine.html">
+    <span class="kind">Risotto</span>
+    <h2>Risotto alle zucchine</h2>
+    <p>Italienischer Klassiker mit Carnaroli: Zucchini anbraten, Reis rösten, Brühe kellenweise, Butter und Parmigiano erst vom Herd.</p>
+    <span class="meta">4 Portionen · ca. 35 Min · GialloZafferano</span>
+  </a>
+  </section>
+
   <section class="view" id="view-backen">
     <a class="backchip" href="#">← Übersicht</a>
     <p class="sect">Backen</p>
@@ -202,7 +220,7 @@ a:focus-visible{outline:2px solid var(--flame);outline-offset:3px}
   <script>
   'use strict';
   (function(){
-    var ids=['grillen','pasta','backen','schmoren'];
+    var ids=['grillen','pasta','risotto','backen','schmoren'];
     function render(){
       var h=location.hash.replace('#','');
       var cat=ids.indexOf(h)>=0?h:null;
