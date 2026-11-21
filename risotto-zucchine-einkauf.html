@@ -123,7 +123,7 @@ button:focus-visible,.chip:focus-visible,li:focus-visible{outline:2px solid var(
 <div id="stores"></div>
 
 <div class="note">
-  <b>Zuhause prüfen:</b> Hühnerbrühe, selbst gekocht aus dem Tiefkühler (1 l bei 4 Portionen), trockener Weißwein (40 ml bei 4 Portionen), Olivenöl (2 EL), Salz. <b>Kein Carnaroli bei Silletti?</b> EDEKA oder REWE, ersatzweise Arborio oder Vialone Nano.
+  <b>Zuhause prüfen</b> steht oben in der Liste: abhaken, was da ist, der Rest kommt mit auf die Runde. <b>Kein Carnaroli bei Silletti?</b> EDEKA oder REWE, ersatzweise Arborio oder Vialone Nano.
 </div>
 
 <button class="share" onclick="shareList()">Liste teilen</button>
@@ -136,18 +136,23 @@ button:focus-visible,.chip:focus-visible,li:focus-visible{outline:2px solid var(
 var KEY='risotto-zucchine-einkauf';
 var BASE=4;              /* Portionen */
 var STORES=[
+  {id:'vorrat',n:'Zuhause prüfen',info:'Abhaken, was da ist · <b>der Rest kommt mit auf die Runde</b>'},
   {id:'silletti',n:'Silletti Buon Gusto',info:'Hauptstraße 3 · <b>Sa 9 bis 14 Uhr, Di nur bis 15 Uhr, So zu</b> · 08151 9727527'},
   {id:'gemuese',n:'Türkischer Gemüsemann',info:'Zucchini, Knoblauch, Petersilie, frisch und günstig'},
   {id:'rewe',n:'REWE / EDEKA / Denns',info:'Butter'}
 ];
-/* per: Menge pro Person · fix: feste Menge */
+/* per: Menge pro Person · fix: feste Menge · txt: fester Text */
 var ITEMS=[
   {s:'silletti',n:'Carnaroli-Reis',sub:'80 g je Portion, auf der Packung muss „Carnaroli“ stehen',per:80,u:'g'},
   {s:'silletti',n:'Parmigiano Reggiano',sub:'am Stück, 25 g je Portion',per:25,u:'g'},
   {s:'gemuese',n:'Zucchini',sub:'klein und fest, 125 g je Portion',per:125,u:'g'},
   {s:'gemuese',n:'Knoblauch',sub:'1 Zehe reicht',fix:1,u:'Knolle'},
   {s:'gemuese',n:'Glatte Petersilie',sub:'ein halber Bund reicht',fix:1,u:'Bund'},
-  {s:'rewe',n:'Butter',sub:'kalt, für die Mantecatura',per:12.5,u:'g'}
+  {s:'rewe',n:'Butter',sub:'kalt, für die Mantecatura',per:12.5,u:'g'},
+  {s:'vorrat',n:'Hühnerbrühe',sub:'TK-Würfel da? Sonst Suppenhuhn bei Kandler und vorkochen, oder Hühnerfond im Glas',per:250,u:'ml'},
+  {s:'vorrat',n:'Trockener Weißwein',sub:'sonst REWE / EDEKA',per:10,u:'ml'},
+  {s:'vorrat',n:'Natives Olivenöl extra',sub:'sonst Silletti',per:0.5,u:'EL'},
+  {s:'vorrat',n:'Salz',sub:'sonst REWE / EDEKA',txt:'nach Bedarf'}
 ];
 /* ---------- State ---------- */
 var portions=BASE, checked={}, hasOwn=false;
@@ -191,6 +196,7 @@ function shareList(){
 }
 /* ---------- Mengen ---------- */
 function amount(it){
+  if(it.txt)return it.txt;
   var v,u=it.u;
   if(it.per!=null)v=it.per*portions;
   else if(it.perN!=null)v=Math.ceil(portions/it.perN);
@@ -198,6 +204,7 @@ function amount(it){
   if(u==='g'){v=v>=100?Math.round(v/10)*10:Math.round(v/5)*5}
   if(u==='g'&&v>=1000)return (Math.round(v/50)*50/1000).toString().replace('.',',')+' kg';
   if(u==='ml'&&v>=1000)return (v/1000).toString().replace('.',',')+' l';
+  if(u==='EL')return String(v).replace('.',',')+' EL';
   return v+' '+u;
 }
 /* ---------- Render ---------- */
