@@ -167,7 +167,7 @@ button:focus-visible,.chip:focus-visible,li:focus-visible{outline:2px solid var(
   <p class="hint" id="reisHint"></p>
   <ul class="zut" id="zutList"></ul>
   <div class="note">
-    <b>Reis:</b> Carnaroli, Vialone Nano oder Arborio. Kochzeit von der Packung oben eintragen, der Gar-Timer läuft 2 Min kürzer, weil der Reis beim Mantecare und Ruhen nachgart. <b>Brühe:</b> milde Hühnerbrühe, gekauft oder selbst gemacht, Gemüsebrühe geht auch. Sie muss beim Angießen heiß sein, sonst stockt das Garen. <b>Zucchini:</b> sehr dünn gehobelt nur 1 Min braten, ganz herausnehmen und erst am Ende unterheben, so bleiben sie grün und zerfallen nicht. <b>Cremiger:</b> ein paar der Zucchini mit etwas Brühe pürieren und mit unterheben. <b>Quelle:</b> Mengen nach GialloZafferano (Ricette Pane e Dolci), Brühe und Zeiten ergänzt.
+    <b>Reis:</b> Carnaroli, Vialone Nano oder Arborio. Kochzeit von der Packung oben eintragen, der Gar-Timer läuft 2 Min kürzer, weil der Reis beim Mantecare und Ruhen nachgart. <b>Brühe:</b> milde Hühnerbrühe, gekauft oder selbst gemacht, Gemüsebrühe geht auch. Sie muss beim Angießen heiß sein, sonst stockt das Garen. <b>Zucchini:</b> sehr dünn gehobelt nur 1 Min braten und ganz herausnehmen. Die Hälfte gart mit dem Reis und macht ihn cremig, ein Viertel kommt am Ende für Biss dazu, ein Viertel obendrauf. <b>Quelle:</b> Mengen nach GialloZafferano (Ricette Pane e Dolci), Brühe und Zeiten ergänzt.
   </div>
 </div>
 
@@ -195,12 +195,12 @@ var ZUT = [
 ];
 var STEPS = [
   {t:'Brühe + Vorbereiten', min:0, txt:'Hühnerbrühe aufkochen (TK-Würfel direkt im Topf schmelzen) und auf kleiner Flamme <b>heiß halten</b>. Probieren, bei ungesalzener Brühe <b>leicht salzen</b>. Zucchini längs halbieren und mit Hobel oder Trommelreibe in <b>dünne Halbmonde</b> schneiden, Parmigiano reiben. Butter <b>kalt</b> in Stücke schneiden und zurück in den Kühlschrank.'},
-  {t:'Zucchini anbraten', min:1, txt:'Olivenöl in einem breiten Topf erhitzen, Knoblauch kurz anziehen lassen, bis er duftet. Zucchini dazu, leicht salzen und bei <b>hoher Hitze 1 Min</b> braten, in zwei Portionen, bis sie glänzen und die Ränder Farbe nehmen. Bei Würfeln statt Scheiben 5 bis 6 Min. Knoblauch entfernen, <b>alle Zucchini herausnehmen</b> und beiseitestellen.'},
+  {t:'Zucchini anbraten', min:1, txt:'Olivenöl in einem breiten Topf erhitzen, Knoblauch kurz anziehen lassen, bis er duftet. Zucchini dazu, leicht salzen und bei <b>hoher Hitze 1 Min</b> braten, in zwei Portionen, bis sie glänzen und die Ränder Farbe nehmen. Bei Würfeln statt Scheiben 5 bis 6 Min. Knoblauch entfernen, <b>alle Zucchini herausnehmen</b> und aufteilen: <b>Hälfte, Viertel, Viertel</b>.'},
   {t:'Reis anrösten', min:2, txt:'Reis in denselben Topf geben, bei Bedarf einen Schuss Öl nachgeben, und <b>2 Min</b> unter Rühren rösten, bis die Körner am Rand <b>glasig</b> sind und sich heiß anfühlen.'},
-  {t:'Mit Wein ablöschen', min:0, txt:'Weißwein angießen und unter Rühren <b>vollständig verdampfen</b> lassen, bis es nicht mehr nach Alkohol riecht.'},
+  {t:'Mit Wein ablöschen', min:0, txt:'Weißwein angießen und unter Rühren <b>vollständig verdampfen</b> lassen, bis es nicht mehr nach Alkohol riecht. Dann die <b>Hälfte der Zucchini</b> zum Reis geben, sie zerkochen und machen das Risotto cremig.'},
   {t:'Risotto garen', min:16, gar:true, txt:''},
   {t:'Mantecatura', min:2, txt:'<b>Topf vom Herd!</b> Kalte Butter und Parmigiano kräftig einrühren, bis das Risotto glänzt und cremig bindet. Abschmecken, zugedeckt <b>2 Min ruhen</b> lassen.'},
-  {t:'Anrichten', min:0, txt:'Auf flache, vorgewärmte Teller geben. Mit dem <b>restlichen Drittel Zucchini</b> und Petersilie bestreuen, sofort servieren.'}
+  {t:'Anrichten', min:0, txt:'Das <b>letzte Viertel Zucchini</b> 20 bis 30 Sek in der heißen Pfanne schwenken. Risotto auf flache, vorgewärmte Teller geben, Zucchini obendrauf, mit Petersilie bestreuen, sofort servieren.'}
 ];
 var REIS_MIN=10, REIS_MAX=25, REIS_STD=18;
 /* ---------- State ---------- */
@@ -218,7 +218,7 @@ function applyReis(){
     if(!st.gar)return;
     st.min=garMin();
     st.txt='Heiße Brühe <b>kellenweise</b> zugeben, erst nachgießen, wenn die Flüssigkeit fast aufgenommen ist. Regelmäßig rühren. '
-      +'In den <b>letzten 2 Min</b> zwei Drittel der Zucchini unterheben. '
+      +'In den <b>letzten 2 Min</b> ein Viertel der Zucchini unterheben, die behalten Biss. '
       +'Nach <b>'+garMin()+' Min</b> probieren (Packung '+reis+' Min minus 2): cremig, mit leichtem Biss. Am Ende eher flüssig lassen (<b>all’onda</b>).';
   });
   document.getElementById('rVal').textContent=reis;
